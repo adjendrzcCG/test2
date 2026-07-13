@@ -1,0 +1,18 @@
+{
+  "application_identifier": "app004",
+  "complexity_score": 7,
+  "complexity_label": "High",
+  "factors": {
+    "business_criticality": "High",
+    "architecture_tier": "2-Tier",
+    "containerization": true,
+    "ci_cd": true,
+    "server_count": 2,
+    "external_interface_count": 6,
+    "eol_components": true,
+    "outdated_components": true,
+    "technology_age": "aging"
+  },
+  "reasoning": "HRApp-004 scores High complexity (7/10). The application has modernization-positive traits: containerized, CI/CD present, and already partially deployed on AWS. However, it runs on EOL Windows Server 2012 (EOL October 2023) with EOL IIS 8.0, presenting immediate security risk. The .NET Core version is unspecified, introducing lifecycle uncertainty. As a Custom made, High criticality application handling Payroll Processing and HR data (Internal classification), modernization carries significant business risk. The hybrid AWS+On-premise deployment adds architectural complexity requiring careful migration planning. SQL Server 2019 is in extended support (mainstream ended Jan 2025), and the licensed database engine adds cost and migration considerations. With 6 external interfaces and 12 API endpoints, integration re-testing will be substantial.",
+  "analysis_timestamp": "2026-07-13T00:00:00Z"
+}

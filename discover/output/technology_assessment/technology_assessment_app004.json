@@ -1,0 +1,53 @@
+{
+  "application_identifier": "app004",
+  "components_analyzed": [
+    {
+      "component_name": "Windows Server 2012",
+      "component_family": "Windows Server",
+      "component_type": "os",
+      "managed_service": false,
+      "version": "2012",
+      "component_status": "EOL",
+      "eol_date": "2023-10-10",
+      "reason": "Windows Server 2012 reached End of Extended Support on October 10, 2023. Microsoft no longer provides security updates, exposing the system to unpatched vulnerabilities.",
+      "confidence": 10
+    },
+    {
+      "component_name": ".NET Core",
+      "component_family": ".NET",
+      "component_type": "programming_language",
+      "managed_service": false,
+      "version": "unknown",
+      "component_status": "NO_KNOWLEDGE",
+      "eol_date": "N/A",
+      "reason": "The .NET Core version is not specified. Without knowing the exact version (e.g., 3.1, 5.0, 6.0, 8.0), lifecycle status cannot be determined. Version discovery is required.",
+      "confidence": 3
+    },
+    {
+      "component_name": "Microsoft IIS 8.0",
+      "component_family": "Microsoft IIS",
+      "component_type": "application_server",
+      "managed_service": false,
+      "version": "8.0",
+      "component_status": "EOL",
+      "eol_date": "2023-10-10",
+      "reason": "IIS 8.0 is bundled with Windows Server 2012 and reached End of Life on October 10, 2023, together with Windows Server 2012.",
+      "confidence": 10
+    },
+    {
+      "component_name": "SQL Server 2019",
+      "component_family": "Microsoft SQL Server",
+      "component_type": "database",
+      "managed_service": false,
+      "version": "2019",
+      "component_status": "OUTDATED",
+      "eol_date": "2030-01-08",
+      "reason": "SQL Server 2019 mainstream support ended January 7, 2025. It remains in Extended Support through January 8, 2030, but is no longer the current version (SQL Server 2022 is latest).",
+      "confidence": 9
+    }
+  ],
+  "has_eol_components": true,
+  "has_outdated_components": true,
+  "has_missing_version_data": true,
+  "analysis_timestamp": "2026-07-13T00:00:00Z"
+}
