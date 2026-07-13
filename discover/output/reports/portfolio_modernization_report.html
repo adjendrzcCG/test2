@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio Modernization Report - Client - GenDiscover</title>
+    <style>
+        :root {
+            --page-bg: #0b1420;
+            --shell-bg: #111d2b;
+            --panel-bg: #162233;
+            --card-bg: #202c3d;
+            --card-bg-soft: #313f54;
+            --text-main: #f4f7fb;
+            --text-soft: #b7c6d9;
+            --border: rgba(47, 196, 215, 0.18);
+            --teal: #19cfd1;
+            --blue: #1384d6;
+            --orange: #ff8a45;
+            --red: #ff5f73;
+            --maroon: #7b4453;
+            --track: #1a2332;
+        }
+        * { box-sizing: border-box; }
+        body { margin: 0; font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif; color: var(--text-main); background: radial-gradient(circle at top, #132334 0%, var(--page-bg) 55%); }
+        a { color: inherit; text-decoration: none; }
+        .page { width: min(1760px, calc(100% - 32px)); margin: 14px auto; }
+        .report-shell { background: var(--shell-bg); border: 1px solid var(--border); border-radius: 18px; overflow: hidden; box-shadow: 0 28px 70px rgba(0, 0, 0, 0.32); }
+        .header { display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 20px 28px; border-bottom: 1px solid rgba(255,255,255,0.06); }
+        .customer-meta [data-testid="customer-name"] { font-size: 1.1rem; font-weight: 700; margin-bottom: 0.25rem; }
+        .customer-meta div:last-child { color: var(--text-soft); }
+        .logo { height: 42px; width: auto; }
+        .logo svg { height: 100%; width: auto; }
+        .logo path { fill: #fff; }
+        .content { padding: 18px 18px 24px; }
+        .hero { padding: 10px 14px 16px; }
+        .hero h1 { margin: 0; font-size: 2.2rem; font-weight: 800; }
+        .hero p { margin: 10px 0 0; color: var(--text-soft); font-size: 1.05rem; line-height: 1.5; max-width: 1100px; }
+        .section-panel { background: var(--panel-bg); border: 1px solid var(--border); border-radius: 16px; margin-bottom: 18px; overflow: hidden; }
+        .section-panel summary { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; cursor: pointer; list-style: none; padding: 22px 28px 14px; }
+        .section-panel summary::-webkit-details-marker { display: none; }
+        .section-panel summary h2 { margin: 0; font-size: 1.15rem; font-weight: 800; }
+        .section-panel summary p { margin: 8px 0 0; color: var(--text-soft); font-size: 0.95rem; }
+        .section-panel .chevron { font-size: 1.4rem; line-height: 1; color: #fff; transform: rotate(0deg); transition: transform 140ms ease; }
+        .section-panel[open] .chevron { transform: rotate(180deg); }
+        .section-panel-body { padding: 0 18px 18px; }
+        .summary-grid { display: grid; grid-template-columns: 1.1fr 1.6fr 1fr 1fr 1.4fr; gap: 18px; }
+        .metric-card, .opportunity-card, .roadmap-card { background: var(--card-bg); border-radius: 14px; padding: 28px; min-height: 100%; box-shadow: inset 0 0 0 1px rgba(255,255,255,0.02); }
+        .metric-card h3, .opportunity-card h3, .roadmap-card h3 { margin: 0 0 18px; font-size: 1rem; font-weight: 800; }
+        .ring-card { display: flex; justify-content: center; padding: 16px 0 22px; }
+        .ring { width: 262px; aspect-ratio: 1; border-radius: 50%; display: grid; place-items: center; position: relative; }
+        .ring::before { content: ""; position: absolute; inset: 22px; border-radius: 50%; background: var(--card-bg); box-shadow: inset 0 0 0 1px rgba(255,255,255,0.04); }
+        .ring span, .ring small { position: relative; z-index: 1; display: block; text-align: center; }
+        .ring span { font-size: 4rem; font-weight: 800; line-height: 1; }
+        .ring small { margin-top: 10px; font-size: 0.95rem; color: var(--text-soft); }
+        .ring-blue { background: conic-gradient(var(--blue) 0deg 300deg, rgba(255,255,255,0.15) 300deg 360deg); }
+        .mini-stats { display: grid; gap: 16px; }
+        .two-up { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+        .mini-stats strong { display: block; font-size: 2.1rem; font-weight: 800; line-height: 1.1; margin-bottom: 8px; }
+        .mini-stats span { color: var(--text-soft); font-size: 0.95rem; line-height: 1.35; }
+        .dual-ring-block { display: grid; gap: 30px; padding-top: 6px; }
+        .ring-row { display: grid; grid-template-columns: 180px 1fr; gap: 18px; align-items: center; }
+        .mini-ring { width: 170px; height: 170px; border-radius: 50%; position: relative; }
+        .mini-ring::before { content: ""; position: absolute; inset: 18px; border-radius: 50%; background: var(--card-bg); box-shadow: inset 0 0 0 1px rgba(255,255,255,0.04); }
+        .ring-teal { background: conic-gradient(var(--teal) 0deg 282deg, rgba(255,255,255,0.18) 282deg 360deg); }
+        .ring-orange { background: conic-gradient(var(--orange) 0deg 245deg, rgba(255,255,255,0.18) 245deg 360deg); }
+        .ring-copy strong { display: block; font-size: 3.6rem; font-weight: 800; line-height: 1; margin-bottom: 10px; }
+        .ring-copy span { color: var(--text-soft); font-size: 1rem; line-height: 1.45; }
+        .value-stack { display: grid; gap: 20px; }
+        .stat-chip { border-radius: 12px; padding: 18px 18px 14px; text-align: center; }
+        .stat-chip strong { display: block; font-size: 2.45rem; font-weight: 800; line-height: 1.05; }
+        .stat-chip span { display: block; margin-top: 10px; color: rgba(255,255,255,0.9); font-size: 0.95rem; line-height: 1.35; }
+        .stat-chip-large strong { font-size: 3rem; }
+        .stat-chip-teal { background: #197f83; }
+        .stat-chip-maroon { background: #6f3947; }
+        .stat-chip-blue { background: #1178c9; }
+        .signal-list { display: grid; gap: 26px; padding-top: 8px; }
+        .signal-row strong { display: block; font-size: 3rem; font-weight: 800; line-height: 1; margin-bottom: 8px; }
+        .signal-row span { display: block; color: var(--text-soft); font-size: 0.98rem; line-height: 1.4; margin-bottom: 12px; }
+        .signal-bar { height: 12px; background: var(--track); border-radius: 999px; overflow: hidden; max-width: 240px; }
+        .signal-bar span { display: block; height: 100%; width: 62%; margin: 0; }
+        .signal-red span { background: var(--red); }
+        .signal-orange span { background: var(--orange); }
+        .signal-teal span { background: var(--teal); }
+        .signal-blue span { background: var(--blue); }
+        .scroll-list { display: grid; gap: 12px; max-height: 360px; overflow: auto; padding-right: 4px; }
+        .compact-list { max-height: 290px; }
+        .pill-row { display: grid; grid-template-columns: minmax(0, 1fr) auto auto; gap: 10px; align-items: center; padding: 12px 14px; border-radius: 10px; background: var(--card-bg-soft); }
+        .pill-title { font-size: 0.98rem; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .pill-badge { border-radius: 7px; padding: 7px 10px; font-size: 0.82rem; font-weight: 800; white-space: nowrap; }
+        .pill-badge-danger { background: var(--red); color: #fff; }
+        .pill-badge-accent { background: #1698a9; color: #fff; }
+        .empty-state { color: var(--text-soft); padding: 12px 0; }
+        .opportunity-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 18px; }
+        .opportunity-card p, .roadmap-card p { color: var(--text-soft); font-size: 0.95rem; line-height: 1.45; margin: 0 0 24px; }
+        .opportunity-number { font-size: 3.7rem; font-weight: 800; line-height: 1; margin-bottom: 8px; text-align: center; }
+        .opportunity-label { color: var(--text-soft); text-align: center; font-size: 0.95rem; margin-bottom: 16px; }
+        .scenario-count { color: var(--text-soft); font-size: 0.92rem; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; margin: 18px 0 14px; }
+        .roadmap-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
+        .roadmap-stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin-bottom: 18px; }
+        .footer { display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 20px 28px; border-top: 1px solid rgba(255,255,255,0.06); }
+        .footer p { margin: 0.15rem 0; }
+        .meta-primary { color: var(--teal); font-weight: 700; font-size: 0.86rem; }
+        .meta-secondary, .meta-muted { color: var(--text-soft); font-size: 0.8rem; }
+        @media (max-width: 1500px) {
+            .summary-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+            .metric-card:last-child { grid-column: 1 / -1; }
+            .opportunity-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+            .roadmap-grid { grid-template-columns: 1fr; }
+        }
+        @media (max-width: 980px) {
+            .page { width: min(100%, calc(100% - 20px)); }
+            .header, .footer { flex-direction: column; align-items: flex-start; }
+            .summary-grid, .opportunity-grid { grid-template-columns: 1fr; }
+            .ring-row { grid-template-columns: 1fr; }
+            .roadmap-stats { grid-template-columns: 1fr; }
+            .pill-row { grid-template-columns: minmax(0, 1fr) auto; }
+            .pill-row .pill-badge:last-child { grid-column: 2; }
+        }
+    </style>
+</head>
+<body>
+    <div class="page">
+        <div class="report-shell">
+            <div class="header">
+                <div class="customer-meta">
+                    <div data-testid="customer-name">Client</div>
+                    <div>Application modernization with Agentic AI powered by Capgemini GenSuite</div>
+                </div>
+                <div class="logo"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 50" width="200" height="50">
+  <rect width="200" height="50" rx="6" fill="#0d1117"/>
+  <text x="10" y="33" font-family="Arial,sans-serif" font-size="18" font-weight="bold" fill="#58a6ff">Portfolio</text>
+  <text x="105" y="33" font-family="Arial,sans-serif" font-size="18" fill="#8b949e">Modernization</text>
+</svg></div>
+            </div>
+            <div class="content">
+                <section class="hero" data-testid="portfolio-report-title">
+                    <h1>Portfolio Modernization Report</h1>
+                    <p>&gt; **Generated:** 2026-07-13 | **Reference Date:** 2026-07-13 | **Portfolio:** Enterprise Application Portfolio</p>
+                </section>
+                <details open class="section-panel" data-testid="section-summary">
+    <summary>
+        <div>
+            <h2>Summary</h2>
+            <p>Summary of portfolio modernization assessment</p>
+        </div>
+        <span class="chevron">⌃</span>
+    </summary>
+    <div class="section-panel-body summary-grid">
+        <article class="metric-card metric-card-scope" data-testid="summary-scope-card">
+            <h3>Scope</h3>
+            <div class="ring-card">
+                <div class="ring ring-blue"><span>4</span><small>Total Apps</small></div>
+            </div>
+            <div class="mini-stats two-up">
+                <div><strong>4</strong><span>Apps in Scope</span></div>
+                <div><strong>0</strong><span>Apps out of Scope</span></div>
+            </div>
+        </article>
+        <article class="metric-card" data-testid="summary-quality-card">
+            <h3>Potential &amp; Data Quality</h3>
+            <div class="dual-ring-block">
+                <div class="ring-row">
+                    <div class="mini-ring ring-teal"></div>
+                    <div class="ring-copy"><strong>0%</strong><span>Apps with Modernization Potential</span></div>
+                </div>
+                <div class="ring-row">
+                    <div class="mini-ring ring-orange"></div>
+                    <div class="ring-copy"><strong>100%</strong><span>Average Data Completeness Across All Scenarios</span></div>
+                </div>
+            </div>
+        </article>
+        <article class="metric-card metric-card-roi" data-testid="summary-roi-card">
+            <h3>Return on Investment</h3>
+            <div class="value-stack">
+                <div class="stat-chip stat-chip-teal"><strong>395.4kEUR</strong><span>Annual Savings</span></div>
+                <div class="stat-chip stat-chip-maroon"><strong>EUR0</strong><span>Migration Costs</span></div>
+                <div class="stat-chip stat-chip-blue stat-chip-large"><strong>n/a</strong><span>Until positive ROI<br>Until positive ROI</span></div>
+            </div>
+        </article>
+        <article class="metric-card" data-testid="summary-eol-card">
+            <h3>End of Life</h3>
+            <div class="signal-list">
+                <div class="signal-row"><strong>3</strong><span>Apps with EOL Components</span><div class="signal-bar signal-red"><span></span></div></div>
+                <div class="signal-row"><strong>3</strong><span>Apps with Outdated Components</span><div class="signal-bar signal-orange"><span></span></div></div>
+                <div class="signal-row"><strong>1</strong><span>Apps with Missing Version Details</span><div class="signal-bar signal-teal"><span></span></div></div>
+            </div>
+        </article>
+        <article class="metric-card" data-testid="summary-priority-card">
+            <h3>Priority Apps for Modernization</h3>
+            <div class="scroll-list"><a href="application_reports/application_report_app004.html" class="pill-row" data-testid="summary-priority-app004">
+    <span class="pill-title">Application Report — HRApp-004</span>
+    <span class="pill-badge pill-badge-danger">EOL</span>
+    <span class="pill-badge pill-badge-accent">8 scenarios</span>
+</a>
+<a href="application_reports/application_report_app002.html" class="pill-row" data-testid="summary-priority-app002">
+    <span class="pill-title">Application Report — CRMApp-002</span>
+    <span class="pill-badge pill-badge-danger">EOL</span>
+    <span class="pill-badge pill-badge-accent">6 scenarios</span>
+</a>
+<a href="application_reports/application_report_app003.html" class="pill-row" data-testid="summary-priority-app003">
+    <span class="pill-title">Application Report — AnalyticsApp-003</span>
+    <span class="pill-badge pill-badge-danger">EOL</span>
+    <span class="pill-badge pill-badge-accent">9 scenarios</span>
+</a>
+<a href="application_reports/application_report_app001.html" class="pill-row" data-testid="summary-priority-app001">
+    <span class="pill-title">Application Report — ERPApp-001</span>
+    <span class="pill-badge pill-badge-danger">OUTDATED</span>
+    <span class="pill-badge pill-badge-accent">7 scenarios</span>
+</a></div>
+        </article>
+    </div>
+</details>
+
+<details open class="section-panel" data-testid="section-opportunities">
+    <summary>
+        <div>
+            <h2>Modernization Opportunities</h2>
+            <p>Key opportunities for portfolio modernization</p>
+        </div>
+        <span class="chevron">⌃</span>
+    </summary>
+    <div class="section-panel-body opportunity-grid">
+        <article class="opportunity-card" data-testid="opportunity-card-cost-reduction">
+    <h3>Cost Reduction</h3>
+    <p>Lower operational costs, reduced licensing fees</p>
+    <div class="opportunity-number">4</div>
+    <div class="opportunity-label">Applicable Apps</div>
+    <div class="signal-bar signal-orange"><span></span></div>
+    <div class="scenario-count">4 scenarios</div>
+    <div class="scroll-list"><div class="pill-row" data-testid="opportunity-cost-reduction-upgrade_legacy_databases">
+    <span class="pill-title">Upgrade Legacy Databases</span>
+    <span class="pill-badge pill-badge-accent">4 Apps</span>
+</div>
+<div class="pill-row" data-testid="opportunity-cost-reduction-switch_db_engine_open_source">
+    <span class="pill-title">Switch DB Engine to Open Source</span>
+    <span class="pill-badge pill-badge-accent">4 Apps</span>
+</div>
+<div class="pill-row" data-testid="opportunity-cost-reduction-switch_to_standard_linux_os">
+    <span class="pill-title">Switch to Standard Linux OS</span>
+    <span class="pill-badge pill-badge-accent">3 Apps</span>
+</div>
+<div class="pill-row" data-testid="opportunity-cost-reduction-application_server_replacement">
+    <span class="pill-title">Application Server Replacement</span>
+    <span class="pill-badge pill-badge-accent">3 Apps</span>
+</div></div>
+</article>
+<article class="opportunity-card" data-testid="opportunity-card-agility">
+    <h3>Agility</h3>
+    <p>Faster deployment, improved scalability, enhanced flexibility</p>
+    <div class="opportunity-number">4</div>
+    <div class="opportunity-label">Applicable Apps</div>
+    <div class="signal-bar signal-blue"><span></span></div>
+    <div class="scenario-count">4 scenarios</div>
+    <div class="scroll-list"><div class="pill-row" data-testid="opportunity-agility-app_deployment_to_cloud">
+    <span class="pill-title">Application Deployment to Public Cloud</span>
+    <span class="pill-badge pill-badge-accent">4 Apps</span>
+</div>
+<div class="pill-row" data-testid="opportunity-agility-application_server_replacement">
+    <span class="pill-title">Application Server Replacement</span>
+    <span class="pill-badge pill-badge-accent">3 Apps</span>
+</div>
+<div class="pill-row" data-testid="opportunity-agility-app_containerization">
+    <span class="pill-title">Application Containerization</span>
+    <span class="pill-badge pill-badge-accent">2 Apps</span>
+</div>
+<div class="pill-row" data-testid="opportunity-agility-app_refactor_decoupling">
+    <span class="pill-title">Application Refactoring</span>
+    <span class="pill-badge pill-badge-accent">2 Apps</span>
+</div></div>
+</article>
+<article class="opportunity-card" data-testid="opportunity-card-security">
+    <h3>Security</h3>
+    <p>Better compliance, reduced vulnerabilities, enhanced protection</p>
+    <div class="opportunity-number">4</div>
+    <div class="opportunity-label">Applicable Apps</div>
+    <div class="signal-bar signal-red"><span></span></div>
+    <div class="scenario-count">4 scenarios</div>
+    <div class="scroll-list"><div class="pill-row" data-testid="opportunity-security-upgrade_legacy_databases">
+    <span class="pill-title">Upgrade Legacy Databases</span>
+    <span class="pill-badge pill-badge-accent">4 Apps</span>
+</div>
+<div class="pill-row" data-testid="opportunity-security-os_update_security_patch">
+    <span class="pill-title">Operating System Update</span>
+    <span class="pill-badge pill-badge-accent">4 Apps</span>
+</div>
+<div class="pill-row" data-testid="opportunity-security-update_outdated_components">
+    <span class="pill-title">Update Outdated Components</span>
+    <span class="pill-badge pill-badge-accent">3 Apps</span>
+</div>
+<div class="pill-row" data-testid="opportunity-security-application_server_replacement">
+    <span class="pill-title">Application Server Replacement</span>
+    <span class="pill-badge pill-badge-accent">3 Apps</span>
+</div></div>
+</article>
+<article class="opportunity-card" data-testid="opportunity-card-sustainability">
+    <h3>Sustainability</h3>
+    <p>Reduced energy consumption, greener infrastructure</p>
+    <div class="opportunity-number">4</div>
+    <div class="opportunity-label">Applicable Apps</div>
+    <div class="signal-bar signal-teal"><span></span></div>
+    <div class="scenario-count">4 scenarios</div>
+    <div class="scroll-list"><div class="pill-row" data-testid="opportunity-sustainability-app_deployment_to_cloud">
+    <span class="pill-title">Application Deployment to Public Cloud</span>
+    <span class="pill-badge pill-badge-accent">4 Apps</span>
+</div>
+<div class="pill-row" data-testid="opportunity-sustainability-switch_to_standard_linux_os">
+    <span class="pill-title">Switch to Standard Linux OS</span>
+    <span class="pill-badge pill-badge-accent">3 Apps</span>
+</div>
+<div class="pill-row" data-testid="opportunity-sustainability-app_containerization">
+    <span class="pill-title">Application Containerization</span>
+    <span class="pill-badge pill-badge-accent">2 Apps</span>
+</div>
+<div class="pill-row" data-testid="opportunity-sustainability-switch_to_arm_cpu">
+    <span class="pill-title">Switch to ARM-Based CPU</span>
+    <span class="pill-badge pill-badge-accent">1 Apps</span>
+</div></div>
+</article>
+    </div>
+</details>
+
+<details open class="section-panel" data-testid="section-roadmap">
+    <summary>
+        <div>
+            <h2>Roadmap Proposal</h2>
+            <p>Phased approach to portfolio modernization</p>
+        </div>
+        <span class="chevron">⌃</span>
+    </summary>
+    <div class="section-panel-body roadmap-grid">
+        <article class="roadmap-card" data-testid="roadmap-card-phase-1-quick-wins">
+    <h3>Phase 1: Quick Wins</h3>
+    <p>High Priority • Low/Medium Effort</p>
+    <div class="roadmap-stats">
+        <div class="stat-chip stat-chip-teal"><strong>EUR0</strong><span>Annual Savings</span></div>
+        <div class="stat-chip stat-chip-maroon"><strong>EUR0</strong><span>Migration Costs</span></div>
+        <div class="stat-chip stat-chip-blue stat-chip-large"><strong>n/a</strong><span>Until positive ROI<br>Until positive ROI</span></div>
+    </div>
+    <div class="scenario-count">0 scenarios</div>
+    <div class="scroll-list compact-list"><div class="empty-state">No scenarios assigned.</div></div>
+</article>
+<article class="roadmap-card" data-testid="roadmap-card-phase-2-tactical-improvements">
+    <h3>Phase 2: Tactical Improvements</h3>
+    <p>Medium/Low Priority • Low/Medium/High Effort</p>
+    <div class="roadmap-stats">
+        <div class="stat-chip stat-chip-teal"><strong>EUR0</strong><span>Annual Savings</span></div>
+        <div class="stat-chip stat-chip-maroon"><strong>EUR0</strong><span>Migration Costs</span></div>
+        <div class="stat-chip stat-chip-blue stat-chip-large"><strong>n/a</strong><span>Until positive ROI<br>Until positive ROI</span></div>
+    </div>
+    <div class="scenario-count">0 scenarios</div>
+    <div class="scroll-list compact-list"><div class="empty-state">No scenarios assigned.</div></div>
+</article>
+<article class="roadmap-card" data-testid="roadmap-card-phase-3-strategic-initiatives">
+    <h3>Phase 3: Strategic Initiatives</h3>
+    <p>High Priority • High Effort</p>
+    <div class="roadmap-stats">
+        <div class="stat-chip stat-chip-teal"><strong>EUR0</strong><span>Annual Savings</span></div>
+        <div class="stat-chip stat-chip-maroon"><strong>EUR0</strong><span>Migration Costs</span></div>
+        <div class="stat-chip stat-chip-blue stat-chip-large"><strong>n/a</strong><span>Until positive ROI<br>Until positive ROI</span></div>
+    </div>
+    <div class="scenario-count">0 scenarios</div>
+    <div class="scroll-list compact-list"><div class="empty-state">No scenarios assigned.</div></div>
+</article>
+    </div>
+</details>
+
+<details open class="section-card" data-testid="section-technology-health">
+  <summary>
+    <div>
+      <h2>Technology Health</h2>
+    </div>
+    <span class="chevron">▾</span>
+  </summary>
+  <div class="section-body">
+    <h3>EOL &amp; Outdated Component Summary</h3>
+<p>App | OS | Language | App Server | Database | EOL? | Outdated? | Missing Version?</p>
+<p><strong>ERPApp-001</strong> | AIX 7.2 — 🟡 Outdated | COBOL-2014 — ✅ Current | N/A | Oracle 19c — ✅ Current | ✅ No | 🟡 Yes | ✅ No</p>
+<p><strong>CRMApp-002</strong> | RHEL 7 — 🔴 EOL | Java 11 — 🟡 Outdated | Websphere 7.0 — 🔴 EOL | Amazon RDS MySQL — ✅ Current | 🔴 Yes | 🟡 Yes | ✅ No</p>
+<p><strong>AnalyticsApp-003</strong> | RHEL 7 — 🔴 EOL | Python 3.9 — 🔴 EOL | Apache Tomcat 6.1 — 🔴 EOL | PostgreSQL 13 — 🔴 EOL | 🔴 Yes | ✅ No | ✅ No</p>
+<p><strong>HRApp-004</strong> | Windows Server 2012 — 🔴 EOL | .NET Core — ❓ Unknown | Microsoft IIS 8.0 — 🔴 EOL | SQL Server 2019 — 🟡 Outdated | 🔴 Yes | 🟡 Yes | ❓ Yes</p>
+<h3>Key Technology Risks</h3>
+<ul><li>🔴 <strong>RHEL 7</strong> (EOL June 2024) — affects CRMApp-002 and AnalyticsApp-003</li><li>🔴 <strong>Windows Server 2012</strong> (EOL October 2023) — affects HRApp-004</li><li>🔴 <strong>WebSphere 7.0</strong> (EOL September 2015) — affects CRMApp-002; critically overdue</li><li>🔴 <strong>Apache Tomcat 6.1</strong> (EOL December 2016) — affects AnalyticsApp-003; critically overdue</li><li>🔴 <strong>Python 3.9</strong> (EOL October 2025) — affects AnalyticsApp-003</li><li>🔴 <strong>PostgreSQL 13</strong> (EOL November 2025) — affects AnalyticsApp-003</li><li>🔴 <strong>Microsoft IIS 8.0</strong> (EOL October 2023) — affects HRApp-004</li><li>🟡 <strong>AIX 7.2</strong> (Outdated) — affects ERPApp-001</li><li>🟡 <strong>Java 11</strong> (Outdated/approaching EOL) — affects CRMApp-002</li><li>🟡 <strong>SQL Server 2019</strong> (Outdated, mainstream support ended Jan 2025) — affects HRApp-004</li><li>❓ <strong>.NET Core</strong> (Version unknown) — affects HRApp-004; version discovery required</li></ul>
+  </div>
+</details>
+            </div>
+            <div class="footer">
+                <div>
+                    <p class="meta-primary">Generated by GenDiscover</p>
+                    <p class="meta-secondary">2026-07-13T13:02:47.539533+00:00</p>
+                    <p class="meta-muted">Analysis ID: 3df04d593337c5303fe21415478bf9e0</p>
+                </div>
+                <div class="logo"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 50" width="200" height="50">
+  <rect width="200" height="50" rx="6" fill="#0d1117"/>
+  <text x="10" y="33" font-family="Arial,sans-serif" font-size="18" font-weight="bold" fill="#58a6ff">Portfolio</text>
+  <text x="105" y="33" font-family="Arial,sans-serif" font-size="18" fill="#8b949e">Modernization</text>
+</svg></div>
+            </div>
+        </div>
+    </div>
+    <script type="application/json" id="report-data">{&quot;kind&quot;: &quot;portfolio&quot;, &quot;title&quot;: &quot;Portfolio Modernization Report&quot;, &quot;lead&quot;: &quot;&gt; **Generated:** 2026-07-13 | **Reference Date:** 2026-07-13 | **Portfolio:** Enterprise Application Portfolio&quot;, &quot;customer_name&quot;: &quot;Client&quot;, &quot;subtitle&quot;: &quot;Application modernization with Agentic AI powered by Capgemini GenSuite&quot;, &quot;generated_at&quot;: &quot;2026-07-13T13:02:47.539533+00:00&quot;, &quot;sections&quot;: [{&quot;title&quot;: &quot;Executive Summary&quot;, &quot;slug&quot;: &quot;executive-summary&quot;, &quot;html&quot;: &quot;&lt;p&gt;This portfolio modernization report covers &lt;strong&gt;5 applications&lt;/strong&gt; assessed for technology lifecycle status, complexity, modernization opportunities, and business value.&lt;/p&gt;\n&lt;p&gt;Metric | Value&lt;/p&gt;\n&lt;p&gt;Total Applications | 5&lt;/p&gt;\n&lt;p&gt;Out-of-Scope (Retired) | 1&lt;/p&gt;\n&lt;p&gt;In-Scope (Production) | 4&lt;/p&gt;\n&lt;p&gt;Applications with EOL Components | 3&lt;/p&gt;\n&lt;p&gt;Applications with Outdated Components | 3&lt;/p&gt;\n&lt;p&gt;Applications with Unknown Version Data | 1&lt;/p&gt;\n&lt;p&gt;Total Portfolio Investment Required | $963,940.00&lt;/p&gt;\n&lt;p&gt;Total Yearly Savings | $395,400.00&lt;/p&gt;\n&lt;p&gt;Portfolio ROI Payback | ~2.44 years&lt;/p&gt;\n&lt;p&gt;The portfolio carries &lt;strong&gt;significant technical debt&lt;/strong&gt; concentrated in EOL operating systems (RHEL 7, Windows Server 2012), severely EOL middleware (WebSphere 7.0, Apache Tomcat 6.1), and EOL languages/runtimes (Python 3.9, PostgreSQL 13). Three of four in-scope applications have EOL components requiring immediate attention. ERPApp-001 and HRApp-004 represent the highest modernization risk and investment due to their High business criticality and legacy architecture.&lt;/p&gt;&quot;}, {&quot;title&quot;: &quot;Portfolio Overview&quot;, &quot;slug&quot;: &quot;portfolio-overview&quot;, &quot;html&quot;: &quot;&lt;p&gt;App ID | Name | Criticality | Status | Deployment | Containerized | CI/CD | Complexity&lt;/p&gt;\n&lt;p&gt;&lt;code&gt;app001&lt;/code&gt; | &lt;strong&gt;ERPApp-001&lt;/strong&gt; | High | Production | On-Premise | No | No | 9/10 (Very High)&lt;/p&gt;\n&lt;p&gt;&lt;code&gt;app002&lt;/code&gt; | &lt;strong&gt;CRMApp-002&lt;/strong&gt; | Medium | Production | AWS | No | Yes | 7/10 (High)&lt;/p&gt;\n&lt;p&gt;&lt;code&gt;app003&lt;/code&gt; | &lt;strong&gt;AnalyticsApp-003&lt;/strong&gt; | Low | Production | AWS | Yes | Yes | 4/10 (Medium)&lt;/p&gt;\n&lt;p&gt;&lt;code&gt;app004&lt;/code&gt; | &lt;strong&gt;HRApp-004&lt;/strong&gt; | High | Production | AWS+On-premise | Yes | Yes | 7/10 (High)&lt;/p&gt;\n&lt;p&gt;&lt;code&gt;app005&lt;/code&gt; | &lt;strong&gt;EComApp-005&lt;/strong&gt; *(Out of Scope)* | Critical | Retired | AWS | Yes | Yes | N/A (Out of Scope)&lt;/p&gt;&quot;}, {&quot;title&quot;: &quot;Technology Health&quot;, &quot;slug&quot;: &quot;technology-health&quot;, &quot;html&quot;: &quot;&lt;h3&gt;EOL &amp;amp; Outdated Component Summary&lt;/h3&gt;\n&lt;p&gt;App | OS | Language | App Server | Database | EOL? | Outdated? | Missing Version?&lt;/p&gt;\n&lt;p&gt;&lt;strong&gt;ERPApp-001&lt;/strong&gt; | AIX 7.2 — 🟡 Outdated | COBOL-2014 — ✅ Current | N/A | Oracle 19c — ✅ Current | ✅ No | 🟡 Yes | ✅ No&lt;/p&gt;\n&lt;p&gt;&lt;strong&gt;CRMApp-002&lt;/strong&gt; | RHEL 7 — 🔴 EOL | Java 11 — 🟡 Outdated | Websphere 7.0 — 🔴 EOL | Amazon RDS MySQL — ✅ Current | 🔴 Yes | 🟡 Yes | ✅ No&lt;/p&gt;\n&lt;p&gt;&lt;strong&gt;AnalyticsApp-003&lt;/strong&gt; | RHEL 7 — 🔴 EOL | Python 3.9 — 🔴 EOL | Apache Tomcat 6.1 — 🔴 EOL | PostgreSQL 13 — 🔴 EOL | 🔴 Yes | ✅ No | ✅ No&lt;/p&gt;\n&lt;p&gt;&lt;strong&gt;HRApp-004&lt;/strong&gt; | Windows Server 2012 — 🔴 EOL | .NET Core — ❓ Unknown | Microsoft IIS 8.0 — 🔴 EOL | SQL Server 2019 — 🟡 Outdated | 🔴 Yes | 🟡 Yes | ❓ Yes&lt;/p&gt;\n&lt;h3&gt;Key Technology Risks&lt;/h3&gt;\n&lt;ul&gt;&lt;li&gt;🔴 &lt;strong&gt;RHEL 7&lt;/strong&gt; (EOL June 2024) — affects CRMApp-002 and AnalyticsApp-003&lt;/li&gt;&lt;li&gt;🔴 &lt;strong&gt;Windows Server 2012&lt;/strong&gt; (EOL October 2023) — affects HRApp-004&lt;/li&gt;&lt;li&gt;🔴 &lt;strong&gt;WebSphere 7.0&lt;/strong&gt; (EOL September 2015) — affects CRMApp-002; critically overdue&lt;/li&gt;&lt;li&gt;🔴 &lt;strong&gt;Apache Tomcat 6.1&lt;/strong&gt; (EOL December 2016) — affects AnalyticsApp-003; critically overdue&lt;/li&gt;&lt;li&gt;🔴 &lt;strong&gt;Python 3.9&lt;/strong&gt; (EOL October 2025) — affects AnalyticsApp-003&lt;/li&gt;&lt;li&gt;🔴 &lt;strong&gt;PostgreSQL 13&lt;/strong&gt; (EOL November 2025) — affects AnalyticsApp-003&lt;/li&gt;&lt;li&gt;🔴 &lt;strong&gt;Microsoft IIS 8.0&lt;/strong&gt; (EOL October 2023) — affects HRApp-004&lt;/li&gt;&lt;li&gt;🟡 &lt;strong&gt;AIX 7.2&lt;/strong&gt; (Outdated) — affects ERPApp-001&lt;/li&gt;&lt;li&gt;🟡 &lt;strong&gt;Java 11&lt;/strong&gt; (Outdated/approaching EOL) — affects CRMApp-002&lt;/li&gt;&lt;li&gt;🟡 &lt;strong&gt;SQL Server 2019&lt;/strong&gt; (Outdated, mainstream support ended Jan 2025) — affects HRApp-004&lt;/li&gt;&lt;li&gt;❓ &lt;strong&gt;.NET Core&lt;/strong&gt; (Version unknown) — affects HRApp-004; version discovery required&lt;/li&gt;&lt;/ul&gt;&quot;}, {&quot;title&quot;: &quot;Top Modernization Opportunities&quot;, &quot;slug&quot;: &quot;top-modernization-opportunities&quot;, &quot;html&quot;: &quot;&lt;p&gt;Based on ROI, urgency, and feasibility:&lt;/p&gt;\n&lt;p&gt;Rank | Scenario | Application(s) | Status | Adj. Cost | Yearly Savings | ROI&lt;/p&gt;\n&lt;p&gt;1 | Application Server Replacement (Tomcat 6.1 → 10.x) | AnalyticsApp-003 | 🔵 APPLICABLE | $8,000 | $12,000 | 0.67 yrs&lt;/p&gt;\n&lt;p&gt;2 | Upgrade Legacy Databases (PostgreSQL 13 → 16+) | AnalyticsApp-003 | 🔵 APPLICABLE | $8,000 | $10,000 | 0.80 yrs&lt;/p&gt;\n&lt;p&gt;3 | Switch to Standard Linux OS | ERPApp-001 | 🔵 APPLICABLE | $540 | $400 | 1.35 yrs&lt;/p&gt;\n&lt;p&gt;4 | Application Server Replacement (WebSphere 7.0) | CRMApp-002 | 🔵 APPLICABLE | $14,000 | $12,000 | 1.17 yrs&lt;/p&gt;\n&lt;p&gt;5 | OS Security Patch (all in-scope apps) | All 4 apps | 🔵 APPLICABLE | ~$5,400 | ~$2,000 | 2.7 yrs&lt;/p&gt;\n&lt;p&gt;6 | Full Cloud Migration (HRApp-004) | HRApp-004 | 🟡 PARTIALLY_FULFILLED | $7,000 | $3,000 | 2.33 yrs&lt;/p&gt;\n&lt;p&gt;7 | Switch DB Engine to Open-Source | ERPApp-001 | 🔵 APPLICABLE | $45,000 | $15,000 | 3.0 yrs&lt;/p&gt;\n&lt;p&gt;8 | Application Refactoring (ERPApp-001 COBOL) | ERPApp-001 | 🔵 APPLICABLE | $450,000 | $150,000 | 3.0 yrs&lt;/p&gt;&quot;}, {&quot;title&quot;: &quot;Financial Summary&quot;, &quot;slug&quot;: &quot;financial-summary&quot;, &quot;html&quot;: &quot;&lt;p&gt;Metric | Value&lt;/p&gt;\n&lt;p&gt;Total Portfolio Investment | &lt;strong&gt;$963,940.00&lt;/strong&gt;&lt;/p&gt;\n&lt;p&gt;Total Yearly Savings | &lt;strong&gt;$395,400.00&lt;/strong&gt;&lt;/p&gt;\n&lt;p&gt;Portfolio ROI Payback | &lt;strong&gt;2.44 years&lt;/strong&gt;&lt;/p&gt;\n&lt;h3&gt;Per-Application Financial Summary&lt;/h3&gt;\n&lt;p&gt;Application | Complexity | Investment | Yearly Savings | ROI (years)&lt;/p&gt;\n&lt;p&gt;&lt;strong&gt;ERPApp-001&lt;/strong&gt; (&lt;code&gt;app001&lt;/code&gt;) | 1.8x | $506,340.00 | $168,900.00 | 3.0&lt;/p&gt;\n&lt;p&gt;&lt;strong&gt;CRMApp-002&lt;/strong&gt; (&lt;code&gt;app002&lt;/code&gt;) | 1.4x | $15,400.00 | $12,500.00 | 1.23&lt;/p&gt;\n&lt;p&gt;&lt;strong&gt;AnalyticsApp-003&lt;/strong&gt; (&lt;code&gt;app003&lt;/code&gt;) | 0.8x | $20,800.00 | $23,500.00 | 0.89&lt;/p&gt;\n&lt;p&gt;&lt;strong&gt;HRApp-004&lt;/strong&gt; (&lt;code&gt;app004&lt;/code&gt;) | 1.4x | $421,400.00 | $190,500.00 | 2.21&lt;/p&gt;\n&lt;p&gt;&amp;gt; *Investment costs are base migration costs adjusted by per-application complexity multiplier (complexity score ÷ 5).* &amp;gt; *Only APPLICABLE and PARTIALLY_FULFILLED scenarios are included in cost calculations.* &amp;gt; *Savings are first-year estimates; multi-year compound savings will increase ROI.*&lt;/p&gt;&quot;}, {&quot;title&quot;: &quot;Risk Applications&quot;, &quot;slug&quot;: &quot;risk-applications&quot;, &quot;html&quot;: &quot;&lt;h3&gt;🔴 Critical Risk: ERPApp-001&lt;/h3&gt;\n&lt;ul&gt;&lt;li&gt;&lt;strong&gt;Risk:&lt;/strong&gt; COBOL monolith on EOL AIX 7.2, no CI/CD, no containerization, Confidential data, decommission target 2027&lt;/li&gt;&lt;li&gt;&lt;strong&gt;Action:&lt;/strong&gt; Immediate COBOL code analysis, AIX upgrade, cloud migration planning, Oracle license cost reduction&lt;/li&gt;&lt;li&gt;&lt;strong&gt;Impact:&lt;/strong&gt; Finance/Accounting system failure would be catastrophic to business operations&lt;/li&gt;&lt;/ul&gt;\n&lt;h3&gt;🔴 Critical Risk: CRMApp-002&lt;/h3&gt;\n&lt;ul&gt;&lt;li&gt;&lt;strong&gt;Risk:&lt;/strong&gt; WebSphere 7.0 (EOL since 2015) + RHEL 7 (EOL 2024) combination creates severe unpatched vulnerability exposure&lt;/li&gt;&lt;li&gt;&lt;strong&gt;Action:&lt;/strong&gt; Emergency WebSphere 7.0 replacement, RHEL 7 → RHEL 9 upgrade&lt;/li&gt;&lt;li&gt;&lt;strong&gt;Impact:&lt;/strong&gt; 1,200 Marketing users affected; Customer data exposure risk&lt;/li&gt;&lt;/ul&gt;\n&lt;h3&gt;🟠 High Risk: AnalyticsApp-003&lt;/h3&gt;\n&lt;ul&gt;&lt;li&gt;&lt;strong&gt;Risk:&lt;/strong&gt; All four technology components are EOL; however, application is already containerized with CI/CD&lt;/li&gt;&lt;li&gt;&lt;strong&gt;Action:&lt;/strong&gt; Systematic component update plan — OS, Python, Tomcat, PostgreSQL all need upgrading&lt;/li&gt;&lt;li&gt;&lt;strong&gt;Mitigation:&lt;/strong&gt; Low complexity (4/10) and existing containerization make this highly actionable&lt;/li&gt;&lt;/ul&gt;\n&lt;h3&gt;🟠 High Risk: HRApp-004&lt;/h3&gt;\n&lt;ul&gt;&lt;li&gt;&lt;strong&gt;Risk:&lt;/strong&gt; EOL Windows Server 2012 + IIS 8.0, unknown .NET Core version, HR/Payroll data sensitivity&lt;/li&gt;&lt;li&gt;&lt;strong&gt;Action:&lt;/strong&gt; OS upgrade to Windows Server 2022, identify .NET Core version, complete cloud migration&lt;/li&gt;&lt;li&gt;&lt;strong&gt;Impact:&lt;/strong&gt; Payroll processing disruption would have immediate employee impact&lt;/li&gt;&lt;/ul&gt;&quot;}, {&quot;title&quot;: &quot;Per-Application Reports&quot;, &quot;slug&quot;: &quot;per-application-reports&quot;, &quot;html&quot;: &quot;&lt;p&gt;Detailed reports for each in-scope application:&lt;/p&gt;\n&lt;ul&gt;&lt;li&gt;&lt;a href=\&quot;apps/app_report_app001.md\&quot; target=\&quot;_blank\&quot;&gt;ERPApp-001 (app001)&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href=\&quot;apps/app_report_app002.md\&quot; target=\&quot;_blank\&quot;&gt;CRMApp-002 (app002)&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href=\&quot;apps/app_report_app003.md\&quot; target=\&quot;_blank\&quot;&gt;AnalyticsApp-003 (app003)&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href=\&quot;apps/app_report_app004.md\&quot; target=\&quot;_blank\&quot;&gt;HRApp-004 (app004)&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;\n&lt;p&gt;---&lt;/p&gt;\n&lt;p&gt;*app005 (EComApp-005) is excluded from this report as its status is &lt;strong&gt;Retired&lt;/strong&gt;.*&lt;/p&gt;&quot;}], &quot;app_links&quot;: [{&quot;app_id&quot;: &quot;app001&quot;, &quot;title&quot;: &quot;Application Report — ERPApp-001&quot;}, {&quot;app_id&quot;: &quot;app002&quot;, &quot;title&quot;: &quot;Application Report — CRMApp-002&quot;}, {&quot;app_id&quot;: &quot;app003&quot;, &quot;title&quot;: &quot;Application Report — AnalyticsApp-003&quot;}, {&quot;app_id&quot;: &quot;app004&quot;, &quot;title&quot;: &quot;Application Report — HRApp-004&quot;}], &quot;dashboard&quot;: {&quot;summary&quot;: {&quot;total_portfolio&quot;: 4, &quot;in_scope&quot;: 4, &quot;out_of_scope&quot;: 0, &quot;modernization_potential&quot;: 0.0, &quot;data_completeness&quot;: 1.0, &quot;annual_savings&quot;: 395400.0, &quot;migration_costs&quot;: 0.0, &quot;roi_years&quot;: null, &quot;apps_with_eol&quot;: 3, &quot;apps_with_outdated&quot;: 3, &quot;apps_with_missing_versions&quot;: 1, &quot;priority_apps&quot;: [{&quot;app_id&quot;: &quot;app004&quot;, &quot;title&quot;: &quot;Application Report — HRApp-004&quot;, &quot;status&quot;: &quot;EOL&quot;, &quot;scenario_count&quot;: 8, &quot;complexity&quot;: 0, &quot;score&quot;: [10, 5, 8, 0]}, {&quot;app_id&quot;: &quot;app002&quot;, &quot;title&quot;: &quot;Application Report — CRMApp-002&quot;, &quot;status&quot;: &quot;EOL&quot;, &quot;scenario_count&quot;: 6, &quot;complexity&quot;: 0, &quot;score&quot;: [10, 5, 6, 0]}, {&quot;app_id&quot;: &quot;app003&quot;, &quot;title&quot;: &quot;Application Report — AnalyticsApp-003&quot;, &quot;status&quot;: &quot;EOL&quot;, &quot;scenario_count&quot;: 9, &quot;complexity&quot;: 0, &quot;score&quot;: [10, 0, 9, 0]}, {&quot;app_id&quot;: &quot;app001&quot;, &quot;title&quot;: &quot;Application Report — ERPApp-001&quot;, &quot;status&quot;: &quot;OUTDATED&quot;, &quot;scenario_count&quot;: 7, &quot;complexity&quot;: 0, &quot;score&quot;: [0, 5, 7, 0]}]}, &quot;opportunities&quot;: [{&quot;title&quot;: &quot;Cost Reduction&quot;, &quot;description&quot;: &quot;Lower operational costs, reduced licensing fees&quot;, &quot;accent&quot;: &quot;orange&quot;, &quot;app_count&quot;: 4, &quot;scenario_count&quot;: 4, &quot;items&quot;: [{&quot;scenario_id&quot;: &quot;upgrade_legacy_databases&quot;, &quot;scenario_name&quot;: &quot;Upgrade Legacy Databases&quot;, &quot;applicable_count&quot;: 4, &quot;app_ids&quot;: [&quot;app001&quot;, &quot;app002&quot;, &quot;app003&quot;, &quot;app004&quot;]}, {&quot;scenario_id&quot;: &quot;switch_db_engine_open_source&quot;, &quot;scenario_name&quot;: &quot;Switch DB Engine to Open Source&quot;, &quot;applicable_count&quot;: 4, &quot;app_ids&quot;: [&quot;app001&quot;, &quot;app002&quot;, &quot;app003&quot;, &quot;app004&quot;]}, {&quot;scenario_id&quot;: &quot;switch_to_standard_linux_os&quot;, &quot;scenario_name&quot;: &quot;Switch to Standard Linux OS&quot;, &quot;applicable_count&quot;: 3, &quot;app_ids&quot;: [&quot;app001&quot;, &quot;app002&quot;, &quot;app003&quot;]}, {&quot;scenario_id&quot;: &quot;application_server_replacement&quot;, &quot;scenario_name&quot;: &quot;Application Server Replacement&quot;, &quot;applicable_count&quot;: 3, &quot;app_ids&quot;: [&quot;app002&quot;, &quot;app003&quot;, &quot;app004&quot;]}]}, {&quot;title&quot;: &quot;Agility&quot;, &quot;description&quot;: &quot;Faster deployment, improved scalability, enhanced flexibility&quot;, &quot;accent&quot;: &quot;blue&quot;, &quot;app_count&quot;: 4, &quot;scenario_count&quot;: 4, &quot;items&quot;: [{&quot;scenario_id&quot;: &quot;app_deployment_to_cloud&quot;, &quot;scenario_name&quot;: &quot;Application Deployment to Public Cloud&quot;, &quot;applicable_count&quot;: 4, &quot;app_ids&quot;: [&quot;app001&quot;, &quot;app002&quot;, &quot;app003&quot;, &quot;app004&quot;]}, {&quot;scenario_id&quot;: &quot;application_server_replacement&quot;, &quot;scenario_name&quot;: &quot;Application Server Replacement&quot;, &quot;applicable_count&quot;: 3, &quot;app_ids&quot;: [&quot;app002&quot;, &quot;app003&quot;, &quot;app004&quot;]}, {&quot;scenario_id&quot;: &quot;app_containerization&quot;, &quot;scenario_name&quot;: &quot;Application Containerization&quot;, &quot;applicable_count&quot;: 2, &quot;app_ids&quot;: [&quot;app003&quot;, &quot;app004&quot;]}, {&quot;scenario_id&quot;: &quot;app_refactor_decoupling&quot;, &quot;scenario_name&quot;: &quot;Application Refactoring&quot;, &quot;applicable_count&quot;: 2, &quot;app_ids&quot;: [&quot;app001&quot;, &quot;app004&quot;]}]}, {&quot;title&quot;: &quot;Security&quot;, &quot;description&quot;: &quot;Better compliance, reduced vulnerabilities, enhanced protection&quot;, &quot;accent&quot;: &quot;red&quot;, &quot;app_count&quot;: 4, &quot;scenario_count&quot;: 4, &quot;items&quot;: [{&quot;scenario_id&quot;: &quot;upgrade_legacy_databases&quot;, &quot;scenario_name&quot;: &quot;Upgrade Legacy Databases&quot;, &quot;applicable_count&quot;: 4, &quot;app_ids&quot;: [&quot;app001&quot;, &quot;app002&quot;, &quot;app003&quot;, &quot;app004&quot;]}, {&quot;scenario_id&quot;: &quot;os_update_security_patch&quot;, &quot;scenario_name&quot;: &quot;Operating System Update&quot;, &quot;applicable_count&quot;: 4, &quot;app_ids&quot;: [&quot;app001&quot;, &quot;app002&quot;, &quot;app003&quot;, &quot;app004&quot;]}, {&quot;scenario_id&quot;: &quot;update_outdated_components&quot;, &quot;scenario_name&quot;: &quot;Update Outdated Components&quot;, &quot;applicable_count&quot;: 3, &quot;app_ids&quot;: [&quot;app001&quot;, &quot;app003&quot;, &quot;app004&quot;]}, {&quot;scenario_id&quot;: &quot;application_server_replacement&quot;, &quot;scenario_name&quot;: &quot;Application Server Replacement&quot;, &quot;applicable_count&quot;: 3, &quot;app_ids&quot;: [&quot;app002&quot;, &quot;app003&quot;, &quot;app004&quot;]}]}, {&quot;title&quot;: &quot;Sustainability&quot;, &quot;description&quot;: &quot;Reduced energy consumption, greener infrastructure&quot;, &quot;accent&quot;: &quot;teal&quot;, &quot;app_count&quot;: 4, &quot;scenario_count&quot;: 4, &quot;items&quot;: [{&quot;scenario_id&quot;: &quot;app_deployment_to_cloud&quot;, &quot;scenario_name&quot;: &quot;Application Deployment to Public Cloud&quot;, &quot;applicable_count&quot;: 4, &quot;app_ids&quot;: [&quot;app001&quot;, &quot;app002&quot;, &quot;app003&quot;, &quot;app004&quot;]}, {&quot;scenario_id&quot;: &quot;switch_to_standard_linux_os&quot;, &quot;scenario_name&quot;: &quot;Switch to Standard Linux OS&quot;, &quot;applicable_count&quot;: 3, &quot;app_ids&quot;: [&quot;app001&quot;, &quot;app002&quot;, &quot;app003&quot;]}, {&quot;scenario_id&quot;: &quot;app_containerization&quot;, &quot;scenario_name&quot;: &quot;Application Containerization&quot;, &quot;applicable_count&quot;: 2, &quot;app_ids&quot;: [&quot;app003&quot;, &quot;app004&quot;]}, {&quot;scenario_id&quot;: &quot;switch_to_arm_cpu&quot;, &quot;scenario_name&quot;: &quot;Switch to ARM-Based CPU&quot;, &quot;applicable_count&quot;: 1, &quot;app_ids&quot;: [&quot;app003&quot;]}]}], &quot;roadmap&quot;: [{&quot;title&quot;: &quot;Phase 1: Quick Wins&quot;, &quot;subtitle&quot;: &quot;High Priority • Low/Medium Effort&quot;, &quot;accent&quot;: &quot;teal&quot;, &quot;total_cost&quot;: 0, &quot;total_savings&quot;: 0, &quot;roi_years&quot;: null, &quot;items&quot;: []}, {&quot;title&quot;: &quot;Phase 2: Tactical Improvements&quot;, &quot;subtitle&quot;: &quot;Medium/Low Priority • Low/Medium/High Effort&quot;, &quot;accent&quot;: &quot;maroon&quot;, &quot;total_cost&quot;: 0, &quot;total_savings&quot;: 0, &quot;roi_years&quot;: null, &quot;items&quot;: []}, {&quot;title&quot;: &quot;Phase 3: Strategic Initiatives&quot;, &quot;subtitle&quot;: &quot;High Priority • High Effort&quot;, &quot;accent&quot;: &quot;blue&quot;, &quot;total_cost&quot;: 0, &quot;total_savings&quot;: 0, &quot;roi_years&quot;: null, &quot;items&quot;: []}]}, &quot;analysis_id&quot;: &quot;3df04d593337c5303fe21415478bf9e0&quot;}</script>
+</body>
+</html>

@@ -1,0 +1,96 @@
+{
+  "application_identifier": "app002",
+  "scenarios_detailed": [
+    {
+      "id": "os_update_security_patch",
+      "scenario_name": "Operating System Update",
+      "status": "APPLICABLE",
+      "reasoning": "RHEL 7 is EOL as of June 30, 2024. The OS is no longer receiving security patches, exposing a 1,200-user CRM application to unpatched vulnerabilities.",
+      "modernization_suggestion": "Upgrade from RHEL 7 to RHEL 9 (current) using in-place upgrade tools (Leapp) or re-platform to a new RHEL 9 instance. Validate Java 11 and WebSphere compatibility.",
+      "priority": "Critical",
+      "effort": "Medium"
+    },
+    {
+      "id": "switch_to_standard_linux_os",
+      "scenario_name": "Switch to Standard Linux Operating System",
+      "status": "FULFILLED",
+      "reasoning": "CRMApp-002 already runs on RHEL, which is a standard enterprise Linux OS. The requirement for a standard Linux OS is met; the OS version upgrade is tracked under os_update_security_patch.",
+      "modernization_suggestion": "OS family already fulfilled. Proceed with RHEL 7 \u2192 RHEL 9 upgrade.",
+      "priority": "N/A",
+      "effort": "N/A"
+    },
+    {
+      "id": "switch_to_arm_cpu",
+      "scenario_name": "Switch to ARM-based CPU",
+      "status": "BLOCKED",
+      "reasoning": "WebSphere Application Server 7.0 does not support ARM architecture. Without replacing the EOL application server first, ARM migration is not feasible.",
+      "modernization_suggestion": "Replace WebSphere 7.0 with a modern application server (Tomcat, WildFly, or Liberty) before evaluating ARM migration.",
+      "priority": "Low",
+      "effort": "Very High"
+    },
+    {
+      "id": "application_server_replacement",
+      "scenario_name": "Application Server Replacement",
+      "status": "APPLICABLE",
+      "reasoning": "WebSphere 7.0 is severely EOL (since September 2015) and represents the highest risk component. Replacement with a modern, supported application server is urgently needed.",
+      "modernization_suggestion": "Migrate from WebSphere 7.0 to IBM Liberty, WildFly, or Apache Tomcat (latest). For a 3rd-party CRM, check vendor support for alternative application servers before migrating.",
+      "priority": "Critical",
+      "effort": "High"
+    },
+    {
+      "id": "app_deployment_to_cloud",
+      "scenario_name": "Application Migration to Cloud Infrastructure (Lift & Shift)",
+      "status": "FULFILLED",
+      "reasoning": "CRMApp-002 is already deployed on AWS. The cloud deployment requirement is fulfilled.",
+      "modernization_suggestion": "Cloud deployment is already fulfilled. Focus on modernizing EOL components (RHEL 7, WebSphere 7.0) in the existing AWS environment.",
+      "priority": "N/A",
+      "effort": "N/A"
+    },
+    {
+      "id": "app_containerization",
+      "scenario_name": "Application Containerization",
+      "status": "BLOCKED",
+      "reasoning": "The 3rd-party CRM cannot be easily containerized without vendor support. WebSphere 7.0 is EOL and not designed for container deployment. Architecture is unknown, adding discovery risk.",
+      "modernization_suggestion": "Containerization is blocked for a 3rd-party application on EOL WebSphere. Evaluate vendor-provided containerized versions or SaaS alternatives.",
+      "priority": "Low",
+      "effort": "Very High"
+    },
+    {
+      "id": "app_refactor_decoupling",
+      "scenario_name": "Application Refactoring and De-coupling",
+      "status": "BLOCKED",
+      "reasoning": "As a 3rd-party application, source code refactoring is not available. Decoupling would need to happen via API layer additions, which may conflict with vendor licensing terms.",
+      "modernization_suggestion": "Refactoring is blocked for 3rd-party software. Evaluate vendor API capabilities or plan replacement with a SaaS CRM (e.g., Salesforce, HubSpot).",
+      "priority": "Low",
+      "effort": "N/A"
+    },
+    {
+      "id": "upgrade_legacy_databases",
+      "scenario_name": "Upgrade Legacy Databases",
+      "status": "FULFILLED",
+      "reasoning": "Amazon RDS MySQL is a managed service that AWS automatically keeps updated. Database version management is handled by AWS.",
+      "modernization_suggestion": "Database lifecycle management is handled by AWS RDS. Ensure the RDS MySQL major version is current (8.0+) and enable auto minor version upgrades.",
+      "priority": "N/A",
+      "effort": "N/A"
+    },
+    {
+      "id": "switch_db_engine_open_source",
+      "scenario_name": "Switch DB Engine to Open-Source Database Solution",
+      "status": "FULFILLED",
+      "reasoning": "Amazon RDS MySQL is already an open-source database engine (MySQL is open-source). No commercial database license is required (database_license_required: false).",
+      "modernization_suggestion": "Open-source database requirement is already fulfilled with Amazon RDS MySQL.",
+      "priority": "N/A",
+      "effort": "N/A"
+    },
+    {
+      "id": "update_outdated_components",
+      "scenario_name": "Update Outdated Components",
+      "status": "BLOCKED",
+      "reasoning": "RHEL 7 and WebSphere 7.0 are EOL, not just outdated. Java 11 is approaching EOL. For a 3rd-party application, component updates are constrained by vendor certification requirements \u2014 updating RHEL or Java may break the certified support matrix.",
+      "modernization_suggestion": "Coordinate with the CRM vendor to obtain a certified upgrade path. Check vendor support matrix for RHEL 9 and Java 17/21 compatibility.",
+      "priority": "High",
+      "effort": "High"
+    }
+  ],
+  "analysis_timestamp": "2026-07-13T00:00:00Z"
+}

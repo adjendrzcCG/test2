@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Application Report - Application Report — ERPApp-001 - GenDiscover</title>
+  <style>
+    :root {
+      --primary-dark: #081722;
+      --report-background: #102737;
+      --section-background: #163244;
+      --accent: #1ec8d7;
+      --accent-rgb: 30, 200, 215;
+      --report-text-font-primary: #e9f7ff;
+      --report-text-font-secondary-rgb: 184, 216, 232;
+      --text-light-blue-rgb: 154, 198, 220;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: radial-gradient(circle at top, #153044 0%, var(--primary-dark) 55%); color: var(--report-text-font-primary); font-family: "Segoe UI", "Helvetica Neue", sans-serif; }
+    a { color: inherit; text-decoration: none; }
+    code { background: rgba(255,255,255,0.08); padding: 0.1rem 0.3rem; border-radius: 4px; }
+    pre { overflow-x: auto; background: rgba(0,0,0,0.25); padding: 1rem; border-radius: 10px; }
+    table { width: 100%; border-collapse: collapse; }
+    th, td { padding: 0.75rem; border-bottom: 1px solid rgba(var(--accent-rgb), 0.12); text-align: left; vertical-align: top; }
+    .page { max-width: 95%; margin: 0 auto; padding: 2rem 1rem; }
+    .report-shell { background: var(--report-background); border: 1px solid rgba(var(--accent-rgb), 0.15); border-radius: 1rem; overflow: hidden; box-shadow: 0 24px 60px rgba(0,0,0,0.35); }
+    .header { display: flex; justify-content: space-between; align-items: center; gap: 1rem; padding: 1.5rem 2rem; color: white; background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01)); }
+    .customer-meta { font-size: 0.95rem; font-weight: 300; letter-spacing: 0.02em; }
+    .customer-meta [data-testid="customer-name"] { font-weight: 700; font-size: 1.125rem; margin-bottom: 0.25rem; }
+    .logo { height: 45px; width: auto; }
+    .logo svg { height: 100%; width: auto; }
+    .logo path { fill: white; }
+    .content { padding: 2rem; }
+    .title-card { background: var(--section-background); border: 1px solid rgba(var(--accent-rgb), 0.15); border-radius: 0.75rem; box-shadow: 0 8px 20px rgba(0,0,0,0.18); margin-bottom: 1.5rem; padding: 1.25rem; }
+    .title-card h1 { margin: 0; padding-bottom: 1rem; border-bottom: 3px solid var(--accent); color: white; font-size: 2.5rem; text-shadow: 0 0 4px rgba(255,255,255,0.25); }
+    .lead { margin: 1rem 0 0; font-size: 1.05rem; line-height: 1.6; color: rgba(var(--report-text-font-secondary-rgb), 0.95); }
+    .section-card { background: var(--section-background); border: 1px solid rgba(var(--accent-rgb), 0.15); border-radius: 0.75rem; box-shadow: 0 8px 20px rgba(0,0,0,0.12); margin-bottom: 1.5rem; overflow: hidden; }
+    .section-card summary { list-style: none; display: flex; justify-content: space-between; align-items: center; gap: 1rem; cursor: pointer; padding: 1.25rem 1.5rem; }
+    .section-card summary::-webkit-details-marker { display: none; }
+    .section-card h2 { margin: 0; font-size: 1.5rem; color: white; }
+    .section-card .chevron { color: var(--accent); font-size: 1.25rem; }
+    .section-card[open] .chevron { transform: rotate(180deg); }
+    .section-body { padding: 0 1.5rem 1.5rem; color: rgba(var(--report-text-font-secondary-rgb), 0.95); line-height: 1.65; }
+    .section-body ul { margin: 0; padding-left: 1.25rem; }
+    .footer { display: flex; justify-content: space-between; align-items: center; gap: 1rem; padding: 1.5rem 2rem; border-top: 1px solid rgba(var(--accent-rgb), 0.2); }
+    .footer p { margin: 0.2rem 0; }
+    .footer .meta-primary { font-size: 0.875rem; font-weight: 600; color: var(--accent); }
+    .footer .meta-secondary { font-size: 0.75rem; color: rgba(var(--text-light-blue-rgb), 0.8); }
+    .footer .meta-muted { font-size: 0.75rem; color: rgba(var(--text-light-blue-rgb), 0.6); }
+    .app-link-list { display: grid; gap: 0.75rem; }
+    .app-link { display: flex; justify-content: space-between; align-items: center; gap: 1rem; padding: 0.75rem 0.9rem; border-radius: 0.5rem; background: rgba(255,255,255,0.08); transition: background-color 160ms ease; }
+    .app-link:hover { background: rgba(255,255,255,0.14); }
+    @media (max-width: 768px) {
+      .header, .footer { flex-direction: column; text-align: center; }
+      .logo { height: 35px; }
+      .content { padding: 1.25rem; }
+      .title-card h1 { font-size: 2rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div class="report-shell">
+      <div class="header">
+        <div class="customer-meta">
+          <div class="font-bold text-lg mb-1" data-testid="customer-name">Client</div>
+          <div>Application modernization with Agentic AI powered by Capgemini GenSuite</div>
+        </div>
+        <div class="logo"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 50" width="200" height="50">
+  <rect width="200" height="50" rx="6" fill="#0d1117"/>
+  <text x="10" y="33" font-family="Arial,sans-serif" font-size="18" font-weight="bold" fill="#58a6ff">Portfolio</text>
+  <text x="105" y="33" font-family="Arial,sans-serif" font-size="18" fill="#8b949e">Modernization</text>
+</svg></div>
+      </div>
+      <div class="content">
+        <div class="title-card" data-testid="app-report-title">
+          <h1>Application Report - Application Report — ERPApp-001</h1>
+          <p class="lead">&gt; Generated: 2026-07-13 | Application ID: `app001`</p>
+        </div>
+        <details open class="section-card" data-testid="section-application-overview">
+  <summary>
+    <div>
+      <h2>Application Overview</h2>
+    </div>
+    <span class="chevron">▾</span>
+  </summary>
+  <div class="section-body">
+    <p>Field | Value</p>
+<p><strong>App ID</strong> | <code>app001</code></p>
+<p><strong>Name</strong> | ERPApp-001</p>
+<p><strong>Description</strong> | Core ERP system</p>
+<p><strong>Solution Type</strong> | Custom made</p>
+<p><strong>Business Criticality</strong> | High</p>
+<p><strong>Status</strong> | Production</p>
+<p><strong>Decommission Date</strong> | 2027</p>
+<p><strong>Deployment Type</strong> | On-Premise</p>
+<p><strong>Data Classification</strong> | Confidential</p>
+<p><strong>Business Unit</strong> | Finance</p>
+<p><strong>Business Capabilities</strong> | Financial Planning, Accounting, Budgeting</p>
+<p><strong>User Count</strong> | 350</p>
+<p><strong>Operating System</strong> | AIX 7.2</p>
+<p><strong>Programming Language</strong> | COBOL-2014</p>
+<p><strong>Application Server</strong> | None</p>
+<p><strong>Architecture</strong> | 1-Tier</p>
+<p><strong>Containerized</strong> | No</p>
+<p><strong>CI/CD</strong> | No</p>
+<p><strong>Environment Count</strong> | 2</p>
+<p><strong>Servers</strong> | sv01, sv02</p>
+<p><strong>CPU Cores</strong> | 4</p>
+<p><strong>Memory (GB)</strong> | 16</p>
+<p><strong>API Endpoints</strong> | 0</p>
+<p><strong>External Interfaces</strong> | 5</p>
+<p><strong>Database Engine</strong> | Oracle 19c</p>
+<p><strong>Database Storage (GB)</strong> | 1000</p>
+<p><strong>Database License Required</strong> | Yes</p>
+<p><strong>Logging Solution</strong> | None</p>
+<p><strong>Monitoring Tool</strong> | None</p>
+  </div>
+</details>
+
+<details open class="section-card" data-testid="section-technology-assessment">
+  <summary>
+    <div>
+      <h2>Technology Assessment</h2>
+    </div>
+    <span class="chevron">▾</span>
+  </summary>
+  <div class="section-body">
+    <p>🟡 <strong>Outdated components present</strong></p>
+<p>Component | Type | Version | Status | EOL Date | Notes</p>
+<p><strong>AIX 7.2</strong> | os | 7.2 | 🟡 OUTDATED | N/A | AIX 7.2 standard support has ended; only extended support available. IBM has shifted focus to newer AIX and Power platform versions.</p>
+<p><strong>COBOL-2014</strong> | programming_language | 2014 | ✅ CURRENT_VERSION | N/A | COBOL-2014 is the current ISO/IEC standard for COBOL. Mainframe COBOL compilers (GnuCOBOL, IBM Enterprise COBOL) continue to support the 2014 standard actively.</p>
+<p><strong>Oracle 19c</strong> | database | 19c | ✅ CURRENT_VERSION | 2027-04-30 | Oracle 19c is the long-term release with Premier Support through April 2024 and Extended Support through April 2027. Currently under extended support with full patches available.</p>
+  </div>
+</details>
+
+<details open class="section-card" data-testid="section-complexity-assessment">
+  <summary>
+    <div>
+      <h2>Complexity Assessment</h2>
+    </div>
+    <span class="chevron">▾</span>
+  </summary>
+  <div class="section-body">
+    <p><strong>Complexity Score: 9/10 — 🔴 Very High</strong></p>
+<h3>Complexity Factors</h3>
+<p>Factor | Value</p>
+<p>Business Criticality | High</p>
+<p>Architecture Tier | 1-Tier</p>
+<p>Containerization | False</p>
+<p>Ci Cd | False</p>
+<p>Server Count | 2</p>
+<p>External Interface Count | 5</p>
+<p>Eol Components | False</p>
+<p>Outdated Components | True</p>
+<p>Technology Age | legacy</p>
+<h3>Reasoning</h3>
+<p>ERPApp-001 scores Very High complexity (9/10) due to multiple compounding factors. The application is a monolithic 1-Tier COBOL system running on AIX 7.2 — a highly proprietary, aging technology stack with very limited modernization tooling. There is no CI/CD pipeline and no containerization, indicating a manual, fragile deployment process. The application carries High business criticality with Confidential data classification and serves core Finance functions (Financial Planning, Accounting, Budgeting). With 0 API endpoints and 5 external interfaces, integration modernization will require significant re-engineering. The 1000GB Oracle database and decommission target of 2027 add time pressure. The COBOL codebase requires specialized skills that are increasingly rare, further elevating modernization risk and effort.</p>
+  </div>
+</details>
+
+<details open class="section-card" data-testid="section-scenario-applicability">
+  <summary>
+    <div>
+      <h2>Scenario Applicability</h2>
+    </div>
+    <span class="chevron">▾</span>
+  </summary>
+  <div class="section-body">
+    <p>Scenario | Status | Priority | Effort | Summary</p>
+<p><strong>Operating System Update</strong> | 🔵 APPLICABLE | High | Medium | AIX 7.2 is OUTDATED with standard support ended. Security patches are limited to extended support co...</p>
+<p><strong>Switch to Standard Linux Operating System</strong> | 🔵 APPLICABLE | High | High | AIX 7.2 is a proprietary IBM UNIX platform with limited vendor ecosystem support. Migrating to RHEL ...</p>
+<p><strong>Switch to ARM-based CPU</strong> | 🔴 BLOCKED | Low | Very High | COBOL-2014 on AIX 7.2 is tightly coupled to IBM Power architecture. COBOL compilers with full ARM64 ...</p>
+<p><strong>Application Server Replacement</strong> | ⚪ NOT_APPLICABLE | N/A | N/A | ERPApp-001 does not use an application server (application_server: None). The COBOL application runs...</p>
+<p><strong>Application Migration to Cloud Infrastructure (Lift &amp; Shift)</strong> | 🔵 APPLICABLE | Medium | High | ERPApp-001 is currently On-Premise with no cloud footprint. A lift-and-shift migration to cloud (e.g...</p>
+<p><strong>Application Containerization</strong> | 🔴 BLOCKED | Low | Very High | COBOL on AIX 7.2 with a 1-Tier monolithic architecture and no CI/CD pipeline is not suitable for con...</p>
+<p><strong>Application Refactoring and De-coupling</strong> | 🔵 APPLICABLE | High | Very High | The 1-Tier monolithic COBOL architecture with 5 external interfaces and a 2027 decommission target s...</p>
+<p><strong>Upgrade Legacy Databases</strong> | ✅ FULFILLED | Low | N/A | Oracle 19c is the current LTS version with support through April 2027. No database upgrade is needed...</p>
+<p><strong>Switch DB Engine to Open-Source Database Solution</strong> | 🔵 APPLICABLE | Medium | High | Oracle 19c requires a commercial license (database_license_required: true). Migrating to PostgreSQL ...</p>
+<p><strong>Update Outdated Components</strong> | 🔵 APPLICABLE | High | Medium | AIX 7.2 is OUTDATED. Updating to the latest AIX 7.3 or planning OS migration addresses security gaps...</p>
+<h3>Scenario Details</h3>
+<p>#### 🔵 Operating System Update</p>
+<ul><li><strong>Status:</strong> APPLICABLE</li><li><strong>Priority:</strong> High</li><li><strong>Effort:</strong> Medium</li><li><strong>Reasoning:</strong> AIX 7.2 is OUTDATED with standard support ended. Security patches are limited to extended support contracts, increasing vulnerability exposure for a High-criticality Confidential application.</li><li><strong>Suggestion:</strong> Update AIX to the latest supported version or plan migration to a standard Linux distribution to reduce proprietary platform risk.</li></ul>
+<p>#### 🔵 Switch to Standard Linux Operating System</p>
+<ul><li><strong>Status:</strong> APPLICABLE</li><li><strong>Priority:</strong> High</li><li><strong>Effort:</strong> High</li><li><strong>Reasoning:</strong> AIX 7.2 is a proprietary IBM UNIX platform with limited vendor ecosystem support. Migrating to RHEL 9 or similar standard Linux would reduce licensing costs and broaden tooling availability. However, COBOL portability must be validated.</li><li><strong>Suggestion:</strong> Plan a phased migration from AIX 7.2 to RHEL 9. Validate COBOL compiler compatibility (GnuCOBOL or IBM COBOL for Linux) before migrating.</li></ul>
+<p>#### 🔴 Switch to ARM-based CPU</p>
+<ul><li><strong>Status:</strong> BLOCKED</li><li><strong>Priority:</strong> Low</li><li><strong>Effort:</strong> Very High</li><li><strong>Reasoning:</strong> COBOL-2014 on AIX 7.2 is tightly coupled to IBM Power architecture. COBOL compilers with full ARM64 support are limited, and the application has no CI/CD or containerization to facilitate cross-architecture builds.</li><li><strong>Suggestion:</strong> This scenario is blocked until the application is modernized to a portable language/runtime stack and containerized.</li></ul>
+<p>#### ⚪ Application Server Replacement</p>
+<ul><li><strong>Status:</strong> NOT_APPLICABLE</li><li><strong>Priority:</strong> N/A</li><li><strong>Effort:</strong> N/A</li><li><strong>Reasoning:</strong> ERPApp-001 does not use an application server (application_server: None). The COBOL application runs directly on AIX without a middleware tier.</li><li><strong>Suggestion:</strong> Not applicable. No application server is present to replace.</li></ul>
+<p>#### 🔵 Application Migration to Cloud Infrastructure (Lift &amp; Shift)</p>
+<ul><li><strong>Status:</strong> APPLICABLE</li><li><strong>Priority:</strong> Medium</li><li><strong>Effort:</strong> High</li><li><strong>Reasoning:</strong> ERPApp-001 is currently On-Premise with no cloud footprint. A lift-and-shift migration to cloud (e.g., IBM Power Virtual Server on IBM Cloud, or AWS Bare Metal) would improve scalability and reduce on-premise hardware costs.</li><li><strong>Suggestion:</strong> Evaluate IBM Power Virtual Server (IBM Cloud) as an AIX-compatible lift-and-shift target to maintain COBOL/AIX compatibility while moving to cloud.</li></ul>
+<p>#### 🔴 Application Containerization</p>
+<ul><li><strong>Status:</strong> BLOCKED</li><li><strong>Priority:</strong> Low</li><li><strong>Effort:</strong> Very High</li><li><strong>Reasoning:</strong> COBOL on AIX 7.2 with a 1-Tier monolithic architecture and no CI/CD pipeline is not suitable for containerization without major refactoring. There is no container runtime or orchestration infrastructure in place.</li><li><strong>Suggestion:</strong> Containerization is blocked until the COBOL application is refactored or rewritten to a portable technology stack and a CI/CD pipeline is established.</li></ul>
+<p>#### 🔵 Application Refactoring and De-coupling</p>
+<ul><li><strong>Status:</strong> APPLICABLE</li><li><strong>Priority:</strong> High</li><li><strong>Effort:</strong> Very High</li><li><strong>Reasoning:</strong> The 1-Tier monolithic COBOL architecture with 5 external interfaces and a 2027 decommission target strongly suggests refactoring is necessary. Breaking the monolith into services would enable incremental modernization.</li><li><strong>Suggestion:</strong> Conduct a COBOL code analysis (using tools like Micro Focus, IBM Rational) to identify service boundaries. Gradually expose business functions as APIs to enable phased modernization.</li></ul>
+<p>#### ✅ Upgrade Legacy Databases</p>
+<ul><li><strong>Status:</strong> FULFILLED</li><li><strong>Priority:</strong> Low</li><li><strong>Effort:</strong> N/A</li><li><strong>Reasoning:</strong> Oracle 19c is the current LTS version with support through April 2027. No database upgrade is needed at this time.</li><li><strong>Suggestion:</strong> Monitor Oracle 19c end-of-extended-support (April 2027) and plan upgrade to Oracle 21c or 23ai before that date.</li></ul>
+<p>#### 🔵 Switch DB Engine to Open-Source Database Solution</p>
+<ul><li><strong>Status:</strong> APPLICABLE</li><li><strong>Priority:</strong> Medium</li><li><strong>Effort:</strong> High</li><li><strong>Reasoning:</strong> Oracle 19c requires a commercial license (database_license_required: true). Migrating to PostgreSQL or other open-source alternatives would eliminate Oracle licensing costs. However, Oracle-specific SQL and PL/SQL must be migrated.</li><li><strong>Suggestion:</strong> Evaluate AWS Aurora PostgreSQL or standard PostgreSQL as migration targets. Use tools like AWS Schema Conversion Tool (SCT) or Ora2Pg to assess migration complexity.</li></ul>
+<p>#### 🔵 Update Outdated Components</p>
+<ul><li><strong>Status:</strong> APPLICABLE</li><li><strong>Priority:</strong> High</li><li><strong>Effort:</strong> Medium</li><li><strong>Reasoning:</strong> AIX 7.2 is OUTDATED. Updating to the latest AIX 7.3 or planning OS migration addresses security gaps and extends vendor support coverage for this High-criticality application.</li><li><strong>Suggestion:</strong> Engage IBM support to update AIX 7.2 to AIX 7.3 if hardware permits, or plan OS migration. Review COBOL compiler and runtime versions for available updates.</li></ul>
+  </div>
+</details>
+
+<details open class="section-card" data-testid="section-business-case">
+  <summary>
+    <div>
+      <h2>Business Case</h2>
+    </div>
+    <span class="chevron">▾</span>
+  </summary>
+  <div class="section-body">
+    <p><strong>Total Adjusted Investment: $506,340.00</strong> <strong>Total Yearly Savings: $168,900.00</strong> <strong>Estimated ROI Payback: 3.0 years</strong></p>
+<p>Scenario | Status | Adj. Cost | Yearly Savings | ROI (years)</p>
+<p>Operating System Update | APPLICABLE | $1,800.00 | $500.00 | 3.6</p>
+<p>Switch to Standard Linux Operating System | APPLICABLE | $540.00 | $400.00 | 1.35</p>
+<p>Application Migration to Cloud Infrastructure (Lift &amp; Shift) | APPLICABLE | $9,000.00 | $3,000.00 | 3.0</p>
+<p>Application Refactoring and De-coupling | APPLICABLE | $450,000.00 | $150,000.00 | 3.0</p>
+<p>Switch DB Engine to Open-Source Database Solution | APPLICABLE | $45,000.00 | $15,000.00 | 3.0</p>
+<p>&gt; *Costs adjusted by complexity multiplier: <strong>1.8x</strong> (complexity score / 5)*</p>
+  </div>
+</details>
+      </div>
+      <div class="footer">
+        <div>
+          <p class="meta-primary">Generated by GenDiscover</p>
+          <p class="meta-secondary">2026-07-13T13:02:47.535504+00:00</p>
+          <p class="meta-muted">Analysis ID: 40cbb56443427604bb89ccde0ec98790</p>
+        </div>
+        <div class="logo"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 50" width="200" height="50">
+  <rect width="200" height="50" rx="6" fill="#0d1117"/>
+  <text x="10" y="33" font-family="Arial,sans-serif" font-size="18" font-weight="bold" fill="#58a6ff">Portfolio</text>
+  <text x="105" y="33" font-family="Arial,sans-serif" font-size="18" fill="#8b949e">Modernization</text>
+</svg></div>
+      </div>
+    </div>
+  </div>
+  <script type="application/json" id="report-data">{&quot;kind&quot;: &quot;application&quot;, &quot;title&quot;: &quot;Application Report - Application Report — ERPApp-001&quot;, &quot;lead&quot;: &quot;&gt; Generated: 2026-07-13 | Application ID: `app001`&quot;, &quot;customer_name&quot;: &quot;Client&quot;, &quot;subtitle&quot;: &quot;Application modernization with Agentic AI powered by Capgemini GenSuite&quot;, &quot;generated_at&quot;: &quot;2026-07-13T13:02:47.535504+00:00&quot;, &quot;sections&quot;: [{&quot;title&quot;: &quot;Application Overview&quot;, &quot;slug&quot;: &quot;application-overview&quot;, &quot;html&quot;: &quot;&lt;p&gt;Field | Value&lt;/p&gt;\n&lt;p&gt;&lt;strong&gt;App ID&lt;/strong&gt; | &lt;code&gt;app001&lt;/code&gt;&lt;/p&gt;\n&lt;p&gt;&lt;strong&gt;Name&lt;/strong&gt; | ERPApp-001&lt;/p&gt;\n&lt;p&gt;&lt;strong&gt;Description&lt;/strong&gt; | Core ERP system&lt;/p&gt;\n&lt;p&gt;&lt;strong&gt;Solution Type&lt;/strong&gt; | Custom made&lt;/p&gt;\n&lt;p&gt;&lt;strong&gt;Business Criticality&lt;/strong&gt; | High&lt;/p&gt;\n&lt;p&gt;&lt;strong&gt;Status&lt;/strong&gt; | Production&lt;/p&gt;\n&lt;p&gt;&lt;strong&gt;Decommission Date&lt;/strong&gt; | 2027&lt;/p&gt;\n&lt;p&gt;&lt;strong&gt;Deployment Type&lt;/strong&gt; | On-Premise&lt;/p&gt;\n&lt;p&gt;&lt;strong&gt;Data Classification&lt;/strong&gt; | Confidential&lt;/p&gt;\n&lt;p&gt;&lt;strong&gt;Business Unit&lt;/strong&gt; | Finance&lt;/p&gt;\n&lt;p&gt;&lt;strong&gt;Business Capabilities&lt;/strong&gt; | Financial Planning, Accounting, Budgeting&lt;/p&gt;\n&lt;p&gt;&lt;strong&gt;User Count&lt;/strong&gt; | 350&lt;/p&gt;\n&lt;p&gt;&lt;strong&gt;Operating System&lt;/strong&gt; | AIX 7.2&lt;/p&gt;\n&lt;p&gt;&lt;strong&gt;Programming Language&lt;/strong&gt; | COBOL-2014&lt;/p&gt;\n&lt;p&gt;&lt;strong&gt;Application Server&lt;/strong&gt; | None&lt;/p&gt;\n&lt;p&gt;&lt;strong&gt;Architecture&lt;/strong&gt; | 1-Tier&lt;/p&gt;\n&lt;p&gt;&lt;strong&gt;Containerized&lt;/strong&gt; | No&lt;/p&gt;\n&lt;p&gt;&lt;strong&gt;CI/CD&lt;/strong&gt; | No&lt;/p&gt;\n&lt;p&gt;&lt;strong&gt;Environment Count&lt;/strong&gt; | 2&lt;/p&gt;\n&lt;p&gt;&lt;strong&gt;Servers&lt;/strong&gt; | sv01, sv02&lt;/p&gt;\n&lt;p&gt;&lt;strong&gt;CPU Cores&lt;/strong&gt; | 4&lt;/p&gt;\n&lt;p&gt;&lt;strong&gt;Memory (GB)&lt;/strong&gt; | 16&lt;/p&gt;\n&lt;p&gt;&lt;strong&gt;API Endpoints&lt;/strong&gt; | 0&lt;/p&gt;\n&lt;p&gt;&lt;strong&gt;External Interfaces&lt;/strong&gt; | 5&lt;/p&gt;\n&lt;p&gt;&lt;strong&gt;Database Engine&lt;/strong&gt; | Oracle 19c&lt;/p&gt;\n&lt;p&gt;&lt;strong&gt;Database Storage (GB)&lt;/strong&gt; | 1000&lt;/p&gt;\n&lt;p&gt;&lt;strong&gt;Database License Required&lt;/strong&gt; | Yes&lt;/p&gt;\n&lt;p&gt;&lt;strong&gt;Logging Solution&lt;/strong&gt; | None&lt;/p&gt;\n&lt;p&gt;&lt;strong&gt;Monitoring Tool&lt;/strong&gt; | None&lt;/p&gt;&quot;}, {&quot;title&quot;: &quot;Technology Assessment&quot;, &quot;slug&quot;: &quot;technology-assessment&quot;, &quot;html&quot;: &quot;&lt;p&gt;🟡 &lt;strong&gt;Outdated components present&lt;/strong&gt;&lt;/p&gt;\n&lt;p&gt;Component | Type | Version | Status | EOL Date | Notes&lt;/p&gt;\n&lt;p&gt;&lt;strong&gt;AIX 7.2&lt;/strong&gt; | os | 7.2 | 🟡 OUTDATED | N/A | AIX 7.2 standard support has ended; only extended support available. IBM has shifted focus to newer AIX and Power platform versions.&lt;/p&gt;\n&lt;p&gt;&lt;strong&gt;COBOL-2014&lt;/strong&gt; | programming_language | 2014 | ✅ CURRENT_VERSION | N/A | COBOL-2014 is the current ISO/IEC standard for COBOL. Mainframe COBOL compilers (GnuCOBOL, IBM Enterprise COBOL) continue to support the 2014 standard actively.&lt;/p&gt;\n&lt;p&gt;&lt;strong&gt;Oracle 19c&lt;/strong&gt; | database | 19c | ✅ CURRENT_VERSION | 2027-04-30 | Oracle 19c is the long-term release with Premier Support through April 2024 and Extended Support through April 2027. Currently under extended support with full patches available.&lt;/p&gt;&quot;}, {&quot;title&quot;: &quot;Complexity Assessment&quot;, &quot;slug&quot;: &quot;complexity-assessment&quot;, &quot;html&quot;: &quot;&lt;p&gt;&lt;strong&gt;Complexity Score: 9/10 — 🔴 Very High&lt;/strong&gt;&lt;/p&gt;\n&lt;h3&gt;Complexity Factors&lt;/h3&gt;\n&lt;p&gt;Factor | Value&lt;/p&gt;\n&lt;p&gt;Business Criticality | High&lt;/p&gt;\n&lt;p&gt;Architecture Tier | 1-Tier&lt;/p&gt;\n&lt;p&gt;Containerization | False&lt;/p&gt;\n&lt;p&gt;Ci Cd | False&lt;/p&gt;\n&lt;p&gt;Server Count | 2&lt;/p&gt;\n&lt;p&gt;External Interface Count | 5&lt;/p&gt;\n&lt;p&gt;Eol Components | False&lt;/p&gt;\n&lt;p&gt;Outdated Components | True&lt;/p&gt;\n&lt;p&gt;Technology Age | legacy&lt;/p&gt;\n&lt;h3&gt;Reasoning&lt;/h3&gt;\n&lt;p&gt;ERPApp-001 scores Very High complexity (9/10) due to multiple compounding factors. The application is a monolithic 1-Tier COBOL system running on AIX 7.2 — a highly proprietary, aging technology stack with very limited modernization tooling. There is no CI/CD pipeline and no containerization, indicating a manual, fragile deployment process. The application carries High business criticality with Confidential data classification and serves core Finance functions (Financial Planning, Accounting, Budgeting). With 0 API endpoints and 5 external interfaces, integration modernization will require significant re-engineering. The 1000GB Oracle database and decommission target of 2027 add time pressure. The COBOL codebase requires specialized skills that are increasingly rare, further elevating modernization risk and effort.&lt;/p&gt;&quot;}, {&quot;title&quot;: &quot;Scenario Applicability&quot;, &quot;slug&quot;: &quot;scenario-applicability&quot;, &quot;html&quot;: &quot;&lt;p&gt;Scenario | Status | Priority | Effort | Summary&lt;/p&gt;\n&lt;p&gt;&lt;strong&gt;Operating System Update&lt;/strong&gt; | 🔵 APPLICABLE | High | Medium | AIX 7.2 is OUTDATED with standard support ended. Security patches are limited to extended support co...&lt;/p&gt;\n&lt;p&gt;&lt;strong&gt;Switch to Standard Linux Operating System&lt;/strong&gt; | 🔵 APPLICABLE | High | High | AIX 7.2 is a proprietary IBM UNIX platform with limited vendor ecosystem support. Migrating to RHEL ...&lt;/p&gt;\n&lt;p&gt;&lt;strong&gt;Switch to ARM-based CPU&lt;/strong&gt; | 🔴 BLOCKED | Low | Very High | COBOL-2014 on AIX 7.2 is tightly coupled to IBM Power architecture. COBOL compilers with full ARM64 ...&lt;/p&gt;\n&lt;p&gt;&lt;strong&gt;Application Server Replacement&lt;/strong&gt; | ⚪ NOT_APPLICABLE | N/A | N/A | ERPApp-001 does not use an application server (application_server: None). The COBOL application runs...&lt;/p&gt;\n&lt;p&gt;&lt;strong&gt;Application Migration to Cloud Infrastructure (Lift &amp;amp; Shift)&lt;/strong&gt; | 🔵 APPLICABLE | Medium | High | ERPApp-001 is currently On-Premise with no cloud footprint. A lift-and-shift migration to cloud (e.g...&lt;/p&gt;\n&lt;p&gt;&lt;strong&gt;Application Containerization&lt;/strong&gt; | 🔴 BLOCKED | Low | Very High | COBOL on AIX 7.2 with a 1-Tier monolithic architecture and no CI/CD pipeline is not suitable for con...&lt;/p&gt;\n&lt;p&gt;&lt;strong&gt;Application Refactoring and De-coupling&lt;/strong&gt; | 🔵 APPLICABLE | High | Very High | The 1-Tier monolithic COBOL architecture with 5 external interfaces and a 2027 decommission target s...&lt;/p&gt;\n&lt;p&gt;&lt;strong&gt;Upgrade Legacy Databases&lt;/strong&gt; | ✅ FULFILLED | Low | N/A | Oracle 19c is the current LTS version with support through April 2027. No database upgrade is needed...&lt;/p&gt;\n&lt;p&gt;&lt;strong&gt;Switch DB Engine to Open-Source Database Solution&lt;/strong&gt; | 🔵 APPLICABLE | Medium | High | Oracle 19c requires a commercial license (database_license_required: true). Migrating to PostgreSQL ...&lt;/p&gt;\n&lt;p&gt;&lt;strong&gt;Update Outdated Components&lt;/strong&gt; | 🔵 APPLICABLE | High | Medium | AIX 7.2 is OUTDATED. Updating to the latest AIX 7.3 or planning OS migration addresses security gaps...&lt;/p&gt;\n&lt;h3&gt;Scenario Details&lt;/h3&gt;\n&lt;p&gt;#### 🔵 Operating System Update&lt;/p&gt;\n&lt;ul&gt;&lt;li&gt;&lt;strong&gt;Status:&lt;/strong&gt; APPLICABLE&lt;/li&gt;&lt;li&gt;&lt;strong&gt;Priority:&lt;/strong&gt; High&lt;/li&gt;&lt;li&gt;&lt;strong&gt;Effort:&lt;/strong&gt; Medium&lt;/li&gt;&lt;li&gt;&lt;strong&gt;Reasoning:&lt;/strong&gt; AIX 7.2 is OUTDATED with standard support ended. Security patches are limited to extended support contracts, increasing vulnerability exposure for a High-criticality Confidential application.&lt;/li&gt;&lt;li&gt;&lt;strong&gt;Suggestion:&lt;/strong&gt; Update AIX to the latest supported version or plan migration to a standard Linux distribution to reduce proprietary platform risk.&lt;/li&gt;&lt;/ul&gt;\n&lt;p&gt;#### 🔵 Switch to Standard Linux Operating System&lt;/p&gt;\n&lt;ul&gt;&lt;li&gt;&lt;strong&gt;Status:&lt;/strong&gt; APPLICABLE&lt;/li&gt;&lt;li&gt;&lt;strong&gt;Priority:&lt;/strong&gt; High&lt;/li&gt;&lt;li&gt;&lt;strong&gt;Effort:&lt;/strong&gt; High&lt;/li&gt;&lt;li&gt;&lt;strong&gt;Reasoning:&lt;/strong&gt; AIX 7.2 is a proprietary IBM UNIX platform with limited vendor ecosystem support. Migrating to RHEL 9 or similar standard Linux would reduce licensing costs and broaden tooling availability. However, COBOL portability must be validated.&lt;/li&gt;&lt;li&gt;&lt;strong&gt;Suggestion:&lt;/strong&gt; Plan a phased migration from AIX 7.2 to RHEL 9. Validate COBOL compiler compatibility (GnuCOBOL or IBM COBOL for Linux) before migrating.&lt;/li&gt;&lt;/ul&gt;\n&lt;p&gt;#### 🔴 Switch to ARM-based CPU&lt;/p&gt;\n&lt;ul&gt;&lt;li&gt;&lt;strong&gt;Status:&lt;/strong&gt; BLOCKED&lt;/li&gt;&lt;li&gt;&lt;strong&gt;Priority:&lt;/strong&gt; Low&lt;/li&gt;&lt;li&gt;&lt;strong&gt;Effort:&lt;/strong&gt; Very High&lt;/li&gt;&lt;li&gt;&lt;strong&gt;Reasoning:&lt;/strong&gt; COBOL-2014 on AIX 7.2 is tightly coupled to IBM Power architecture. COBOL compilers with full ARM64 support are limited, and the application has no CI/CD or containerization to facilitate cross-architecture builds.&lt;/li&gt;&lt;li&gt;&lt;strong&gt;Suggestion:&lt;/strong&gt; This scenario is blocked until the application is modernized to a portable language/runtime stack and containerized.&lt;/li&gt;&lt;/ul&gt;\n&lt;p&gt;#### ⚪ Application Server Replacement&lt;/p&gt;\n&lt;ul&gt;&lt;li&gt;&lt;strong&gt;Status:&lt;/strong&gt; NOT_APPLICABLE&lt;/li&gt;&lt;li&gt;&lt;strong&gt;Priority:&lt;/strong&gt; N/A&lt;/li&gt;&lt;li&gt;&lt;strong&gt;Effort:&lt;/strong&gt; N/A&lt;/li&gt;&lt;li&gt;&lt;strong&gt;Reasoning:&lt;/strong&gt; ERPApp-001 does not use an application server (application_server: None). The COBOL application runs directly on AIX without a middleware tier.&lt;/li&gt;&lt;li&gt;&lt;strong&gt;Suggestion:&lt;/strong&gt; Not applicable. No application server is present to replace.&lt;/li&gt;&lt;/ul&gt;\n&lt;p&gt;#### 🔵 Application Migration to Cloud Infrastructure (Lift &amp;amp; Shift)&lt;/p&gt;\n&lt;ul&gt;&lt;li&gt;&lt;strong&gt;Status:&lt;/strong&gt; APPLICABLE&lt;/li&gt;&lt;li&gt;&lt;strong&gt;Priority:&lt;/strong&gt; Medium&lt;/li&gt;&lt;li&gt;&lt;strong&gt;Effort:&lt;/strong&gt; High&lt;/li&gt;&lt;li&gt;&lt;strong&gt;Reasoning:&lt;/strong&gt; ERPApp-001 is currently On-Premise with no cloud footprint. A lift-and-shift migration to cloud (e.g., IBM Power Virtual Server on IBM Cloud, or AWS Bare Metal) would improve scalability and reduce on-premise hardware costs.&lt;/li&gt;&lt;li&gt;&lt;strong&gt;Suggestion:&lt;/strong&gt; Evaluate IBM Power Virtual Server (IBM Cloud) as an AIX-compatible lift-and-shift target to maintain COBOL/AIX compatibility while moving to cloud.&lt;/li&gt;&lt;/ul&gt;\n&lt;p&gt;#### 🔴 Application Containerization&lt;/p&gt;\n&lt;ul&gt;&lt;li&gt;&lt;strong&gt;Status:&lt;/strong&gt; BLOCKED&lt;/li&gt;&lt;li&gt;&lt;strong&gt;Priority:&lt;/strong&gt; Low&lt;/li&gt;&lt;li&gt;&lt;strong&gt;Effort:&lt;/strong&gt; Very High&lt;/li&gt;&lt;li&gt;&lt;strong&gt;Reasoning:&lt;/strong&gt; COBOL on AIX 7.2 with a 1-Tier monolithic architecture and no CI/CD pipeline is not suitable for containerization without major refactoring. There is no container runtime or orchestration infrastructure in place.&lt;/li&gt;&lt;li&gt;&lt;strong&gt;Suggestion:&lt;/strong&gt; Containerization is blocked until the COBOL application is refactored or rewritten to a portable technology stack and a CI/CD pipeline is established.&lt;/li&gt;&lt;/ul&gt;\n&lt;p&gt;#### 🔵 Application Refactoring and De-coupling&lt;/p&gt;\n&lt;ul&gt;&lt;li&gt;&lt;strong&gt;Status:&lt;/strong&gt; APPLICABLE&lt;/li&gt;&lt;li&gt;&lt;strong&gt;Priority:&lt;/strong&gt; High&lt;/li&gt;&lt;li&gt;&lt;strong&gt;Effort:&lt;/strong&gt; Very High&lt;/li&gt;&lt;li&gt;&lt;strong&gt;Reasoning:&lt;/strong&gt; The 1-Tier monolithic COBOL architecture with 5 external interfaces and a 2027 decommission target strongly suggests refactoring is necessary. Breaking the monolith into services would enable incremental modernization.&lt;/li&gt;&lt;li&gt;&lt;strong&gt;Suggestion:&lt;/strong&gt; Conduct a COBOL code analysis (using tools like Micro Focus, IBM Rational) to identify service boundaries. Gradually expose business functions as APIs to enable phased modernization.&lt;/li&gt;&lt;/ul&gt;\n&lt;p&gt;#### ✅ Upgrade Legacy Databases&lt;/p&gt;\n&lt;ul&gt;&lt;li&gt;&lt;strong&gt;Status:&lt;/strong&gt; FULFILLED&lt;/li&gt;&lt;li&gt;&lt;strong&gt;Priority:&lt;/strong&gt; Low&lt;/li&gt;&lt;li&gt;&lt;strong&gt;Effort:&lt;/strong&gt; N/A&lt;/li&gt;&lt;li&gt;&lt;strong&gt;Reasoning:&lt;/strong&gt; Oracle 19c is the current LTS version with support through April 2027. No database upgrade is needed at this time.&lt;/li&gt;&lt;li&gt;&lt;strong&gt;Suggestion:&lt;/strong&gt; Monitor Oracle 19c end-of-extended-support (April 2027) and plan upgrade to Oracle 21c or 23ai before that date.&lt;/li&gt;&lt;/ul&gt;\n&lt;p&gt;#### 🔵 Switch DB Engine to Open-Source Database Solution&lt;/p&gt;\n&lt;ul&gt;&lt;li&gt;&lt;strong&gt;Status:&lt;/strong&gt; APPLICABLE&lt;/li&gt;&lt;li&gt;&lt;strong&gt;Priority:&lt;/strong&gt; Medium&lt;/li&gt;&lt;li&gt;&lt;strong&gt;Effort:&lt;/strong&gt; High&lt;/li&gt;&lt;li&gt;&lt;strong&gt;Reasoning:&lt;/strong&gt; Oracle 19c requires a commercial license (database_license_required: true). Migrating to PostgreSQL or other open-source alternatives would eliminate Oracle licensing costs. However, Oracle-specific SQL and PL/SQL must be migrated.&lt;/li&gt;&lt;li&gt;&lt;strong&gt;Suggestion:&lt;/strong&gt; Evaluate AWS Aurora PostgreSQL or standard PostgreSQL as migration targets. Use tools like AWS Schema Conversion Tool (SCT) or Ora2Pg to assess migration complexity.&lt;/li&gt;&lt;/ul&gt;\n&lt;p&gt;#### 🔵 Update Outdated Components&lt;/p&gt;\n&lt;ul&gt;&lt;li&gt;&lt;strong&gt;Status:&lt;/strong&gt; APPLICABLE&lt;/li&gt;&lt;li&gt;&lt;strong&gt;Priority:&lt;/strong&gt; High&lt;/li&gt;&lt;li&gt;&lt;strong&gt;Effort:&lt;/strong&gt; Medium&lt;/li&gt;&lt;li&gt;&lt;strong&gt;Reasoning:&lt;/strong&gt; AIX 7.2 is OUTDATED. Updating to the latest AIX 7.3 or planning OS migration addresses security gaps and extends vendor support coverage for this High-criticality application.&lt;/li&gt;&lt;li&gt;&lt;strong&gt;Suggestion:&lt;/strong&gt; Engage IBM support to update AIX 7.2 to AIX 7.3 if hardware permits, or plan OS migration. Review COBOL compiler and runtime versions for available updates.&lt;/li&gt;&lt;/ul&gt;&quot;}, {&quot;title&quot;: &quot;Business Case&quot;, &quot;slug&quot;: &quot;business-case&quot;, &quot;html&quot;: &quot;&lt;p&gt;&lt;strong&gt;Total Adjusted Investment: $506,340.00&lt;/strong&gt; &lt;strong&gt;Total Yearly Savings: $168,900.00&lt;/strong&gt; &lt;strong&gt;Estimated ROI Payback: 3.0 years&lt;/strong&gt;&lt;/p&gt;\n&lt;p&gt;Scenario | Status | Adj. Cost | Yearly Savings | ROI (years)&lt;/p&gt;\n&lt;p&gt;Operating System Update | APPLICABLE | $1,800.00 | $500.00 | 3.6&lt;/p&gt;\n&lt;p&gt;Switch to Standard Linux Operating System | APPLICABLE | $540.00 | $400.00 | 1.35&lt;/p&gt;\n&lt;p&gt;Application Migration to Cloud Infrastructure (Lift &amp;amp; Shift) | APPLICABLE | $9,000.00 | $3,000.00 | 3.0&lt;/p&gt;\n&lt;p&gt;Application Refactoring and De-coupling | APPLICABLE | $450,000.00 | $150,000.00 | 3.0&lt;/p&gt;\n&lt;p&gt;Switch DB Engine to Open-Source Database Solution | APPLICABLE | $45,000.00 | $15,000.00 | 3.0&lt;/p&gt;\n&lt;p&gt;&amp;gt; *Costs adjusted by complexity multiplier: &lt;strong&gt;1.8x&lt;/strong&gt; (complexity score / 5)*&lt;/p&gt;&quot;}], &quot;app_id&quot;: &quot;app001&quot;, &quot;application_name&quot;: &quot;Application Report — ERPApp-001&quot;, &quot;analysis_id&quot;: &quot;40cbb56443427604bb89ccde0ec98790&quot;}</script>
+</body>
+</html>

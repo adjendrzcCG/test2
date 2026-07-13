@@ -1,0 +1,42 @@
+{
+  "application_identifier": "app001",
+  "components_analyzed": [
+    {
+      "component_name": "AIX 7.2",
+      "component_family": "AIX",
+      "component_type": "os",
+      "managed_service": false,
+      "version": "7.2",
+      "component_status": "OUTDATED",
+      "eol_date": "N/A",
+      "reason": "AIX 7.2 standard support has ended; only extended support available. IBM has shifted focus to newer AIX and Power platform versions.",
+      "confidence": 7
+    },
+    {
+      "component_name": "COBOL-2014",
+      "component_family": "COBOL",
+      "component_type": "programming_language",
+      "managed_service": false,
+      "version": "2014",
+      "component_status": "CURRENT_VERSION",
+      "eol_date": "N/A",
+      "reason": "COBOL-2014 is the current ISO/IEC standard for COBOL. Mainframe COBOL compilers (GnuCOBOL, IBM Enterprise COBOL) continue to support the 2014 standard actively.",
+      "confidence": 8
+    },
+    {
+      "component_name": "Oracle 19c",
+      "component_family": "Oracle Database",
+      "component_type": "database",
+      "managed_service": false,
+      "version": "19c",
+      "component_status": "CURRENT_VERSION",
+      "eol_date": "2027-04-30",
+      "reason": "Oracle 19c is the long-term release with Premier Support through April 2024 and Extended Support through April 2027. Currently under extended support with full patches available.",
+      "confidence": 9
+    }
+  ],
+  "has_eol_components": false,
+  "has_outdated_components": true,
+  "has_missing_version_data": false,
+  "analysis_timestamp": "2026-07-13T00:00:00Z"
+}
