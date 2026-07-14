@@ -1,0 +1,47 @@
+{
+  "app_id": "app002",
+  "app_name": "CRMApp-002",
+  "complexity_score": 6,
+  "complexity_label": "Medium-High",
+  "assessment_date": "2026-07-14",
+  "scoring_breakdown": {
+    "eol_components": {
+      "score": 2,
+      "max": 2,
+      "rationale": "RHEL 7 EOL, WebSphere 7.0 EOL"
+    },
+    "architecture_complexity": {
+      "score": 1,
+      "max": 2,
+      "rationale": "Architecture unknown; 3rd-party CRM limits refactoring options"
+    },
+    "business_criticality": {
+      "score": 1,
+      "max": 2,
+      "rationale": "Medium criticality"
+    },
+    "external_interfaces": {
+      "score": 1,
+      "max": 2,
+      "rationale": "8 external interfaces"
+    },
+    "server_count": {
+      "score": 0.5,
+      "max": 1,
+      "rationale": "2 servers"
+    },
+    "environments": {
+      "score": 0.5,
+      "max": 1,
+      "rationale": "2 environments, multiple production instances"
+    }
+  },
+  "key_risk_factors": [
+    "WebSphere 7.0 EOL since 2015 \u2014 critical security exposure",
+    "RHEL 7 EOL creates OS-level security gap",
+    "3rd party software limits customization and migration options",
+    "8 external interfaces require careful re-integration testing",
+    "Java 11 outdated; upgrade to Java 21 needed"
+  ],
+  "modernization_notes": "CRMApp-002 should prioritize WebSphere replacement and OS upgrade. As 3rd-party software, vendor roadmap alignment is critical before planning any major modernization."
+}

@@ -1,0 +1,109 @@
+{
+  "app_id": "app001",
+  "assessment_date": "2026-07-14",
+  "total_scenarios": 12,
+  "applicable_count": 6,
+  "fulfilled_count": 0,
+  "not_applicable_count": 5,
+  "blocked_count": 1,
+  "scenarios": [
+    {
+      "scenario_id": "os_update_security_patch",
+      "scenario_name": "Operating System Update",
+      "status": "APPLICABLE",
+      "rationale": "AIX 7.2 is EOL. IBM AIX 8.x or migration to a supported OS is required. However, AIX-to-Linux OS update for COBOL is non-trivial.",
+      "priority": "Critical",
+      "effort": "High",
+      "risk": "High"
+    },
+    {
+      "scenario_id": "switch_to_standard_linux_os",
+      "scenario_name": "Switch to Standard Linux OS",
+      "status": "APPLICABLE",
+      "rationale": "Migration from proprietary AIX to RHEL/Ubuntu would reduce vendor lock-in and eliminate AIX license costs. Requires COBOL runtime porting.",
+      "priority": "High",
+      "effort": "High",
+      "risk": "High"
+    },
+    {
+      "scenario_id": "switch_to_arm_cpu",
+      "scenario_name": "Switch to ARM CPU",
+      "status": "NOT_APPLICABLE",
+      "rationale": "AIX runs on IBM POWER architecture. ARM migration would require complete platform rewrite. Not feasible without full application modernization first.",
+      "priority": "Medium"
+    },
+    {
+      "scenario_id": "application_server_replacement",
+      "scenario_name": "Application Server Replacement",
+      "status": "NOT_APPLICABLE",
+      "rationale": "ERPApp-001 has no application server (1-Tier COBOL). Scenario not applicable.",
+      "priority": "Medium"
+    },
+    {
+      "scenario_id": "app_deployment_to_cloud",
+      "scenario_name": "Application Deployment to Cloud",
+      "status": "APPLICABLE",
+      "rationale": "On-Premise ERP could be migrated to cloud (e.g., IBM Cloud for AIX or lift-and-shift with COBOL runtime). Significant effort required.",
+      "priority": "Medium",
+      "effort": "High",
+      "risk": "High"
+    },
+    {
+      "scenario_id": "app_containerization",
+      "scenario_name": "Application Containerization",
+      "status": "BLOCKED",
+      "rationale": "COBOL on AIX cannot be containerized without first modernizing the application to a containerizable runtime. Blocked by legacy stack.",
+      "priority": "Low",
+      "effort": "N/A",
+      "risk": "N/A"
+    },
+    {
+      "scenario_id": "app_refactor_decoupling",
+      "scenario_name": "Application Refactor / Decoupling",
+      "status": "APPLICABLE",
+      "rationale": "1-Tier COBOL monolith is the primary candidate for refactoring. Strangler-fig pattern or incremental modernization could decouple financial modules.",
+      "priority": "High",
+      "effort": "Very High",
+      "risk": "Very High"
+    },
+    {
+      "scenario_id": "upgrade_legacy_databases",
+      "scenario_name": "Upgrade Legacy Databases",
+      "status": "NOT_APPLICABLE",
+      "rationale": "Oracle 19c is CURRENT_VERSION with support until 2027. No immediate database upgrade needed.",
+      "priority": "Medium"
+    },
+    {
+      "scenario_id": "switch_to_managed_db",
+      "scenario_name": "Switch to Managed Database",
+      "status": "APPLICABLE",
+      "rationale": "Oracle 19c could be migrated to Oracle Cloud or Amazon RDS to eliminate on-premise DB server management.",
+      "priority": "Medium",
+      "effort": "Medium",
+      "risk": "Medium"
+    },
+    {
+      "scenario_id": "managed_arm_db",
+      "scenario_name": "Managed ARM Database",
+      "status": "NOT_APPLICABLE",
+      "rationale": "Oracle 19c is not available on ARM managed services without an engine change. Not applicable in current state.",
+      "priority": "Medium"
+    },
+    {
+      "scenario_id": "serverless_db_migration",
+      "scenario_name": "Serverless Database Migration",
+      "status": "NOT_APPLICABLE",
+      "rationale": "Oracle database workload for core ERP financials is not suitable for serverless database patterns.",
+      "priority": "Medium"
+    },
+    {
+      "scenario_id": "switch_db_engine_postgresql",
+      "scenario_name": "Switch DB Engine to PostgreSQL",
+      "status": "APPLICABLE",
+      "rationale": "Migration from Oracle 19c to PostgreSQL would eliminate Oracle licensing costs. High effort due to Oracle-specific SQL/PL-SQL features in ERP.",
+      "priority": "Low",
+      "effort": "Very High",
+      "risk": "High"
+    }
+  ]
+}

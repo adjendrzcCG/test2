@@ -1,0 +1,111 @@
+{
+  "app_id": "app003",
+  "assessment_date": "2026-07-14",
+  "total_scenarios": 12,
+  "applicable_count": 8,
+  "fulfilled_count": 4,
+  "not_applicable_count": 0,
+  "blocked_count": 0,
+  "scenarios": [
+    {
+      "scenario_id": "os_update_security_patch",
+      "scenario_name": "Operating System Update",
+      "status": "APPLICABLE",
+      "rationale": "RHEL 7 is EOL. OS upgrade is urgent. Containerized app makes OS upgrade simpler.",
+      "priority": "Critical",
+      "effort": "Low",
+      "risk": "Low"
+    },
+    {
+      "scenario_id": "switch_to_standard_linux_os",
+      "scenario_name": "Switch to Standard Linux OS",
+      "status": "FULFILLED",
+      "rationale": "Already on Linux (RHEL 7). Needs version upgrade but Linux OS is in use.",
+      "priority": "Medium"
+    },
+    {
+      "scenario_id": "switch_to_arm_cpu",
+      "scenario_name": "Switch to ARM CPU",
+      "status": "APPLICABLE",
+      "rationale": "Containerized Python app can be rebuilt for ARM/Graviton with minimal effort. High cost savings potential.",
+      "priority": "Medium",
+      "effort": "Low",
+      "risk": "Low"
+    },
+    {
+      "scenario_id": "application_server_replacement",
+      "scenario_name": "Application Server Replacement",
+      "status": "APPLICABLE",
+      "rationale": "Apache Tomcat 6.1 is EOL since 2016. Upgrade to Tomcat 10.x or migrate to embedded server (e.g., Gunicorn/uvicorn for Python).",
+      "priority": "Critical",
+      "effort": "Low",
+      "risk": "Low"
+    },
+    {
+      "scenario_id": "app_deployment_to_cloud",
+      "scenario_name": "Application Deployment to Cloud",
+      "status": "FULFILLED",
+      "rationale": "AnalyticsApp-003 is already deployed on AWS.",
+      "priority": "Medium"
+    },
+    {
+      "scenario_id": "app_containerization",
+      "scenario_name": "Application Containerization",
+      "status": "FULFILLED",
+      "rationale": "AnalyticsApp-003 is already containerized.",
+      "priority": "Medium"
+    },
+    {
+      "scenario_id": "app_refactor_decoupling",
+      "scenario_name": "Application Refactor / Decoupling",
+      "status": "PARTIALLY_FULFILLED",
+      "rationale": "3-Tier architecture exists. Some decoupling in place but analytics workload could benefit from further microservices decomposition for scalability.",
+      "priority": "Low",
+      "effort": "Medium",
+      "risk": "Low"
+    },
+    {
+      "scenario_id": "upgrade_legacy_databases",
+      "scenario_name": "Upgrade Legacy Databases",
+      "status": "APPLICABLE",
+      "rationale": "PostgreSQL 13 is EOL (Nov 2025). Upgrade to PostgreSQL 16 or 17 is required.",
+      "priority": "Critical",
+      "effort": "Low",
+      "risk": "Low"
+    },
+    {
+      "scenario_id": "switch_to_managed_db",
+      "scenario_name": "Switch to Managed Database",
+      "status": "APPLICABLE",
+      "rationale": "Currently on self-managed PostgreSQL. Migration to Amazon RDS PostgreSQL or Aurora PostgreSQL would eliminate DBA overhead.",
+      "priority": "Medium",
+      "effort": "Low",
+      "risk": "Low"
+    },
+    {
+      "scenario_id": "managed_arm_db",
+      "scenario_name": "Managed ARM Database",
+      "status": "APPLICABLE",
+      "rationale": "Amazon RDS PostgreSQL on Graviton instances available and cost-effective for analytics workloads.",
+      "priority": "Low",
+      "effort": "Low",
+      "risk": "Low"
+    },
+    {
+      "scenario_id": "serverless_db_migration",
+      "scenario_name": "Serverless Database Migration",
+      "status": "APPLICABLE",
+      "rationale": "Analytics workloads are often bursty. Aurora Serverless v2 PostgreSQL-compatible could reduce cost significantly.",
+      "priority": "Medium",
+      "effort": "Low",
+      "risk": "Low"
+    },
+    {
+      "scenario_id": "switch_db_engine_postgresql",
+      "scenario_name": "Switch DB Engine to PostgreSQL",
+      "status": "FULFILLED",
+      "rationale": "AnalyticsApp-003 already uses PostgreSQL. No engine switch needed.",
+      "priority": "Medium"
+    }
+  ]
+}
