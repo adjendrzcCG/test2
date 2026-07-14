@@ -1,172 +1,179 @@
 # Application Report — ERPApp-001
 
-> Generated: 2026-07-13 | Application ID: `app001`
+**Generated:** 2026-07-14T07:33:55Z  
+**Analysis ID:** GD-2026-001  
+**App ID:** app001
 
 ## Application Overview
 
+ERPApp-001 is a mission-critical finance ERP with a still-supported core stack, but it remains anchored to outdated AIX infrastructure and a high-friction operating model with no CI/CD or containers. Because the application is scheduled for decommission in 2027, modernization should emphasize stabilization, supportability, and selective cost takeout rather than full transformation.
+
 | Field | Value |
-|-------|-------|
-| **App ID** | `app001` |
-| **Name** | ERPApp-001 |
-| **Description** | Core ERP system |
-| **Solution Type** | Custom made |
-| **Business Criticality** | High |
-| **Status** | Production |
-| **Decommission Date** | 2027 |
-| **Deployment Type** | On-Premise |
-| **Data Classification** | Confidential |
-| **Business Unit** | Finance |
-| **Business Capabilities** | Financial Planning, Accounting, Budgeting |
-| **User Count** | 350 |
-| **Operating System** | AIX 7.2 |
-| **Programming Language** | COBOL-2014 |
-| **Application Server** | None |
-| **Architecture** | 1-Tier |
-| **Containerized** | No |
-| **CI/CD** | No |
-| **Environment Count** | 2 |
-| **Servers** | sv01, sv02 |
-| **CPU Cores** | 4 |
-| **Memory (GB)** | 16 |
-| **API Endpoints** | 0 |
-| **External Interfaces** | 5 |
-| **Database Engine** | Oracle 19c |
-| **Database Storage (GB)** | 1000 |
-| **Database License Required** | Yes |
-| **Logging Solution** | None |
-| **Monitoring Tool** | None |
+| --- | --- |
+| App ID | app001 |
+| Application Name | ERPApp-001 |
+| Business Unit | Finance |
+| Criticality | High |
+| Deployment | On-Premise |
+| Architecture | 1-Tier monolith |
+| Users | 350 |
+| CI/CD | No |
+| Containers | No |
+| APIs | 0 |
+| External Interfaces | 5 |
+| Database | Oracle 19c |
+| Database Size | 1000GB |
+| License Profile | Licensed |
+| Servers | sv01, sv02 |
+| Compute | 4 CPU cores / 16GB RAM |
+| Logging | Not stated |
+| Monitoring | Not stated |
+| Planned Decommission | 2027 |
 
 ## Technology Assessment
 
-🟡 **Outdated components present**
+| Component | Version | Status | Assessment | EOL / Support | Confidence |
+| --- | --- | --- | --- | --- | --- |
+| 🟡 AIX | 7.2 | OUTDATED | Standard support ended; extended support only. | N/A | 7 |
+| ✅ COBOL | 2014 | CURRENT | ISO/IEC current standard and still actively supported. | N/A | 8 |
+| ✅ Oracle | 19c | CURRENT | Extended support available through April 2027. | 2027-04-30 | 9 |
 
-| Component | Type | Version | Status | EOL Date | Notes |
-|-----------|------|---------|--------|----------|-------|
-| **AIX 7.2** | os | 7.2 | 🟡 OUTDATED | N/A | AIX 7.2 standard support has ended; only extended support available. IBM has shifted focus to newer AIX and Power platform versions. |
-| **COBOL-2014** | programming_language | 2014 | ✅ CURRENT_VERSION | N/A | COBOL-2014 is the current ISO/IEC standard for COBOL. Mainframe COBOL compilers (GnuCOBOL, IBM Enterprise COBOL) continue to support the 2014 standard actively. |
-| **Oracle 19c** | database | 19c | ✅ CURRENT_VERSION | 2027-04-30 | Oracle 19c is the long-term release with Premier Support through April 2024 and Extended Support through April 2027. Currently under extended support with full patches available. |
+Technology flags: EOL components = **No**; Outdated components = **Yes**; Missing version data = **No**.
 
 ## Complexity Assessment
 
-**Complexity Score: 9/10 — 🔴 Very High**
+**Complexity Score:** 9/10 — Very High  
+**Multiplier:** 1.8x
 
-### Complexity Factors
+| Factor | Why it matters |
+| --- | --- |
+| High criticality finance workload | Operational disruption directly affects core finance processes and audit commitments. |
+| 1-tier monolith | Tight coupling raises migration and regression risk. |
+| No CI/CD | Release automation is absent, so every change carries higher delivery friction. |
+| No containers | Portability and repeatable environment promotion are limited. |
+| Legacy COBOL on proprietary AIX | Specialized skills and platform lock-in increase delivery risk. |
+| Five external interfaces | Interface testing must be coordinated across downstream finance integrations. |
+| 1000GB Oracle database | Data movement, cutover, and rollback planning are non-trivial. |
+| 2027 decommission deadline | Short runway limits the value of deep transformation investments. |
 
-| Factor | Value |
-|--------|-------|
-| Business Criticality | High |
-| Architecture Tier | 1-Tier |
-| Containerization | False |
-| Ci Cd | False |
-| Server Count | 2 |
-| External Interface Count | 5 |
-| Eol Components | False |
-| Outdated Components | True |
-| Technology Age | legacy |
+ERPApp-001 is the most difficult application in scope because it combines a monolithic legacy runtime, proprietary infrastructure, a large licensed database, and minimal engineering enablement. The application is still business critical, but the 2027 retirement target means modernization must focus on risk reduction and continuity rather than broad re-architecture.
 
-### Reasoning
+### Key risks
 
-ERPApp-001 scores Very High complexity (9/10) due to multiple compounding factors. The application is a monolithic 1-Tier COBOL system running on AIX 7.2 — a highly proprietary, aging technology stack with very limited modernization tooling. There is no CI/CD pipeline and no containerization, indicating a manual, fragile deployment process. The application carries High business criticality with Confidential data classification and serves core Finance functions (Financial Planning, Accounting, Budgeting). With 0 API endpoints and 5 external interfaces, integration modernization will require significant re-engineering. The 1000GB Oracle database and decommission target of 2027 add time pressure. The COBOL codebase requires specialized skills that are increasingly rare, further elevating modernization risk and effort.
+- Outdated AIX 7.2 increases security, support, and platform continuity risk ahead of the planned retirement window.
+- The 1-tier design plus no CI/CD/no containers makes even small changes operationally expensive and slower to validate.
+- A 1000GB licensed Oracle footprint and five interfaces raise cutover complexity for any platform or data move.
+
+### Recommended actions
+
+- Patch and harden the AIX estate immediately to reduce near-term operational risk.
+- Use the Linux migration as the main platform optimization if the application must remain in service through 2027.
+- Avoid large refactoring unless the decommission timeline slips materially or replacement plans are delayed.
 
 ## Scenario Applicability
 
-| Scenario | Status | Priority | Effort | Summary |
-|----------|--------|----------|--------|---------|
-| **Operating System Update** | 🔵 APPLICABLE | High | Medium | AIX 7.2 is OUTDATED with standard support ended. Security patches are limited to extended support co... |
-| **Switch to Standard Linux Operating System** | 🔵 APPLICABLE | High | High | AIX 7.2 is a proprietary IBM UNIX platform with limited vendor ecosystem support. Migrating to RHEL ... |
-| **Switch to ARM-based CPU** | 🔴 BLOCKED | Low | Very High | COBOL-2014 on AIX 7.2 is tightly coupled to IBM Power architecture. COBOL compilers with full ARM64 ... |
-| **Application Server Replacement** | ⚪ NOT_APPLICABLE | N/A | N/A | ERPApp-001 does not use an application server (application_server: None). The COBOL application runs... |
-| **Application Migration to Cloud Infrastructure (Lift & Shift)** | 🔵 APPLICABLE | Medium | High | ERPApp-001 is currently On-Premise with no cloud footprint. A lift-and-shift migration to cloud (e.g... |
-| **Application Containerization** | 🔴 BLOCKED | Low | Very High | COBOL on AIX 7.2 with a 1-Tier monolithic architecture and no CI/CD pipeline is not suitable for con... |
-| **Application Refactoring and De-coupling** | 🔵 APPLICABLE | High | Very High | The 1-Tier monolithic COBOL architecture with 5 external interfaces and a 2027 decommission target s... |
-| **Upgrade Legacy Databases** | ✅ FULFILLED | Low | N/A | Oracle 19c is the current LTS version with support through April 2027. No database upgrade is needed... |
-| **Switch DB Engine to Open-Source Database Solution** | 🔵 APPLICABLE | Medium | High | Oracle 19c requires a commercial license (database_license_required: true). Migrating to PostgreSQL ... |
-| **Update Outdated Components** | 🔵 APPLICABLE | High | Medium | AIX 7.2 is OUTDATED. Updating to the latest AIX 7.3 or planning OS migration addresses security gaps... |
+| Scenario | Status | Priority | Effort |
+| --- | --- | --- | --- |
+| OS Update / Security Patch | APPLICABLE | High | Medium |
+| Switch to Standard Linux OS | APPLICABLE | High | High |
+| Switch to ARM CPU | BLOCKED | Low | Very High |
+| Application Server Replacement | NOT_APPLICABLE | N/A | N/A |
+| Cloud Lift & Shift | APPLICABLE | Medium | High |
+| Application Containerization | BLOCKED | Low | Very High |
+| Application Refactoring / Decoupling | APPLICABLE | High | Very High |
+| Upgrade Legacy Databases | FULFILLED | Low | N/A |
+| Switch Database to Open Source | APPLICABLE | Medium | High |
+| Update Outdated Components | APPLICABLE | High | Medium |
 
-### Scenario Details
+### OS Update / Security Patch (`os_update_security_patch`)
 
-#### 🔵 Operating System Update
 - **Status:** APPLICABLE
 - **Priority:** High
 - **Effort:** Medium
-- **Reasoning:** AIX 7.2 is OUTDATED with standard support ended. Security patches are limited to extended support contracts, increasing vulnerability exposure for a High-criticality Confidential application.
-- **Suggestion:** Update AIX to the latest supported version or plan migration to a standard Linux distribution to reduce proprietary platform risk.
+- **Reasoning:** AIX 7.2 is outdated, so security patching and hardening provide the fastest risk reduction without changing application behavior.
+- **Suggestion:** Plan an OS remediation sprint with patch validation, backup verification, and post-change vulnerability review.
 
-#### 🔵 Switch to Standard Linux Operating System
+### Switch to Standard Linux OS (`switch_to_standard_linux_os`)
+
 - **Status:** APPLICABLE
 - **Priority:** High
 - **Effort:** High
-- **Reasoning:** AIX 7.2 is a proprietary IBM UNIX platform with limited vendor ecosystem support. Migrating to RHEL 9 or similar standard Linux would reduce licensing costs and broaden tooling availability. However, COBOL portability must be validated.
-- **Suggestion:** Plan a phased migration from AIX 7.2 to RHEL 9. Validate COBOL compiler compatibility (GnuCOBOL or IBM COBOL for Linux) before migrating.
+- **Reasoning:** Moving off proprietary AIX reduces platform dependency and can improve supportability during the remaining service life.
+- **Suggestion:** Use a constrained replatform plan that preserves COBOL and Oracle while replacing the host OS and surrounding operational tooling.
 
-#### 🔴 Switch to ARM-based CPU
+### Switch to ARM CPU (`switch_to_arm_cpu`)
+
 - **Status:** BLOCKED
 - **Priority:** Low
 - **Effort:** Very High
-- **Reasoning:** COBOL-2014 on AIX 7.2 is tightly coupled to IBM Power architecture. COBOL compilers with full ARM64 support are limited, and the application has no CI/CD or containerization to facilitate cross-architecture builds.
-- **Suggestion:** This scenario is blocked until the application is modernized to a portable language/runtime stack and containerized.
+- **Reasoning:** The COBOL/AIX stack is not a natural candidate for ARM adoption without a much larger replatforming effort.
+- **Suggestion:** Treat ARM only as a by-product of a future full-stack replacement, not as a standalone modernization workstream.
 
-#### ⚪ Application Server Replacement
+### Application Server Replacement (`application_server_replacement`)
+
 - **Status:** NOT_APPLICABLE
 - **Priority:** N/A
 - **Effort:** N/A
-- **Reasoning:** ERPApp-001 does not use an application server (application_server: None). The COBOL application runs directly on AIX without a middleware tier.
-- **Suggestion:** Not applicable. No application server is present to replace.
+- **Reasoning:** The application is a 1-tier ERP and does not rely on a separate application server layer that can be replaced independently.
+- **Suggestion:** Concentrate investment on OS, hosting, database economics, and retirement planning instead.
 
-#### 🔵 Application Migration to Cloud Infrastructure (Lift & Shift)
+### Cloud Lift & Shift (`app_deployment_to_cloud`)
+
 - **Status:** APPLICABLE
 - **Priority:** Medium
 - **Effort:** High
-- **Reasoning:** ERPApp-001 is currently On-Premise with no cloud footprint. A lift-and-shift migration to cloud (e.g., IBM Power Virtual Server on IBM Cloud, or AWS Bare Metal) would improve scalability and reduce on-premise hardware costs.
-- **Suggestion:** Evaluate IBM Power Virtual Server (IBM Cloud) as an AIX-compatible lift-and-shift target to maintain COBOL/AIX compatibility while moving to cloud.
+- **Reasoning:** Cloud lift-and-shift is feasible but the monolith, large database, and low automation increase migration effort.
+- **Suggestion:** Use cloud migration only if it materially reduces datacenter risk or aligns with the retirement roadmap.
 
-#### 🔴 Application Containerization
+### Application Containerization (`app_containerization`)
+
 - **Status:** BLOCKED
 - **Priority:** Low
 - **Effort:** Very High
-- **Reasoning:** COBOL on AIX 7.2 with a 1-Tier monolithic architecture and no CI/CD pipeline is not suitable for containerization without major refactoring. There is no container runtime or orchestration infrastructure in place.
-- **Suggestion:** Containerization is blocked until the COBOL application is refactored or rewritten to a portable technology stack and a CI/CD pipeline is established.
+- **Reasoning:** A 1-tier COBOL monolith without CI/CD or service boundaries would need substantial restructuring before containerization becomes practical.
+- **Suggestion:** Do not pursue containerization as a near-term goal; the return window is too short.
 
-#### 🔵 Application Refactoring and De-coupling
+### Application Refactoring / Decoupling (`app_refactor_decoupling`)
+
 - **Status:** APPLICABLE
 - **Priority:** High
 - **Effort:** Very High
-- **Reasoning:** The 1-Tier monolithic COBOL architecture with 5 external interfaces and a 2027 decommission target strongly suggests refactoring is necessary. Breaking the monolith into services would enable incremental modernization.
-- **Suggestion:** Conduct a COBOL code analysis (using tools like Micro Focus, IBM Rational) to identify service boundaries. Gradually expose business functions as APIs to enable phased modernization.
+- **Reasoning:** Refactoring could improve agility, but the cost and delivery risk are exceptionally high for an application due to retire soon.
+- **Suggestion:** Use selective decoupling only where it directly supports decommission preparation or a mandatory integration change.
 
-#### ✅ Upgrade Legacy Databases
+### Upgrade Legacy Databases (`upgrade_legacy_databases`)
+
 - **Status:** FULFILLED
 - **Priority:** Low
 - **Effort:** N/A
-- **Reasoning:** Oracle 19c is the current LTS version with support through April 2027. No database upgrade is needed at this time.
-- **Suggestion:** Monitor Oracle 19c end-of-extended-support (April 2027) and plan upgrade to Oracle 21c or 23ai before that date.
+- **Reasoning:** Oracle 19c is already within support, so no immediate database version remediation is required.
+- **Suggestion:** Maintain patch cadence and focus on resilience, capacity, and license optimization.
 
-#### 🔵 Switch DB Engine to Open-Source Database Solution
+### Switch Database to Open Source (`switch_db_engine_open_source`)
+
 - **Status:** APPLICABLE
 - **Priority:** Medium
 - **Effort:** High
-- **Reasoning:** Oracle 19c requires a commercial license (database_license_required: true). Migrating to PostgreSQL or other open-source alternatives would eliminate Oracle licensing costs. However, Oracle-specific SQL and PL/SQL must be migrated.
-- **Suggestion:** Evaluate AWS Aurora PostgreSQL or standard PostgreSQL as migration targets. Use tools like AWS Schema Conversion Tool (SCT) or Ora2Pg to assess migration complexity.
+- **Reasoning:** There is a material licensing cost angle, but data migration and application compatibility work would be significant.
+- **Suggestion:** Only justify this move if the application must stay beyond 2027 or if Oracle license costs materially rise.
 
-#### 🔵 Update Outdated Components
+### Update Outdated Components (`update_outdated_components`)
+
 - **Status:** APPLICABLE
 - **Priority:** High
 - **Effort:** Medium
-- **Reasoning:** AIX 7.2 is OUTDATED. Updating to the latest AIX 7.3 or planning OS migration addresses security gaps and extends vendor support coverage for this High-criticality application.
-- **Suggestion:** Engage IBM support to update AIX 7.2 to AIX 7.3 if hardware permits, or plan OS migration. Review COBOL compiler and runtime versions for available updates.
+- **Reasoning:** AIX is the clear outdated component and should be remediated to avoid support degradation.
+- **Suggestion:** Track outdated infrastructure in the same remediation program as OS security patching to avoid duplicated delivery effort.
 
 ## Business Case
 
-**Total Adjusted Investment: $506,340.00**  
-**Total Yearly Savings: $168,900.00**  
-**Estimated ROI Payback: 3.0 years**
+| Scenario | Adjusted Cost | Yearly Savings | ROI (yrs) |
+| --- | --- | --- | --- |
+| OS Update | $1,800 | $500 | 3.6 |
+| Switch to Linux OS | $540 | $400 | 1.35 |
+| Cloud Lift & Shift | $9,000 | $3,000 | 3 |
+| App Refactoring | $450,000 | $150,000 | 3 |
+| Switch DB to Open-Source | $45,000 | $15,000 | 3 |
+| TOTAL | $506,340 | $168,900 | 3 |
 
-| Scenario | Status | Adj. Cost | Yearly Savings | ROI (years) |
-|----------|--------|-----------|----------------|-------------|
-| Operating System Update | APPLICABLE | $1,800.00 | $500.00 | 3.6 |
-| Switch to Standard Linux Operating System | APPLICABLE | $540.00 | $400.00 | 1.35 |
-| Application Migration to Cloud Infrastructure (Lift & Shift) | APPLICABLE | $9,000.00 | $3,000.00 | 3.0 |
-| Application Refactoring and De-coupling | APPLICABLE | $450,000.00 | $150,000.00 | 3.0 |
-| Switch DB Engine to Open-Source Database Solution | APPLICABLE | $45,000.00 | $15,000.00 | 3.0 |
-
-> *Costs adjusted by complexity multiplier: **1.8x** (complexity score / 5)*
+Portfolio planning note: ERPApp-001 is best aligned to **Wave 1 for OS hardening and Linux replatform decision; defer deep transformation to replacement planning.**

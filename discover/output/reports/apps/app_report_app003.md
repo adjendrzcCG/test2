@@ -1,172 +1,179 @@
 # Application Report — AnalyticsApp-003
 
-> Generated: 2026-07-13 | Application ID: `app003`
+**Generated:** 2026-07-14T07:33:55Z  
+**Analysis ID:** GD-2026-001  
+**App ID:** app003
 
 ## Application Overview
 
+AnalyticsApp-003 is low criticality and already operates with modern engineering practices, but nearly every runtime layer is out of support. It is the best candidate for a bundled remediation sprint because the technical debt is urgent while delivery complexity remains manageable.
+
 | Field | Value |
-|-------|-------|
-| **App ID** | `app003` |
-| **Name** | AnalyticsApp-003 |
-| **Description** | Analytics platform |
-| **Solution Type** | Open Source |
-| **Business Criticality** | Low |
-| **Status** | Production |
-| **Decommission Date** | not planned |
-| **Deployment Type** | AWS |
-| **Data Classification** | Public |
-| **Business Unit** | IT |
-| **Business Capabilities** | Data Analytics, Reporting, Business Intelligence |
-| **User Count** | 480 |
-| **Operating System** | RHEL 7 |
-| **Programming Language** | Python 3.9 |
-| **Application Server** | Apache Tomcat 6.1 |
-| **Architecture** | 3-Tier |
-| **Containerized** | Yes |
-| **CI/CD** | Yes |
-| **Environment Count** | 1 |
-| **Servers** | sv03 |
-| **CPU Cores** | 2 |
-| **Memory (GB)** | 8 |
-| **API Endpoints** | 8 |
-| **External Interfaces** | 3 |
-| **Database Engine** | PostgreSQL 13 |
-| **Database Storage (GB)** | 200 |
-| **Database License Required** | No |
-| **Logging Solution** | ELK |
-| **Monitoring Tool** | Prometheus |
+| --- | --- |
+| App ID | app003 |
+| Application Name | AnalyticsApp-003 |
+| Business Unit | IT |
+| Criticality | Low |
+| Deployment | AWS |
+| Architecture | 3-Tier |
+| Users | 480 |
+| CI/CD | Yes |
+| Containers | Yes |
+| APIs | 8 |
+| External Interfaces | 3 |
+| Database | PostgreSQL 13 |
+| Database Size | 200GB |
+| License Profile | No license cost |
+| Servers | sv03 |
+| Compute | 2 CPU cores / 8GB RAM |
+| Logging | ELK |
+| Monitoring | Prometheus |
+| Planned Decommission | Not stated |
 
 ## Technology Assessment
 
-🔴 **EOL components present**
+| Component | Version | Status | Assessment | EOL / Support | Confidence |
+| --- | --- | --- | --- | --- | --- |
+| 🔴 RHEL | 7 | EOL | Operating system end of life reached June 30, 2024. | 2024-06-30 | 10 |
+| 🔴 Python | 3.9 | EOL | Community support ended October 5, 2025. | 2025-10-05 | 10 |
+| 🔴 Apache Tomcat | 6.1 | EOL | Version line has been unsupported since 2016. | 2016-12-31 | 10 |
+| 🔴 PostgreSQL | 13 | EOL | Major version support ended November 13, 2025. | 2025-11-13 | 10 |
 
-| Component | Type | Version | Status | EOL Date | Notes |
-|-----------|------|---------|--------|----------|-------|
-| **RHEL 7** | os | 7 | 🔴 EOL | 2024-06-30 | Red Hat Enterprise Linux 7 reached End of Life on June 30, 2024. Security patches are no longer provided without ELS subscription. |
-| **Python 3.9** | programming_language | 3.9 | 🔴 EOL | 2025-10-05 | Python 3.9 reached End of Life on October 5, 2025. No further security updates are released by the Python Software Foundation. Python 3.12+ is recommended. |
-| **Apache Tomcat 6.1** | application_server | 6.1 | 🔴 EOL | 2016-12-31 | Apache Tomcat 6.x reached End of Life in December 2016. This version has known unpatched security vulnerabilities and should be urgently migrated. |
-| **PostgreSQL 13** | database | 13 | 🔴 EOL | 2025-11-13 | PostgreSQL 13 reached End of Life on November 13, 2025. No further bug fix or security releases are available. PostgreSQL 16 or 17 is recommended. |
+Technology flags: EOL components = **Yes**; Outdated components = **No**; Missing version data = **No**.
 
 ## Complexity Assessment
 
-**Complexity Score: 4/10 — 🟡 Medium**
+**Complexity Score:** 4/10 — Medium  
+**Multiplier:** 0.8x
 
-### Complexity Factors
+| Factor | Why it matters |
+| --- | --- |
+| Low criticality | Modernization can be delivered with lower business outage sensitivity. |
+| 3-tier architecture | Logical separation makes component-by-component change more manageable. |
+| CI/CD already present | Automation reduces regression and release effort. |
+| Containers already present | Platform portability is already established. |
+| Single server footprint | Infrastructure scope is relatively small. |
+| Three external interfaces | Integration coordination is modest compared with the rest of the portfolio. |
+| All four major components are EOL | Technical urgency is high even though implementation effort is moderate. |
+| Open-source stack | Upgrade paths are usually more direct and licensing lock-in is limited. |
 
-| Factor | Value |
-|--------|-------|
-| Business Criticality | Low |
-| Architecture Tier | 3-Tier |
-| Containerization | True |
-| Ci Cd | True |
-| Server Count | 1 |
-| External Interface Count | 3 |
-| Eol Components | True |
-| Outdated Components | False |
-| Technology Age | mixed |
+AnalyticsApp-003 has the broadest EOL stack exposure in the portfolio, but it is also the easiest environment in which to execute remediation because it is already cloud-hosted, containerized, and automated. That combination makes it an excellent quick-win candidate: the technical issues are severe, yet the delivery path is comparatively straightforward.
 
-### Reasoning
+### Key risks
 
-AnalyticsApp-003 scores Medium complexity (4/10). The application has several modernization-friendly attributes: it is already containerized, uses a 3-Tier architecture, has CI/CD in place, and runs on a single server. It has Low business criticality and a small number of external interfaces (3), reducing risk during modernization. However, all core components are EOL: RHEL 7 (EOL June 2024), Python 3.9 (EOL October 2025), Apache Tomcat 6.1 (EOL December 2016), and PostgreSQL 13 (EOL November 2025). The breadth of EOL components creates security exposure that must be addressed promptly. The existing containerization and CI/CD pipeline make updates technically straightforward. The open-source nature of the stack enables cost-effective version upgrades.
+- The application has full-stack EOL exposure across OS, runtime, application server, and database.
+- If the low criticality label suppresses urgency, the environment may remain vulnerable even though upgrades are comparatively easy.
+- Independent remediation projects could duplicate effort; the stack should be updated as a coordinated package.
+
+### Recommended actions
+
+- Use the application as a quick-win modernization wave to remove the largest EOL concentration in the portfolio.
+- Bundle app server, runtime, and database upgrade work to take advantage of existing containers and CI/CD.
+- Evaluate ARM only after the core EOL stack has been remediated and performance baselines are stable.
 
 ## Scenario Applicability
 
-| Scenario | Status | Priority | Effort | Summary |
-|----------|--------|----------|--------|---------|
-| **Operating System Update** | 🔵 APPLICABLE | High | Low | RHEL 7 is EOL (June 30, 2024) and no longer receives security patches. The application is containeri... |
-| **Switch to Standard Linux Operating System** | ✅ FULFILLED | N/A | N/A | AnalyticsApp-003 already runs on RHEL, a standard enterprise Linux distribution. The scenario is ful... |
-| **Switch to ARM-based CPU** | 🔵 APPLICABLE | Medium | Medium | The application is containerized with CI/CD on AWS, making it a candidate for ARM-based EC2 instance... |
-| **Application Server Replacement** | 🔵 APPLICABLE | Critical | Medium | Apache Tomcat 6.1 is severely EOL (December 2016) and has numerous unpatched CVEs. Replacement with ... |
-| **Application Migration to Cloud Infrastructure (Lift & Shift)** | ✅ FULFILLED | N/A | N/A | AnalyticsApp-003 is already deployed on AWS. Cloud deployment is fulfilled. |
-| **Application Containerization** | ✅ FULFILLED | N/A | N/A | AnalyticsApp-003 is already containerized. Container deployment is fully implemented. |
-| **Application Refactoring and De-coupling** | 🔴 BLOCKED | Low | Very High | AnalyticsApp-003 is an Open Source platform. Direct source code refactoring may conflict with the op... |
-| **Upgrade Legacy Databases** | 🔵 APPLICABLE | High | Low | PostgreSQL 13 reached EOL on November 13, 2025. Upgrading to PostgreSQL 16 or 17 is needed to restor... |
-| **Switch DB Engine to Open-Source Database Solution** | ✅ FULFILLED | N/A | N/A | PostgreSQL is already an open-source database. No commercial license is required (database_license_r... |
-| **Update Outdated Components** | 🔵 APPLICABLE | Critical | Medium | All components are EOL (RHEL 7, Python 3.9, Tomcat 6.1, PostgreSQL 13). Systematic component updates... |
+| Scenario | Status | Priority | Effort |
+| --- | --- | --- | --- |
+| OS Update / Security Patch | APPLICABLE | High | Low |
+| Switch to Standard Linux OS | FULFILLED | N/A | N/A |
+| Switch to ARM CPU | APPLICABLE | Medium | Medium |
+| Application Server Replacement | APPLICABLE | Critical | Medium |
+| Cloud Lift & Shift | FULFILLED | N/A | N/A |
+| Application Containerization | FULFILLED | N/A | N/A |
+| Application Refactoring / Decoupling | BLOCKED | Low | Very High |
+| Upgrade Legacy Databases | APPLICABLE | High | Low |
+| Switch Database to Open Source | FULFILLED | N/A | N/A |
+| Update Outdated Components | APPLICABLE | Critical | Medium |
 
-### Scenario Details
+### OS Update / Security Patch (`os_update_security_patch`)
 
-#### 🔵 Operating System Update
 - **Status:** APPLICABLE
 - **Priority:** High
 - **Effort:** Low
-- **Reasoning:** RHEL 7 is EOL (June 30, 2024) and no longer receives security patches. The application is containerized and has CI/CD, making OS updates operationally straightforward.
-- **Suggestion:** Upgrade the container base image and host OS from RHEL 7 to RHEL 9 or equivalent (e.g., Rocky Linux 9, AlmaLinux 9). Update CI/CD pipeline to use new base images.
+- **Reasoning:** RHEL 7 is EOL and can be remediated with a relatively low-effort update path in an already automated environment.
+- **Suggestion:** Make OS remediation the opening step in a broader stack-refresh sprint.
 
-#### ✅ Switch to Standard Linux Operating System
+### Switch to Standard Linux OS (`switch_to_standard_linux_os`)
+
 - **Status:** FULFILLED
 - **Priority:** N/A
 - **Effort:** N/A
-- **Reasoning:** AnalyticsApp-003 already runs on RHEL, a standard enterprise Linux distribution. The scenario is fulfilled; only version upgrade is needed.
-- **Suggestion:** Linux OS family is already standard. Proceed with RHEL 7 → RHEL 9 version upgrade.
+- **Reasoning:** The application already runs on a standard Linux platform family.
+- **Suggestion:** Upgrade to a supported release rather than changing OS family.
 
-#### 🔵 Switch to ARM-based CPU
+### Switch to ARM CPU (`switch_to_arm_cpu`)
+
 - **Status:** APPLICABLE
 - **Priority:** Medium
 - **Effort:** Medium
-- **Reasoning:** The application is containerized with CI/CD on AWS, making it a candidate for ARM-based EC2 instances (AWS Graviton). Python and PostgreSQL have strong ARM64 support. Apache Tomcat compatibility with ARM must be validated.
-- **Suggestion:** After upgrading to a supported Tomcat version, test on AWS Graviton (ARM64) EC2 instances. Update CI/CD to build multi-arch container images.
+- **Reasoning:** Containers and cloud hosting make ARM testing feasible once the supported stack baseline is restored.
+- **Suggestion:** Assess ARM after the core remediation to avoid conflating compatibility and lifecycle risk.
 
-#### 🔵 Application Server Replacement
+### Application Server Replacement (`application_server_replacement`)
+
 - **Status:** APPLICABLE
 - **Priority:** Critical
 - **Effort:** Medium
-- **Reasoning:** Apache Tomcat 6.1 is severely EOL (December 2016) and has numerous unpatched CVEs. Replacement with Apache Tomcat 10.x or 11.x (current) is urgently needed.
-- **Suggestion:** Upgrade Apache Tomcat 6.1 to Tomcat 10.1 or 11.0. Note: Tomcat 10+ uses Jakarta EE namespace; migration from javax.* to jakarta.* packages may be required.
+- **Reasoning:** Tomcat 6.1 is long unsupported and should be upgraded as part of the central stack refresh.
+- **Suggestion:** Bundle this with runtime testing and container image refresh to reduce repeated validation effort.
 
-#### ✅ Application Migration to Cloud Infrastructure (Lift & Shift)
+### Cloud Lift & Shift (`app_deployment_to_cloud`)
+
 - **Status:** FULFILLED
 - **Priority:** N/A
 - **Effort:** N/A
-- **Reasoning:** AnalyticsApp-003 is already deployed on AWS. Cloud deployment is fulfilled.
-- **Suggestion:** Cloud deployment already fulfilled. Consider AWS-native analytics services (EMR, Redshift, QuickSight) for future optimization.
+- **Reasoning:** The application is already deployed in AWS.
+- **Suggestion:** Leverage cloud elasticity and snapshots for upgrade rehearsals.
 
-#### ✅ Application Containerization
+### Application Containerization (`app_containerization`)
+
 - **Status:** FULFILLED
 - **Priority:** N/A
 - **Effort:** N/A
-- **Reasoning:** AnalyticsApp-003 is already containerized. Container deployment is fully implemented.
-- **Suggestion:** Containerization is fulfilled. Improve container security by updating base images to remove EOL OS layers.
+- **Reasoning:** Containerization is already implemented.
+- **Suggestion:** Use the existing container platform to standardize rebuilds and promotion for upgraded dependencies.
 
-#### 🔴 Application Refactoring and De-coupling
+### Application Refactoring / Decoupling (`app_refactor_decoupling`)
+
 - **Status:** BLOCKED
 - **Priority:** Low
 - **Effort:** Very High
-- **Reasoning:** AnalyticsApp-003 is an Open Source platform. Direct source code refactoring may conflict with the open-source project's architecture and community roadmap.
-- **Suggestion:** For open-source platforms, contribute to upstream projects rather than forking. Evaluate whether replacing with a managed analytics service is more efficient than custom refactoring.
+- **Reasoning:** Deep refactoring is not justified for a low-criticality analytics platform when lifecycle remediation can address the main risk.
+- **Suggestion:** Keep the focus on component upgrades rather than architectural redesign.
 
-#### 🔵 Upgrade Legacy Databases
+### Upgrade Legacy Databases (`upgrade_legacy_databases`)
+
 - **Status:** APPLICABLE
 - **Priority:** High
 - **Effort:** Low
-- **Reasoning:** PostgreSQL 13 reached EOL on November 13, 2025. Upgrading to PostgreSQL 16 or 17 is needed to restore security patch coverage.
-- **Suggestion:** Use pg_upgrade or pg_logical replication to upgrade from PostgreSQL 13 to PostgreSQL 16 or 17. Test application compatibility with the new version before production migration.
+- **Reasoning:** PostgreSQL 13 is EOL and the open-source upgrade path is usually straightforward.
+- **Suggestion:** Coordinate the database major-version upgrade with application regression testing in the same release train.
 
-#### ✅ Switch DB Engine to Open-Source Database Solution
+### Switch Database to Open Source (`switch_db_engine_open_source`)
+
 - **Status:** FULFILLED
 - **Priority:** N/A
 - **Effort:** N/A
-- **Reasoning:** PostgreSQL is already an open-source database. No commercial license is required (database_license_required: false).
-- **Suggestion:** Open-source database requirement is fulfilled. Focus on upgrading PostgreSQL version rather than switching engines.
+- **Reasoning:** The workload already uses PostgreSQL, so the open-source database objective is met.
+- **Suggestion:** No engine swap is needed; only lifecycle upgrades remain.
 
-#### 🔵 Update Outdated Components
+### Update Outdated Components (`update_outdated_components`)
+
 - **Status:** APPLICABLE
 - **Priority:** Critical
 - **Effort:** Medium
-- **Reasoning:** All components are EOL (RHEL 7, Python 3.9, Tomcat 6.1, PostgreSQL 13). Systematic component updates are required across the full stack. The containerized, CI/CD-enabled setup makes updates highly feasible.
-- **Suggestion:** Create a systematic component update plan: (1) Update base OS image to RHEL 9/Rocky 9, (2) Upgrade Python to 3.12+, (3) Upgrade Tomcat to 10.1+, (4) Upgrade PostgreSQL to 16+. Execute through the existing CI/CD pipeline.
+- **Reasoning:** Python 3.9 and other stack elements require uplift to regain a supported baseline.
+- **Suggestion:** Define a single dependency modernization backlog covering container images, runtime versions, and automated regression checks.
 
 ## Business Case
 
-**Total Adjusted Investment: $20,800.00**  
-**Total Yearly Savings: $23,500.00**  
-**Estimated ROI Payback: 0.89 years**
+| Scenario | Adjusted Cost | Yearly Savings | ROI (yrs) |
+| --- | --- | --- | --- |
+| OS Update | $800 | $500 | 1.6 |
+| Switch to ARM CPU | $4,000 | $1,000 | 4 |
+| App Server Replacement | $8,000 | $12,000 | 0.67 |
+| Upgrade Legacy Databases | $8,000 | $10,000 | 0.8 |
+| TOTAL | $20,800 | $23,500 | 0.89 |
 
-| Scenario | Status | Adj. Cost | Yearly Savings | ROI (years) |
-|----------|--------|-----------|----------------|-------------|
-| Operating System Update | APPLICABLE | $800.00 | $500.00 | 1.6 |
-| Switch to ARM-based CPU | APPLICABLE | $4,000.00 | $1,000.00 | 4.0 |
-| Application Server Replacement | APPLICABLE | $8,000.00 | $12,000.00 | 0.67 |
-| Upgrade Legacy Databases | APPLICABLE | $8,000.00 | $10,000.00 | 0.8 |
-
-> *Costs adjusted by complexity multiplier: **0.8x** (complexity score / 5)*
+Portfolio planning note: AnalyticsApp-003 is best aligned to **Wave 1 / early Wave 2 quick-win modernization bundle covering OS, Tomcat, Python, and PostgreSQL.**

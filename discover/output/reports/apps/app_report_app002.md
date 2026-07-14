@@ -1,170 +1,176 @@
 # Application Report — CRMApp-002
 
-> Generated: 2026-07-13 | Application ID: `app002`
+**Generated:** 2026-07-14T07:33:55Z  
+**Analysis ID:** GD-2026-001  
+**App ID:** app002
 
 ## Application Overview
 
+CRMApp-002 already has cloud hosting and delivery automation, but it remains exposed through EOL RHEL 7 and WebSphere 7.0 plus an aging Java 11 runtime. The best value path is to remediate the middleware layer first, because that removes the highest support risk and unlocks follow-on modernization.
+
 | Field | Value |
-|-------|-------|
-| **App ID** | `app002` |
-| **Name** | CRMApp-002 |
-| **Description** | CRM system |
-| **Solution Type** | 3rd party |
-| **Business Criticality** | Medium |
-| **Status** | Production |
-| **Decommission Date** | not planned |
-| **Deployment Type** | AWS |
-| **Data Classification** | Internal |
-| **Business Unit** | Marketing |
-| **Business Capabilities** | Customer Management, Lead Tracking, Sales Analytics |
-| **User Count** | 1200 |
-| **Operating System** | RHEL 7 |
-| **Programming Language** | Java 11 |
-| **Application Server** | Websphere 7.0 |
-| **Architecture** | unknown |
-| **Containerized** | No |
-| **CI/CD** | Yes |
-| **Environment Count** | 2 |
-| **Servers** | sv05, sv07 |
-| **CPU Cores** | 2 |
-| **Memory (GB)** | 8 |
-| **API Endpoints** | 15 |
-| **External Interfaces** | 8 |
-| **Database Engine** | Amazon RDS MySQL |
-| **Database Storage (GB)** | 500 |
-| **Database License Required** | No |
-| **Logging Solution** | CloudWatch |
-| **Monitoring Tool** | Datadog |
+| --- | --- |
+| App ID | app002 |
+| Application Name | CRMApp-002 |
+| Business Unit | Marketing |
+| Criticality | Medium |
+| Deployment | AWS |
+| Architecture | Unknown |
+| Users | 1200 |
+| CI/CD | Yes |
+| Containers | No |
+| APIs | 15 |
+| External Interfaces | 8 |
+| Database | Amazon RDS MySQL |
+| Database Size | Managed service |
+| License Profile | No license cost |
+| Servers | sv05, sv07 |
+| Compute | 2 CPU cores / 8GB RAM |
+| Logging | Cloud-native / monitoring tools |
+| Monitoring | CloudWatch, Datadog |
+| Planned Decommission | Not stated |
 
 ## Technology Assessment
 
-🔴 **EOL components present** | 🟡 **Outdated components present**
+| Component | Version | Status | Assessment | EOL / Support | Confidence |
+| --- | --- | --- | --- | --- | --- |
+| 🔴 RHEL | 7 | EOL | End of life reached June 30, 2024. | 2024-06-30 | 10 |
+| 🟡 Java | 11 | OUTDATED | Extended support only; free Oracle updates ended in 2023. | 2026-09-30 | 8 |
+| 🔴 WebSphere | 7.0 | EOL | Vendor support ended in 2015. | 2015-09-30 | 10 |
+| ✅ Amazon RDS MySQL | Managed | CURRENT | AWS-managed service keeps database patching current. | Managed by AWS | 9 |
 
-| Component | Type | Version | Status | EOL Date | Notes |
-|-----------|------|---------|--------|----------|-------|
-| **RHEL 7** | os | 7 | 🔴 EOL | 2024-06-30 | Red Hat Enterprise Linux 7 reached End of Life on June 30, 2024. No further security patches or bug fixes are available without a paid ELS subscription. |
-| **Java 11** | programming_language | 11 | 🟡 OUTDATED | 2026-09-30 | Java 11 LTS is in extended support; Oracle's free public updates ended in September 2023. Java 17 and 21 are current LTS releases. Extended support continues through September 2026. |
-| **Websphere 7.0** | application_server | 7.0 | 🔴 EOL | 2015-09-30 | IBM WebSphere Application Server 7.0 reached End of Service on September 30, 2015. Running this version poses significant security and compliance risks. |
-| **Amazon RDS MySQL** | database | managed | ✅ CURRENT_VERSION | N/A | Amazon RDS for MySQL is a managed service that receives automatic patching and version updates from AWS. AWS manages security and compatibility. *(managed)* |
+Technology flags: EOL components = **Yes**; Outdated components = **Yes**; Missing version data = **No**.
 
 ## Complexity Assessment
 
-**Complexity Score: 7/10 — 🟠 High**
+**Complexity Score:** 7/10 — High  
+**Multiplier:** 1.4x
 
-### Complexity Factors
+| Factor | Why it matters |
+| --- | --- |
+| Third-party product constraints | Vendor packaging limits how aggressively components can be changed. |
+| Unknown architecture | Discovery work is needed before estimating migration sequencing confidently. |
+| RHEL 7 and WebSphere 7.0 are EOL | Unsupported infrastructure and middleware create immediate support and security pressure. |
+| Java 11 is aging | Runtime uplift will likely be needed during or after app server migration. |
+| 15 APIs and 8 external interfaces | Regression testing and contract validation are significant. |
+| 1200 users | Business-facing downtime and user acceptance windows must be tightly managed. |
+| No containers | Modern hosting flexibility is limited until the middleware stack is refreshed. |
 
-| Factor | Value |
-|--------|-------|
-| Business Criticality | Medium |
-| Architecture Tier | unknown |
-| Containerization | False |
-| Ci Cd | True |
-| Server Count | 2 |
-| External Interface Count | 8 |
-| Eol Components | True |
-| Outdated Components | True |
-| Technology Age | aging |
+CRMApp-002 is easier to modernize than the ERP because it already runs in AWS and has CI/CD, but it is still constrained by severe middleware obsolescence and third-party packaging. The priority is to replace WebSphere and remediate RHEL before broader optimization, because those moves unlock most other scenario paths.
 
-### Reasoning
+### Key risks
 
-CRMApp-002 scores High complexity (7/10). As a 3rd-party CRM solution hosted on AWS, it benefits from cloud infrastructure and an existing CI/CD pipeline. However, it runs on EOL RHEL 7 and uses EOL WebSphere 7.0 (EOL since 2015), which creates significant security and compliance exposure. Java 11 is in extended support and approaching EOL. The application is not containerized, and its architecture is unknown, adding discovery risk. With 1,200 users across Marketing and 8 external interfaces plus 15 API endpoints, integration surface is considerable. The 3rd-party nature means modernization may be constrained by vendor roadmaps. No database license cost and existing monitoring tools (CloudWatch, Datadog) reduce some operational complexity.
+- WebSphere 7.0 and RHEL 7 are both unsupported, creating urgent supportability and security exposure.
+- The application has a wide integration footprint, so middleware failure or rushed migration would have broad downstream impact.
+- Third-party ownership constrains refactoring and can make component upgrades dependent on vendor-supported paths.
+
+### Recommended actions
+
+- Prioritize application server replacement as the main structural modernization move.
+- Patch and remediate the OS in parallel to reduce EOL exposure while the application server program is mobilized.
+- Delay containerization and broader component refresh until a supported application server baseline is in place.
 
 ## Scenario Applicability
 
-| Scenario | Status | Priority | Effort | Summary |
-|----------|--------|----------|--------|---------|
-| **Operating System Update** | 🔵 APPLICABLE | Critical | Medium | RHEL 7 is EOL as of June 30, 2024. The OS is no longer receiving security patches, exposing a 1,200-... |
-| **Switch to Standard Linux Operating System** | ✅ FULFILLED | N/A | N/A | CRMApp-002 already runs on RHEL, which is a standard enterprise Linux OS. The requirement for a stan... |
-| **Switch to ARM-based CPU** | 🔴 BLOCKED | Low | Very High | WebSphere Application Server 7.0 does not support ARM architecture. Without replacing the EOL applic... |
-| **Application Server Replacement** | 🔵 APPLICABLE | Critical | High | WebSphere 7.0 is severely EOL (since September 2015) and represents the highest risk component. Repl... |
-| **Application Migration to Cloud Infrastructure (Lift & Shift)** | ✅ FULFILLED | N/A | N/A | CRMApp-002 is already deployed on AWS. The cloud deployment requirement is fulfilled. |
-| **Application Containerization** | 🔴 BLOCKED | Low | Very High | The 3rd-party CRM cannot be easily containerized without vendor support. WebSphere 7.0 is EOL and no... |
-| **Application Refactoring and De-coupling** | 🔴 BLOCKED | Low | N/A | As a 3rd-party application, source code refactoring is not available. Decoupling would need to happe... |
-| **Upgrade Legacy Databases** | ✅ FULFILLED | N/A | N/A | Amazon RDS MySQL is a managed service that AWS automatically keeps updated. Database version managem... |
-| **Switch DB Engine to Open-Source Database Solution** | ✅ FULFILLED | N/A | N/A | Amazon RDS MySQL is already an open-source database engine (MySQL is open-source). No commercial dat... |
-| **Update Outdated Components** | 🔴 BLOCKED | High | High | RHEL 7 and WebSphere 7.0 are EOL, not just outdated. Java 11 is approaching EOL. For a 3rd-party app... |
+| Scenario | Status | Priority | Effort |
+| --- | --- | --- | --- |
+| OS Update / Security Patch | APPLICABLE | Critical | Medium |
+| Switch to Standard Linux OS | FULFILLED | N/A | N/A |
+| Switch to ARM CPU | BLOCKED | Low | Very High |
+| Application Server Replacement | APPLICABLE | Critical | High |
+| Cloud Lift & Shift | FULFILLED | N/A | N/A |
+| Application Containerization | BLOCKED | Low | Very High |
+| Application Refactoring / Decoupling | BLOCKED | Low | N/A |
+| Upgrade Legacy Databases | FULFILLED | N/A | N/A |
+| Switch Database to Open Source | FULFILLED | N/A | N/A |
+| Update Outdated Components | BLOCKED | High | High |
 
-### Scenario Details
+### OS Update / Security Patch (`os_update_security_patch`)
 
-#### 🔵 Operating System Update
 - **Status:** APPLICABLE
 - **Priority:** Critical
 - **Effort:** Medium
-- **Reasoning:** RHEL 7 is EOL as of June 30, 2024. The OS is no longer receiving security patches, exposing a 1,200-user CRM application to unpatched vulnerabilities.
-- **Suggestion:** Upgrade from RHEL 7 to RHEL 9 (current) using in-place upgrade tools (Leapp) or re-platform to a new RHEL 9 instance. Validate Java 11 and WebSphere compatibility.
+- **Reasoning:** RHEL 7 is already EOL, so patch governance and near-term remediation are urgent for continued safe operation.
+- **Suggestion:** Establish a short remediation window to reduce exposure while the WebSphere replacement plan is finalized.
 
-#### ✅ Switch to Standard Linux Operating System
+### Switch to Standard Linux OS (`switch_to_standard_linux_os`)
+
 - **Status:** FULFILLED
 - **Priority:** N/A
 - **Effort:** N/A
-- **Reasoning:** CRMApp-002 already runs on RHEL, which is a standard enterprise Linux OS. The requirement for a standard Linux OS is met; the OS version upgrade is tracked under os_update_security_patch.
-- **Suggestion:** OS family already fulfilled. Proceed with RHEL 7 → RHEL 9 upgrade.
+- **Reasoning:** The application already runs on a standard Linux distribution, so no platform family change is required.
+- **Suggestion:** Focus effort on moving from an EOL release to a supported target during the middleware transition.
 
-#### 🔴 Switch to ARM-based CPU
+### Switch to ARM CPU (`switch_to_arm_cpu`)
+
 - **Status:** BLOCKED
 - **Priority:** Low
 - **Effort:** Very High
-- **Reasoning:** WebSphere Application Server 7.0 does not support ARM architecture. Without replacing the EOL application server first, ARM migration is not feasible.
-- **Suggestion:** Replace WebSphere 7.0 with a modern application server (Tomcat, WildFly, or Liberty) before evaluating ARM migration.
+- **Reasoning:** The current vendor stack and WebSphere dependency make ARM migration impractical at this stage.
+- **Suggestion:** Revisit only after the product is on a supported middleware and hosting baseline.
 
-#### 🔵 Application Server Replacement
+### Application Server Replacement (`application_server_replacement`)
+
 - **Status:** APPLICABLE
 - **Priority:** Critical
 - **Effort:** High
-- **Reasoning:** WebSphere 7.0 is severely EOL (since September 2015) and represents the highest risk component. Replacement with a modern, supported application server is urgently needed.
-- **Suggestion:** Migrate from WebSphere 7.0 to IBM Liberty, WildFly, or Apache Tomcat (latest). For a 3rd-party CRM, check vendor support for alternative application servers before migrating.
+- **Reasoning:** WebSphere 7.0 is long out of support and is the largest structural source of technical debt in the application.
+- **Suggestion:** Treat application server replacement as the anchor modernization initiative and align vendor supportability checks early.
 
-#### ✅ Application Migration to Cloud Infrastructure (Lift & Shift)
+### Cloud Lift & Shift (`app_deployment_to_cloud`)
+
 - **Status:** FULFILLED
 - **Priority:** N/A
 - **Effort:** N/A
-- **Reasoning:** CRMApp-002 is already deployed on AWS. The cloud deployment requirement is fulfilled.
-- **Suggestion:** Cloud deployment is already fulfilled. Focus on modernizing EOL components (RHEL 7, WebSphere 7.0) in the existing AWS environment.
+- **Reasoning:** The workload is already hosted in AWS.
+- **Suggestion:** Use the existing cloud footprint to simplify migration environments, testing, and rollback options.
 
-#### 🔴 Application Containerization
+### Application Containerization (`app_containerization`)
+
 - **Status:** BLOCKED
 - **Priority:** Low
 - **Effort:** Very High
-- **Reasoning:** The 3rd-party CRM cannot be easily containerized without vendor support. WebSphere 7.0 is EOL and not designed for container deployment. Architecture is unknown, adding discovery risk.
-- **Suggestion:** Containerization is blocked for a 3rd-party application on EOL WebSphere. Evaluate vendor-provided containerized versions or SaaS alternatives.
+- **Reasoning:** Containerization is not attractive while the application still depends on EOL middleware and vendor-controlled packaging.
+- **Suggestion:** Assess containers only after the application server is modernized and vendor support boundaries are clear.
 
-#### 🔴 Application Refactoring and De-coupling
+### Application Refactoring / Decoupling (`app_refactor_decoupling`)
+
 - **Status:** BLOCKED
 - **Priority:** Low
 - **Effort:** N/A
-- **Reasoning:** As a 3rd-party application, source code refactoring is not available. Decoupling would need to happen via API layer additions, which may conflict with vendor licensing terms.
-- **Suggestion:** Refactoring is blocked for 3rd-party software. Evaluate vendor API capabilities or plan replacement with a SaaS CRM (e.g., Salesforce, HubSpot).
+- **Reasoning:** As a third-party CRM, the application is not a good candidate for major internal refactoring by the enterprise owner.
+- **Suggestion:** Constrain modernization to vendor-supported platform, middleware, and integration patterns.
 
-#### ✅ Upgrade Legacy Databases
+### Upgrade Legacy Databases (`upgrade_legacy_databases`)
+
 - **Status:** FULFILLED
 - **Priority:** N/A
 - **Effort:** N/A
-- **Reasoning:** Amazon RDS MySQL is a managed service that AWS automatically keeps updated. Database version management is handled by AWS.
-- **Suggestion:** Database lifecycle management is handled by AWS RDS. Ensure the RDS MySQL major version is current (8.0+) and enable auto minor version upgrades.
+- **Reasoning:** The database runs as a managed RDS MySQL service and does not represent an immediate legacy database issue.
+- **Suggestion:** Continue to rely on managed-service lifecycle updates and focus application work higher in the stack.
 
-#### ✅ Switch DB Engine to Open-Source Database Solution
+### Switch Database to Open Source (`switch_db_engine_open_source`)
+
 - **Status:** FULFILLED
 - **Priority:** N/A
 - **Effort:** N/A
-- **Reasoning:** Amazon RDS MySQL is already an open-source database engine (MySQL is open-source). No commercial database license is required (database_license_required: false).
-- **Suggestion:** Open-source database requirement is already fulfilled with Amazon RDS MySQL.
+- **Reasoning:** MySQL is already an open-source engine delivered via managed AWS hosting.
+- **Suggestion:** No database engine replacement is required.
 
-#### 🔴 Update Outdated Components
+### Update Outdated Components (`update_outdated_components`)
+
 - **Status:** BLOCKED
 - **Priority:** High
 - **Effort:** High
-- **Reasoning:** RHEL 7 and WebSphere 7.0 are EOL, not just outdated. Java 11 is approaching EOL. For a 3rd-party application, component updates are constrained by vendor certification requirements — updating RHEL or Java may break the certified support matrix.
-- **Suggestion:** Coordinate with the CRM vendor to obtain a certified upgrade path. Check vendor support matrix for RHEL 9 and Java 17/21 compatibility.
+- **Reasoning:** Java uplift and wider component refresh depend on first replacing the unsupported WebSphere foundation.
+- **Suggestion:** Sequence runtime and dependency modernization immediately after the application server change.
 
 ## Business Case
 
-**Total Adjusted Investment: $15,400.00**  
-**Total Yearly Savings: $12,500.00**  
-**Estimated ROI Payback: 1.23 years**
+| Scenario | Adjusted Cost | Yearly Savings | ROI (yrs) |
+| --- | --- | --- | --- |
+| OS Update | $1,400 | $500 | 2.8 |
+| App Server Replacement | $14,000 | $12,000 | 1.17 |
+| TOTAL | $15,400 | $12,500 | 1.23 |
 
-| Scenario | Status | Adj. Cost | Yearly Savings | ROI (years) |
-|----------|--------|-----------|----------------|-------------|
-| Operating System Update | APPLICABLE | $1,400.00 | $500.00 | 2.8 |
-| Application Server Replacement | APPLICABLE | $14,000.00 | $12,000.00 | 1.17 |
-
-> *Costs adjusted by complexity multiplier: **1.4x** (complexity score / 5)*
+Portfolio planning note: CRMApp-002 is best aligned to **Wave 1 for OS remediation, then Wave 2 for the WebSphere replacement and follow-on runtime updates.**

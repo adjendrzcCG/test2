@@ -1,127 +1,162 @@
 # Portfolio Modernization Report
 
-> **Generated:** 2026-07-13 | **Reference Date:** 2026-07-13 | **Portfolio:** Enterprise Application Portfolio
-
 ## Executive Summary
 
-This portfolio modernization report covers **5 applications** assessed for technology lifecycle status, complexity, modernization opportunities, and business value.
+Four in-scope applications require modernization attention, with three carrying EOL components and three carrying outdated components. The portfolio can return its investment in about 2.44 years, but value depends on sequencing quick-win risk reduction ahead of the two large transformation candidates. The strongest near-term moves are OS remediation everywhere, app server replacement where middleware is unsupported, and tightly governed selective transformation for ERP and HR.
 
 | Metric | Value |
-|--------|-------|
-| Total Applications | 5 |
-| Out-of-Scope (Retired) | 1 |
-| In-Scope (Production) | 4 |
-| Applications with EOL Components | 3 |
-| Applications with Outdated Components | 3 |
-| Applications with Unknown Version Data | 1 |
-| Total Portfolio Investment Required | $963,940.00 |
-| Total Yearly Savings | $395,400.00 |
-| Portfolio ROI Payback | ~2.44 years |
-
-The portfolio carries **significant technical debt** concentrated in EOL operating systems (RHEL 7, Windows Server 2012), severely EOL middleware (WebSphere 7.0, Apache Tomcat 6.1), and EOL languages/runtimes (Python 3.9, PostgreSQL 13). Three of four in-scope applications have EOL components requiring immediate attention. ERPApp-001 and HRApp-004 represent the highest modernization risk and investment due to their High business criticality and legacy architecture.
+| --- | --- |
+| Generated timestamp | 2026-07-14T07:33:55Z |
+| Analysis ID | GD-2026-001 |
+| Applications in file | 5 |
+| In scope | 4 |
+| Out of scope | app005 — EComApp-005 (Retired) |
+| Apps with EOL components | 3 |
+| Apps with outdated components | 3 |
+| Apps with missing version data | 1 |
+| Total portfolio investment | $963,940 |
+| Total yearly savings | $395,400 |
+| ROI payback | 2.44 years |
 
 ## Portfolio Overview
 
-| App ID | Name | Criticality | Status | Deployment | Containerized | CI/CD | Complexity |
-|--------|------|-------------|--------|------------|---------------|-------|------------|
-| `app001` | **ERPApp-001** | High | Production | On-Premise | No | No | 9/10 (Very High) |
-| `app002` | **CRMApp-002** | Medium | Production | AWS | No | Yes | 7/10 (High) |
-| `app003` | **AnalyticsApp-003** | Low | Production | AWS | Yes | Yes | 4/10 (Medium) |
-| `app004` | **HRApp-004** | High | Production | AWS+On-premise | Yes | Yes | 7/10 (High) |
-| `app005` | **EComApp-005** *(Out of Scope)* | Critical | Retired | AWS | Yes | Yes | N/A (Out of Scope) |
+| App | Name | BU | Criticality | Deploy | Containers | CI/CD | Complexity |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| app001 | ERPApp-001 | Finance | High | On-Premise | No | No | 9/10 Very High |
+| app002 | CRMApp-002 | Marketing | Medium | AWS | No | Yes | 7/10 High |
+| app003 | AnalyticsApp-003 | IT | Low | AWS | Yes | Yes | 4/10 Medium |
+| app004 | HRApp-004 | HR | High | AWS+On-Prem | Yes | Yes | 7/10 High |
+| app005 | EComApp-005 | Operations | Critical | AWS | Yes | Yes | N/A (Retired) |
 
 ## Technology Health
 
-### EOL & Outdated Component Summary
+| App | Application | EOL Components | Outdated Components | Missing Version Data | Assessment Detail |
+| --- | --- | --- | --- | --- | --- |
+| app001 | ERPApp-001 | No | Yes | No | AIX 7.2 (OUTDATED), COBOL 2014 (CURRENT), Oracle 19c (CURRENT) |
+| app002 | CRMApp-002 | Yes | Yes | No | RHEL 7 (EOL), Java 11 (OUTDATED), WebSphere 7.0 (EOL), Amazon RDS MySQL Managed (CURRENT) |
+| app003 | AnalyticsApp-003 | Yes | No | No | RHEL 7 (EOL), Python 3.9 (EOL), Apache Tomcat 6.1 (EOL), PostgreSQL 13 (EOL) |
+| app004 | HRApp-004 | Yes | Yes | Yes | Windows Server 2012 (EOL), .NET Core Unknown (NO_KNOWLEDGE), Microsoft IIS 8.0 (EOL), SQL Server 2019 (OUTDATED) |
 
-| App | OS | Language | App Server | Database | EOL? | Outdated? | Missing Version? |
-|-----|----|----------|------------|----------|------|-----------|-----------------|
-| **ERPApp-001** | AIX 7.2 — 🟡 Outdated | COBOL-2014 — ✅ Current | N/A | Oracle 19c — ✅ Current | ✅ No | 🟡 Yes | ✅ No |
-| **CRMApp-002** | RHEL 7 — 🔴 EOL | Java 11 — 🟡 Outdated | Websphere 7.0 — 🔴 EOL | Amazon RDS MySQL — ✅ Current | 🔴 Yes | 🟡 Yes | ✅ No |
-| **AnalyticsApp-003** | RHEL 7 — 🔴 EOL | Python 3.9 — 🔴 EOL | Apache Tomcat 6.1 — 🔴 EOL | PostgreSQL 13 — 🔴 EOL | 🔴 Yes | ✅ No | ✅ No |
-| **HRApp-004** | Windows Server 2012 — 🔴 EOL | .NET Core — ❓ Unknown | Microsoft IIS 8.0 — 🔴 EOL | SQL Server 2019 — 🟡 Outdated | 🔴 Yes | 🟡 Yes | ❓ Yes |
+### Key portfolio risks
 
-### Key Technology Risks
-
-- 🔴 **RHEL 7** (EOL June 2024) — affects CRMApp-002 and AnalyticsApp-003
-- 🔴 **Windows Server 2012** (EOL October 2023) — affects HRApp-004
-- 🔴 **WebSphere 7.0** (EOL September 2015) — affects CRMApp-002; critically overdue
-- 🔴 **Apache Tomcat 6.1** (EOL December 2016) — affects AnalyticsApp-003; critically overdue
-- 🔴 **Python 3.9** (EOL October 2025) — affects AnalyticsApp-003
-- 🔴 **PostgreSQL 13** (EOL November 2025) — affects AnalyticsApp-003
-- 🔴 **Microsoft IIS 8.0** (EOL October 2023) — affects HRApp-004
-- 🟡 **AIX 7.2** (Outdated) — affects ERPApp-001
-- 🟡 **Java 11** (Outdated/approaching EOL) — affects CRMApp-002
-- 🟡 **SQL Server 2019** (Outdated, mainstream support ended Jan 2025) — affects HRApp-004
-- ❓ **.NET Core** (Version unknown) — affects HRApp-004; version discovery required
+- Unsupported operating systems and middleware are concentrated in CRM, Analytics, and HR, creating urgent supportability and security pressure.
+- ERP and HR dominate total investment, so poor sequencing could consume budget before faster ROI work is realized.
+- app004 has missing version data for .NET Core, which must be resolved early to protect scope, cost, and security assumptions.
+- Several strategic options are blocked by current architecture, especially ARM moves and containerization for the most legacy workloads.
 
 ## Top Modernization Opportunities
 
-Based on ROI, urgency, and feasibility:
-
-| Rank | Scenario | Application(s) | Status | Adj. Cost | Yearly Savings | ROI |
-|------|----------|----------------|--------|-----------|----------------|-----|
-| 1 | Application Server Replacement (Tomcat 6.1 → 10.x) | AnalyticsApp-003 | 🔵 APPLICABLE | $8,000 | $12,000 | 0.67 yrs |
-| 2 | Upgrade Legacy Databases (PostgreSQL 13 → 16+) | AnalyticsApp-003 | 🔵 APPLICABLE | $8,000 | $10,000 | 0.80 yrs |
-| 3 | Switch to Standard Linux OS | ERPApp-001 | 🔵 APPLICABLE | $540 | $400 | 1.35 yrs |
-| 4 | Application Server Replacement (WebSphere 7.0) | CRMApp-002 | 🔵 APPLICABLE | $14,000 | $12,000 | 1.17 yrs |
-| 5 | OS Security Patch (all in-scope apps) | All 4 apps | 🔵 APPLICABLE | ~$5,400 | ~$2,000 | 2.7 yrs |
-| 6 | Full Cloud Migration (HRApp-004) | HRApp-004 | 🟡 PARTIALLY_FULFILLED | $7,000 | $3,000 | 2.33 yrs |
-| 7 | Switch DB Engine to Open-Source | ERPApp-001 | 🔵 APPLICABLE | $45,000 | $15,000 | 3.0 yrs |
-| 8 | Application Refactoring (ERPApp-001 COBOL) | ERPApp-001 | 🔵 APPLICABLE | $450,000 | $150,000 | 3.0 yrs |
+| Rank | Scenario | Application | Adj. Cost | Yearly Savings | ROI (yrs) |
+| --- | --- | --- | --- | --- | --- |
+| 1 | App Server Replacement | AnalyticsApp-003 | $8,000 | $12,000/yr | 0.67 |
+| 2 | Upgrade Legacy Databases | AnalyticsApp-003 | $8,000 | $10,000/yr | 0.8 |
+| 3 | App Server Replacement | CRMApp-002 | $14,000 | $12,000/yr | 1.17 |
+| 4 | App Server Replacement | HRApp-004 | $14,000 | $12,000/yr | 1.17 |
+| 5 | Switch to Linux OS | ERPApp-001 | $540 | $400/yr | 1.35 |
+| 6 | Upgrade Legacy Databases | HRApp-004 | $14,000 | $10,000/yr | 1.4 |
 
 ## Financial Summary
 
-| Metric | Value |
-|--------|-------|
-| Total Portfolio Investment | **$963,940.00** |
-| Total Yearly Savings | **$395,400.00** |
-| Portfolio ROI Payback | **2.44 years** |
+| Portfolio Metric | Value |
+| --- | --- |
+| Total Investment | $963,940 |
+| Total Yearly Savings | $395,400 |
+| Portfolio Payback | 2.44 years |
 
-### Per-Application Financial Summary
-
-| Application | Complexity | Investment | Yearly Savings | ROI (years) |
-|-------------|------------|------------|----------------|-------------|
-| **ERPApp-001** (`app001`) | 1.8x | $506,340.00 | $168,900.00 | 3.0 |
-| **CRMApp-002** (`app002`) | 1.4x | $15,400.00 | $12,500.00 | 1.23 |
-| **AnalyticsApp-003** (`app003`) | 0.8x | $20,800.00 | $23,500.00 | 0.89 |
-| **HRApp-004** (`app004`) | 1.4x | $421,400.00 | $190,500.00 | 2.21 |
-
-> *Investment costs are base migration costs adjusted by per-application complexity multiplier (complexity score ÷ 5).*
-> *Only APPLICABLE and PARTIALLY_FULFILLED scenarios are included in cost calculations.*
-> *Savings are first-year estimates; multi-year compound savings will increase ROI.*
+| App | Application | Investment | Yearly Savings | ROI (yrs) |
+| --- | --- | --- | --- | --- |
+| app001 | ERPApp-001 | $506,340 | $168,900 | 3 |
+| app002 | CRMApp-002 | $15,400 | $12,500 | 1.23 |
+| app003 | AnalyticsApp-003 | $20,800 | $23,500 | 0.89 |
+| app004 | HRApp-004 | $421,400 | $190,500 | 2.21 |
 
 ## Risk Applications
 
-### 🔴 Critical Risk: ERPApp-001
-- **Risk:** COBOL monolith on EOL AIX 7.2, no CI/CD, no containerization, Confidential data, decommission target 2027
-- **Action:** Immediate COBOL code analysis, AIX upgrade, cloud migration planning, Oracle license cost reduction
-- **Impact:** Finance/Accounting system failure would be catastrophic to business operations
+### CRMApp-002 — Critical risk
 
-### 🔴 Critical Risk: CRMApp-002
-- **Risk:** WebSphere 7.0 (EOL since 2015) + RHEL 7 (EOL 2024) combination creates severe unpatched vulnerability exposure
-- **Action:** Emergency WebSphere 7.0 replacement, RHEL 7 → RHEL 9 upgrade
-- **Impact:** 1,200 Marketing users affected; Customer data exposure risk
+CRMApp-002 already has cloud hosting and delivery automation, but it remains exposed through EOL RHEL 7 and WebSphere 7.0 plus an aging Java 11 runtime. The best value path is to remediate the middleware layer first, because that removes the highest support risk and unlocks follow-on modernization.
 
-### 🟠 High Risk: AnalyticsApp-003
-- **Risk:** All four technology components are EOL; however, application is already containerized with CI/CD
-- **Action:** Systematic component update plan — OS, Python, Tomcat, PostgreSQL all need upgrading
-- **Mitigation:** Low complexity (4/10) and existing containerization make this highly actionable
+**Key risks**
 
-### 🟠 High Risk: HRApp-004
-- **Risk:** EOL Windows Server 2012 + IIS 8.0, unknown .NET Core version, HR/Payroll data sensitivity
-- **Action:** OS upgrade to Windows Server 2022, identify .NET Core version, complete cloud migration
-- **Impact:** Payroll processing disruption would have immediate employee impact
+- WebSphere 7.0 and RHEL 7 are both unsupported, creating urgent supportability and security exposure.
+- The application has a wide integration footprint, so middleware failure or rushed migration would have broad downstream impact.
+- Third-party ownership constrains refactoring and can make component upgrades dependent on vendor-supported paths.
+
+**Recommended sequencing**
+
+- Wave 1 for OS remediation, then Wave 2 for the WebSphere replacement and follow-on runtime updates.
+
+### HRApp-004 — Critical risk
+
+HRApp-004 has a usable modernization foundation, but its hosting stack is already out of support and key lifecycle data for .NET is missing. The right approach is to stabilize the platform first, close the information gap, and then use that foundation to finish the cloud journey and reduce licensing overhead.
+
+**Key risks**
+
+- Windows Server 2012 and IIS 8.0 are unsupported in a high-sensitivity HR environment.
+- The unknown .NET Core version introduces planning uncertainty and could hide additional runtime remediation effort.
+- Hybrid deployment increases operational complexity and slows standardization of controls, observability, and release procedures.
+
+**Recommended sequencing**
+
+- Wave 1 for discovery and platform hardening, Wave 2 for hosting/cloud completion, Wave 3 for refactoring and database economics.
+
+### ERPApp-001 — High risk
+
+ERPApp-001 is a mission-critical finance ERP with a still-supported core stack, but it remains anchored to outdated AIX infrastructure and a high-friction operating model with no CI/CD or containers. Because the application is scheduled for decommission in 2027, modernization should emphasize stabilization, supportability, and selective cost takeout rather than full transformation.
+
+**Key risks**
+
+- Outdated AIX 7.2 increases security, support, and platform continuity risk ahead of the planned retirement window.
+- The 1-tier design plus no CI/CD/no containers makes even small changes operationally expensive and slower to validate.
+- A 1000GB licensed Oracle footprint and five interfaces raise cutover complexity for any platform or data move.
+
+**Recommended sequencing**
+
+- Wave 1 for OS hardening and Linux replatform decision; defer deep transformation to replacement planning.
+
+### AnalyticsApp-003 — High risk
+
+AnalyticsApp-003 is low criticality and already operates with modern engineering practices, but nearly every runtime layer is out of support. It is the best candidate for a bundled remediation sprint because the technical debt is urgent while delivery complexity remains manageable.
+
+**Key risks**
+
+- The application has full-stack EOL exposure across OS, runtime, application server, and database.
+- If the low criticality label suppresses urgency, the environment may remain vulnerable even though upgrades are comparatively easy.
+- Independent remediation projects could duplicate effort; the stack should be updated as a coordinated package.
+
+**Recommended sequencing**
+
+- Wave 1 / early Wave 2 quick-win modernization bundle covering OS, Tomcat, Python, and PostgreSQL.
+
+## Modernization Roadmap
+
+### Wave 1: Quick Wins (0-6 months)
+
+Reduce immediate support and security exposure while improving planning certainty.
+
+- Execute OS/security remediation across app001-app004, prioritized by EOL severity.
+- Complete .NET Core version discovery and hosting baseline assessment for app004.
+- Launch app003 as the proving ground for coordinated stack refresh because it is low complexity and already automated.
+
+### Wave 2: Strategic Modernization (6-18 months)
+
+Remove unsupported middleware, finish cloud/platform alignment, and capture high-confidence ROI.
+
+- Replace WebSphere for app002, Tomcat for app003, and IIS hosting for app004.
+- Complete partial cloud migration for app004 and align operational tooling around the target platform.
+- Bundle app003 runtime and database upgrades to eliminate the largest EOL concentration in the portfolio.
+
+### Wave 3: Transformation (18-36 months)
+
+Pursue selective structural change only where the business case survives timeline and support assumptions.
+
+- Revisit ERP refactoring or database engine change only if the 2027 retirement horizon moves.
+- Use app004 platform stabilization outcomes to decide on refactoring scope and database cost optimization.
+- Evaluate ARM for app003 after the supported baseline is restored and performance benchmarks are available.
 
 ## Per-Application Reports
 
-Detailed reports for each in-scope application:
-
-- [ERPApp-001 (app001)](apps/app_report_app001.md)
-- [CRMApp-002 (app002)](apps/app_report_app002.md)
-- [AnalyticsApp-003 (app003)](apps/app_report_app003.md)
-- [HRApp-004 (app004)](apps/app_report_app004.md)
-
----
-
-*app005 (EComApp-005) is excluded from this report as its status is **Retired**.*
+- [ERPApp-001](apps/app_report_app001.md)
+- [CRMApp-002](apps/app_report_app002.md)
+- [AnalyticsApp-003](apps/app_report_app003.md)
+- [HRApp-004](apps/app_report_app004.md)

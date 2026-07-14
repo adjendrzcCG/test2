@@ -1,174 +1,180 @@
 # Application Report — HRApp-004
 
-> Generated: 2026-07-13 | Application ID: `app004`
+**Generated:** 2026-07-14T07:33:55Z  
+**Analysis ID:** GD-2026-001  
+**App ID:** app004
 
 ## Application Overview
 
+HRApp-004 has a usable modernization foundation, but its hosting stack is already out of support and key lifecycle data for .NET is missing. The right approach is to stabilize the platform first, close the information gap, and then use that foundation to finish the cloud journey and reduce licensing overhead.
+
 | Field | Value |
-|-------|-------|
-| **App ID** | `app004` |
-| **Name** | HRApp-004 |
-| **Description** | HR management system |
-| **Solution Type** | Custom made |
-| **Business Criticality** | High |
-| **Status** | Production |
-| **Decommission Date** | not planned |
-| **Deployment Type** | AWS+On-premise |
-| **Data Classification** | Internal |
-| **Business Unit** | HR |
-| **Business Capabilities** | Employee Management, Payroll Processing, Benefits Administration |
-| **User Count** | 670 |
-| **Operating System** | Windows Server 2012 |
-| **Programming Language** | .NET Core |
-| **Application Server** | Microsoft IIS 8.0 |
-| **Architecture** | 2-Tier |
-| **Containerized** | Yes |
-| **CI/CD** | Yes |
-| **Environment Count** | 2 |
-| **Servers** | sv06, sv02 |
-| **CPU Cores** | 4 |
-| **Memory (GB)** | 16 |
-| **API Endpoints** | 12 |
-| **External Interfaces** | 6 |
-| **Database Engine** | SQL Server 2019 |
-| **Database Storage (GB)** | 750 |
-| **Database License Required** | Yes |
-| **Logging Solution** | Splunk |
-| **Monitoring Tool** | CloudWatch |
+| --- | --- |
+| App ID | app004 |
+| Application Name | HRApp-004 |
+| Business Unit | HR |
+| Criticality | High |
+| Deployment | AWS + On-Premise hybrid |
+| Architecture | 2-Tier |
+| Users | 670 |
+| CI/CD | Yes |
+| Containers | Yes |
+| APIs | 12 |
+| External Interfaces | 6 |
+| Database | SQL Server 2019 |
+| Database Size | 750GB |
+| License Profile | Licensed |
+| Servers | sv06, sv02 |
+| Compute | 4 CPU cores / 16GB RAM |
+| Logging | Splunk |
+| Monitoring | CloudWatch |
+| Planned Decommission | Not stated |
 
 ## Technology Assessment
 
-🔴 **EOL components present** | 🟡 **Outdated components present** | ❓ **Missing version data**
+| Component | Version | Status | Assessment | EOL / Support | Confidence |
+| --- | --- | --- | --- | --- | --- |
+| 🔴 Windows Server | 2012 | EOL | End of life reached October 10, 2023. | 2023-10-10 | 10 |
+| ❓ .NET Core | Unknown | NO_KNOWLEDGE | Version not supplied, so lifecycle status cannot be confirmed. | Unknown | 3 |
+| 🔴 Microsoft IIS | 8.0 | EOL | Lifecycle tied to Windows Server 2012 and therefore unsupported. | 2023-10-10 | 10 |
+| 🟡 SQL Server | 2019 | OUTDATED | Mainstream support ended in 2025; extended support continues. | 2030-01-07 (extended) | 9 |
 
-| Component | Type | Version | Status | EOL Date | Notes |
-|-----------|------|---------|--------|----------|-------|
-| **Windows Server 2012** | os | 2012 | 🔴 EOL | 2023-10-10 | Windows Server 2012 reached End of Extended Support on October 10, 2023. Microsoft no longer provides security updates, exposing the system to unpatched vulnerabilities. |
-| **.NET Core** | programming_language | unknown | ❓ NO_KNOWLEDGE | N/A | The .NET Core version is not specified. Without knowing the exact version (e.g., 3.1, 5.0, 6.0, 8.0), lifecycle status cannot be determined. Version discovery is required. |
-| **Microsoft IIS 8.0** | application_server | 8.0 | 🔴 EOL | 2023-10-10 | IIS 8.0 is bundled with Windows Server 2012 and reached End of Life on October 10, 2023, together with Windows Server 2012. |
-| **SQL Server 2019** | database | 2019 | 🟡 OUTDATED | 2030-01-08 | SQL Server 2019 mainstream support ended January 7, 2025. It remains in Extended Support through January 8, 2030, but is no longer the current version (SQL Server 2022 is latest). |
+Technology flags: EOL components = **Yes**; Outdated components = **Yes**; Missing version data = **Yes**.
 
 ## Complexity Assessment
 
-**Complexity Score: 7/10 — 🟠 High**
+**Complexity Score:** 7/10 — High  
+**Multiplier:** 1.4x
 
-### Complexity Factors
+| Factor | Why it matters |
+| --- | --- |
+| High criticality HR and payroll-sensitive data | Security and downtime concerns are elevated because the system processes sensitive employee information. |
+| Hybrid AWS + on-prem deployment | Operational ownership is split across environments and complicates cutover sequencing. |
+| Windows Server 2012 and IIS 8.0 are EOL | Unsupported platform layers create urgent remediation pressure. |
+| Unknown .NET Core version | Missing lifecycle data raises planning risk and can hide larger upgrade effort. |
+| Containers and CI/CD already present | Delivery mechanics are stronger than the underlying platform health. |
+| Six external interfaces and 12 APIs | Interface validation remains significant for every platform change. |
+| Licensed SQL Server footprint | There is a medium-term cost optimization angle beyond support remediation. |
 
-| Factor | Value |
-|--------|-------|
-| Business Criticality | High |
-| Architecture Tier | 2-Tier |
-| Containerization | True |
-| Ci Cd | True |
-| Server Count | 2 |
-| External Interface Count | 6 |
-| Eol Components | True |
-| Outdated Components | True |
-| Technology Age | aging |
+HRApp-004 mixes urgent infrastructure obsolescence with a partially modern engineering posture. It is easier to modernize than the ERP because CI/CD and containers exist, but the hybrid estate, missing .NET version data, and sensitivity of HR data make planning discipline essential before any major refactor or database change.
 
-### Reasoning
+### Key risks
 
-HRApp-004 scores High complexity (7/10). The application has modernization-positive traits: containerized, CI/CD present, and already partially deployed on AWS. However, it runs on EOL Windows Server 2012 (EOL October 2023) with EOL IIS 8.0, presenting immediate security risk. The .NET Core version is unspecified, introducing lifecycle uncertainty. As a Custom made, High criticality application handling Payroll Processing and HR data (Internal classification), modernization carries significant business risk. The hybrid AWS+On-premise deployment adds architectural complexity requiring careful migration planning. SQL Server 2019 is in extended support (mainstream ended Jan 2025), and the licensed database engine adds cost and migration considerations. With 6 external interfaces and 12 API endpoints, integration re-testing will be substantial.
+- Windows Server 2012 and IIS 8.0 are unsupported in a high-sensitivity HR environment.
+- The unknown .NET Core version introduces planning uncertainty and could hide additional runtime remediation effort.
+- Hybrid deployment increases operational complexity and slows standardization of controls, observability, and release procedures.
+
+### Recommended actions
+
+- Close the .NET version data gap immediately so the rest of the remediation plan can be validated.
+- Replace or uplift the unsupported Windows/IIS hosting baseline as the first major engineering action.
+- Use the existing CI/CD and container base to complete cloud migration and stage later database/licensing improvements.
 
 ## Scenario Applicability
 
-| Scenario | Status | Priority | Effort | Summary |
-|----------|--------|----------|--------|---------|
-| **Operating System Update** | 🔵 APPLICABLE | Critical | Medium | Windows Server 2012 is EOL (October 10, 2023). The OS is no longer receiving security patches, repre... |
-| **Switch to Standard Linux Operating System** | ⚪ NOT_APPLICABLE | N/A | N/A | HRApp-004 uses IIS 8.0 and .NET Core on Windows Server, which are Windows-specific components. While... |
-| **Switch to ARM-based CPU** | 🔴 BLOCKED | Low | Very High | Windows Server 2012 does not support ARM architecture. IIS 8.0 is also Windows x86/x64 only. ARM mig... |
-| **Application Server Replacement** | 🔵 APPLICABLE | Critical | Medium | Microsoft IIS 8.0 is EOL (tied to Windows Server 2012 EOL, October 2023). Upgrade to IIS 10.0 (Windo... |
-| **Application Migration to Cloud Infrastructure (Lift & Shift)** | 🟡 PARTIALLY_FULFILLED | High | High | HRApp-004 has a hybrid AWS+On-premise deployment. Some components are already in AWS, but on-premise... |
-| **Application Containerization** | ✅ FULFILLED | N/A | N/A | HRApp-004 is already containerized. Container deployment is implemented. |
-| **Application Refactoring and De-coupling** | 🔵 APPLICABLE | Medium | Very High | HRApp-004 is a Custom made 2-Tier application. Refactoring to a microservices or API-first architect... |
-| **Upgrade Legacy Databases** | 🔵 APPLICABLE | Medium | Medium | SQL Server 2019 mainstream support ended January 7, 2025. While extended support continues until 203... |
-| **Switch DB Engine to Open-Source Database Solution** | 🔵 APPLICABLE | Medium | High | SQL Server 2019 requires a commercial license (database_license_required: true). Migrating to Postgr... |
-| **Update Outdated Components** | 🔵 APPLICABLE | High | High | Windows Server 2012 (EOL), IIS 8.0 (EOL), and SQL Server 2019 (outdated) all require updates. The .N... |
+| Scenario | Status | Priority | Effort |
+| --- | --- | --- | --- |
+| OS Update / Security Patch | APPLICABLE | Critical | Medium |
+| Switch to Standard Linux OS | NOT_APPLICABLE | N/A | N/A |
+| Switch to ARM CPU | BLOCKED | Low | Very High |
+| Application Server Replacement | APPLICABLE | Critical | Medium |
+| Cloud Lift & Shift | PARTIALLY_FULFILLED | High | High |
+| Application Containerization | FULFILLED | N/A | N/A |
+| Application Refactoring / Decoupling | APPLICABLE | Medium | Very High |
+| Upgrade Legacy Databases | APPLICABLE | Medium | Medium |
+| Switch Database to Open Source | APPLICABLE | Medium | High |
+| Update Outdated Components | APPLICABLE | High | High |
 
-### Scenario Details
+### OS Update / Security Patch (`os_update_security_patch`)
 
-#### 🔵 Operating System Update
 - **Status:** APPLICABLE
 - **Priority:** Critical
 - **Effort:** Medium
-- **Reasoning:** Windows Server 2012 is EOL (October 10, 2023). The OS is no longer receiving security patches, representing a critical compliance and security risk for an HR application handling Payroll data.
-- **Suggestion:** Upgrade to Windows Server 2022 (current LTS) or migrate to Windows Server 2019. For containerized components, evaluate migrating to Linux-based containers to reduce Windows licensing costs.
+- **Reasoning:** The current Windows Server baseline is already EOL, so immediate remediation is required to reduce infrastructure risk.
+- **Suggestion:** Run a time-boxed OS remediation program with validation of HR data handling, access controls, and recovery procedures.
 
-#### ⚪ Switch to Standard Linux Operating System
+### Switch to Standard Linux OS (`switch_to_standard_linux_os`)
+
 - **Status:** NOT_APPLICABLE
 - **Priority:** N/A
 - **Effort:** N/A
-- **Reasoning:** HRApp-004 uses IIS 8.0 and .NET Core on Windows Server, which are Windows-specific components. While .NET Core is cross-platform, IIS is Windows-only. Switching to Linux would require replacing IIS with a Linux-compatible web server.
-- **Suggestion:** Not directly applicable without replacing IIS. Consider migrating to Linux after replacing IIS with Nginx or Kestrel as part of a broader modernization initiative.
+- **Reasoning:** The application is aligned to a Windows/.NET/IIS hosting model, so a Linux switch is not the direct modernization path.
+- **Suggestion:** Focus on supported Windows or platform-service targets instead of forcing an OS family rewrite.
 
-#### 🔴 Switch to ARM-based CPU
+### Switch to ARM CPU (`switch_to_arm_cpu`)
+
 - **Status:** BLOCKED
 - **Priority:** Low
 - **Effort:** Very High
-- **Reasoning:** Windows Server 2012 does not support ARM architecture. IIS 8.0 is also Windows x86/x64 only. ARM migration requires OS modernization and application server replacement first.
-- **Suggestion:** ARM migration is blocked until Windows Server is upgraded to a version with ARM support and IIS is replaced with an ARM-compatible web server.
+- **Reasoning:** ARM does not align well with the current Windows/IIS estate and would introduce unnecessary complexity right now.
+- **Suggestion:** Reassess only if the application later moves to a different supported hosting model.
 
-#### 🔵 Application Server Replacement
+### Application Server Replacement (`application_server_replacement`)
+
 - **Status:** APPLICABLE
 - **Priority:** Critical
 - **Effort:** Medium
-- **Reasoning:** Microsoft IIS 8.0 is EOL (tied to Windows Server 2012 EOL, October 2023). Upgrade to IIS 10.0 (Windows Server 2019/2022) or replace with a cross-platform alternative (Kestrel, Nginx).
-- **Suggestion:** Upgrade IIS to version 10.0 as part of the Windows Server 2022 migration. Alternatively, evaluate Kestrel (built-in .NET web server) or Nginx for cross-platform deployment.
+- **Reasoning:** IIS 8.0 is unsupported, making application server uplift a priority alongside the OS remediation.
+- **Suggestion:** Treat web/application hosting modernization as a paired workstream with the operating system update.
 
-#### 🟡 Application Migration to Cloud Infrastructure (Lift & Shift)
+### Cloud Lift & Shift (`app_deployment_to_cloud`)
+
 - **Status:** PARTIALLY_FULFILLED
 - **Priority:** High
 - **Effort:** High
-- **Reasoning:** HRApp-004 has a hybrid AWS+On-premise deployment. Some components are already in AWS, but on-premise components remain. Full cloud migration is not yet complete.
-- **Suggestion:** Complete the cloud migration by moving remaining on-premise components to AWS. Evaluate AWS ECS or EKS for the containerized components. Ensure data residency requirements for HR/Payroll data are met.
+- **Reasoning:** The application already has a cloud footprint, but the remaining hybrid topology keeps operational complexity high.
+- **Suggestion:** Use platform remediation to standardize deployment and retire residual on-prem dependencies where feasible.
 
-#### ✅ Application Containerization
+### Application Containerization (`app_containerization`)
+
 - **Status:** FULFILLED
 - **Priority:** N/A
 - **Effort:** N/A
-- **Reasoning:** HRApp-004 is already containerized. Container deployment is implemented.
-- **Suggestion:** Containerization is fulfilled. Update container base images to resolve Windows Server 2012 EOL risk and improve container security posture.
+- **Reasoning:** Containers are already in place, which reduces delivery friction for later modernization phases.
+- **Suggestion:** Exploit the container baseline to rehearse runtime and hosting upgrades in lower-risk environments.
 
-#### 🔵 Application Refactoring and De-coupling
+### Application Refactoring / Decoupling (`app_refactor_decoupling`)
+
 - **Status:** APPLICABLE
 - **Priority:** Medium
 - **Effort:** Very High
-- **Reasoning:** HRApp-004 is a Custom made 2-Tier application. Refactoring to a microservices or API-first architecture would enable independent scaling of HR modules (Payroll, Benefits, Employee Management) and facilitate future cloud-native migration.
-- **Suggestion:** Decompose the 2-Tier .NET Core application into domain-aligned microservices. Expose payroll, benefits, and employee management as independent services with REST/GraphQL APIs.
+- **Reasoning:** Deeper refactoring could simplify the hybrid architecture, but it should follow platform stabilization and .NET discovery.
+- **Suggestion:** Limit initial refactoring to seams that support cloud completion, supportability, or security segregation.
 
-#### 🔵 Upgrade Legacy Databases
+### Upgrade Legacy Databases (`upgrade_legacy_databases`)
+
 - **Status:** APPLICABLE
 - **Priority:** Medium
 - **Effort:** Medium
-- **Reasoning:** SQL Server 2019 mainstream support ended January 7, 2025. While extended support continues until 2030, upgrading to SQL Server 2022 (current) would restore full feature and security patch coverage.
-- **Suggestion:** Upgrade from SQL Server 2019 to SQL Server 2022. Use the Database Experimentation Assistant (DEA) to identify compatibility issues before migration.
+- **Reasoning:** SQL Server 2019 is not EOL, but it is past mainstream support and should be aligned with broader platform modernization.
+- **Suggestion:** Sequence the database upgrade after the hosting tier is stabilized to avoid stacking major changes in one release.
 
-#### 🔵 Switch DB Engine to Open-Source Database Solution
+### Switch Database to Open Source (`switch_db_engine_open_source`)
+
 - **Status:** APPLICABLE
 - **Priority:** Medium
 - **Effort:** High
-- **Reasoning:** SQL Server 2019 requires a commercial license (database_license_required: true). Migrating to PostgreSQL would eliminate SQL Server licensing costs. .NET Core has strong PostgreSQL support via Npgsql.
-- **Suggestion:** Evaluate migration from SQL Server 2019 to PostgreSQL 16+. Use AWS Schema Conversion Tool or Babelfish for PostgreSQL to assess T-SQL compatibility. Test via the existing CI/CD pipeline.
+- **Reasoning:** There is a credible license-cost reduction path, but application compatibility and data migration need careful evaluation.
+- **Suggestion:** Run a fit-gap assessment before committing to an engine switch; do not combine it with first-wave infrastructure remediation.
 
-#### 🔵 Update Outdated Components
+### Update Outdated Components (`update_outdated_components`)
+
 - **Status:** APPLICABLE
 - **Priority:** High
 - **Effort:** High
-- **Reasoning:** Windows Server 2012 (EOL), IIS 8.0 (EOL), and SQL Server 2019 (outdated) all require updates. The .NET Core version is unknown and must be identified and updated. CI/CD pipeline and existing containerization support systematic updates.
-- **Suggestion:** Identify and document the exact .NET Core version in use. Create a component update roadmap: (1) Upgrade to Windows Server 2022 + IIS 10, (2) Identify and update .NET Core to 8.0 LTS, (3) Upgrade SQL Server 2019 to 2022.
+- **Reasoning:** SQL Server and possibly the .NET runtime need attention, but the exact scope depends on confirming the current .NET version.
+- **Suggestion:** Treat component modernization as a second-stage backlog gated by version discovery and hosting remediation.
 
 ## Business Case
 
-**Total Adjusted Investment: $421,400.00**  
-**Total Yearly Savings: $190,500.00**  
-**Estimated ROI Payback: 2.21 years**
+| Scenario | Adjusted Cost | Yearly Savings | ROI (yrs) |
+| --- | --- | --- | --- |
+| OS Update | $1,400 | $500 | 2.8 |
+| App Server Replacement | $14,000 | $12,000 | 1.17 |
+| Cloud Lift & Shift (partial) | $7,000 | $3,000 | 2.33 |
+| App Refactoring | $350,000 | $150,000 | 2.33 |
+| Upgrade Legacy Databases | $14,000 | $10,000 | 1.4 |
+| Switch DB to Open-Source | $35,000 | $15,000 | 2.33 |
+| TOTAL | $421,400 | $190,500 | 2.21 |
 
-| Scenario | Status | Adj. Cost | Yearly Savings | ROI (years) |
-|----------|--------|-----------|----------------|-------------|
-| Operating System Update | APPLICABLE | $1,400.00 | $500.00 | 2.8 |
-| Application Server Replacement | APPLICABLE | $14,000.00 | $12,000.00 | 1.17 |
-| Application Migration to Cloud Infrastructure (Lift & Shift) | PARTIALLY_FULFILLED | $7,000.00 | $3,000.00 | 2.33 |
-| Application Refactoring and De-coupling | APPLICABLE | $350,000.00 | $150,000.00 | 2.33 |
-| Upgrade Legacy Databases | APPLICABLE | $14,000.00 | $10,000.00 | 1.4 |
-| Switch DB Engine to Open-Source Database Solution | APPLICABLE | $35,000.00 | $15,000.00 | 2.33 |
-
-> *Costs adjusted by complexity multiplier: **1.4x** (complexity score / 5)*
+Portfolio planning note: HRApp-004 is best aligned to **Wave 1 for discovery and platform hardening, Wave 2 for hosting/cloud completion, Wave 3 for refactoring and database economics.**

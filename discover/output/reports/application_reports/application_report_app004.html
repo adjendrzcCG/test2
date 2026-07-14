@@ -1,242 +1,661 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Application Report - Application Report — HRApp-004 - GenDiscover</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Application Report - HRApp-004 - GenDiscover</title>
   <style>
-    :root {
-      --primary-dark: #081722;
-      --report-background: #102737;
-      --section-background: #163244;
-      --accent: #1ec8d7;
-      --accent-rgb: 30, 200, 215;
-      --report-text-font-primary: #e9f7ff;
-      --report-text-font-secondary-rgb: 184, 216, 232;
-      --text-light-blue-rgb: 154, 198, 220;
-    }
-    * { box-sizing: border-box; }
-    body { margin: 0; background: radial-gradient(circle at top, #153044 0%, var(--primary-dark) 55%); color: var(--report-text-font-primary); font-family: "Segoe UI", "Helvetica Neue", sans-serif; }
-    a { color: inherit; text-decoration: none; }
-    code { background: rgba(255,255,255,0.08); padding: 0.1rem 0.3rem; border-radius: 4px; }
-    pre { overflow-x: auto; background: rgba(0,0,0,0.25); padding: 1rem; border-radius: 10px; }
-    table { width: 100%; border-collapse: collapse; }
-    th, td { padding: 0.75rem; border-bottom: 1px solid rgba(var(--accent-rgb), 0.12); text-align: left; vertical-align: top; }
-    .page { max-width: 95%; margin: 0 auto; padding: 2rem 1rem; }
-    .report-shell { background: var(--report-background); border: 1px solid rgba(var(--accent-rgb), 0.15); border-radius: 1rem; overflow: hidden; box-shadow: 0 24px 60px rgba(0,0,0,0.35); }
-    .header { display: flex; justify-content: space-between; align-items: center; gap: 1rem; padding: 1.5rem 2rem; color: white; background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01)); }
-    .customer-meta { font-size: 0.95rem; font-weight: 300; letter-spacing: 0.02em; }
-    .customer-meta [data-testid="customer-name"] { font-weight: 700; font-size: 1.125rem; margin-bottom: 0.25rem; }
-    .logo { height: 45px; width: auto; }
-    .logo svg { height: 100%; width: auto; }
-    .logo path { fill: white; }
-    .content { padding: 2rem; }
-    .title-card { background: var(--section-background); border: 1px solid rgba(var(--accent-rgb), 0.15); border-radius: 0.75rem; box-shadow: 0 8px 20px rgba(0,0,0,0.18); margin-bottom: 1.5rem; padding: 1.25rem; }
-    .title-card h1 { margin: 0; padding-bottom: 1rem; border-bottom: 3px solid var(--accent); color: white; font-size: 2.5rem; text-shadow: 0 0 4px rgba(255,255,255,0.25); }
-    .lead { margin: 1rem 0 0; font-size: 1.05rem; line-height: 1.6; color: rgba(var(--report-text-font-secondary-rgb), 0.95); }
-    .section-card { background: var(--section-background); border: 1px solid rgba(var(--accent-rgb), 0.15); border-radius: 0.75rem; box-shadow: 0 8px 20px rgba(0,0,0,0.12); margin-bottom: 1.5rem; overflow: hidden; }
-    .section-card summary { list-style: none; display: flex; justify-content: space-between; align-items: center; gap: 1rem; cursor: pointer; padding: 1.25rem 1.5rem; }
-    .section-card summary::-webkit-details-marker { display: none; }
-    .section-card h2 { margin: 0; font-size: 1.5rem; color: white; }
-    .section-card .chevron { color: var(--accent); font-size: 1.25rem; }
-    .section-card[open] .chevron { transform: rotate(180deg); }
-    .section-body { padding: 0 1.5rem 1.5rem; color: rgba(var(--report-text-font-secondary-rgb), 0.95); line-height: 1.65; }
-    .section-body ul { margin: 0; padding-left: 1.25rem; }
-    .footer { display: flex; justify-content: space-between; align-items: center; gap: 1rem; padding: 1.5rem 2rem; border-top: 1px solid rgba(var(--accent-rgb), 0.2); }
-    .footer p { margin: 0.2rem 0; }
-    .footer .meta-primary { font-size: 0.875rem; font-weight: 600; color: var(--accent); }
-    .footer .meta-secondary { font-size: 0.75rem; color: rgba(var(--text-light-blue-rgb), 0.8); }
-    .footer .meta-muted { font-size: 0.75rem; color: rgba(var(--text-light-blue-rgb), 0.6); }
-    .app-link-list { display: grid; gap: 0.75rem; }
-    .app-link { display: flex; justify-content: space-between; align-items: center; gap: 1rem; padding: 0.75rem 0.9rem; border-radius: 0.5rem; background: rgba(255,255,255,0.08); transition: background-color 160ms ease; }
-    .app-link:hover { background: rgba(255,255,255,0.14); }
-    @media (max-width: 768px) {
-      .header, .footer { flex-direction: column; text-align: center; }
-      .logo { height: 35px; }
-      .content { padding: 1.25rem; }
-      .title-card h1 { font-size: 2rem; }
-    }
-  </style>
+:root {
+  --primary-dark: #081722;
+  --report-background: #102737;
+  --section-background: #163244;
+  --accent: #1ec8d7;
+  --accent-rgb: 30, 200, 215;
+  --report-text-font-primary: #e9f7ff;
+  --report-text-font-secondary-rgb: 184, 216, 232;
+  --text-light-blue-rgb: 154, 198, 220;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: Inter, Arial, Helvetica, sans-serif;
+  background: radial-gradient(circle at top right, rgba(var(--accent-rgb), 0.12), transparent 24%), var(--primary-dark);
+  color: var(--report-text-font-primary);
+}
+a { color: var(--accent); }
+.report-shell {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 32px 24px 48px;
+}
+.header, .footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 24px;
+  background: linear-gradient(135deg, rgba(var(--accent-rgb), 0.14), rgba(22, 50, 68, 0.95));
+  border: 1px solid rgba(var(--accent-rgb), 0.2);
+  border-radius: 20px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+}
+.brand-block h2, .brand-block p { margin: 0; }
+.brand-block p { color: rgba(var(--report-text-font-secondary-rgb), 0.92); margin-top: 6px; }
+.logo-wrap {
+  width: 220px;
+  flex: 0 0 220px;
+}
+.logo-wrap svg { width: 100%; height: auto; display: block; }
+.title-card {
+  margin: 28px 0 18px;
+  padding: 28px;
+  border-radius: 22px;
+  background: linear-gradient(180deg, rgba(var(--accent-rgb), 0.16), rgba(16, 39, 55, 0.96));
+  border: 1px solid rgba(var(--accent-rgb), 0.22);
+}
+.title-card h1 { margin: 0 0 10px; font-size: 2.3rem; }
+.title-card p { margin: 0; max-width: 980px; color: rgba(var(--report-text-font-secondary-rgb), 0.95); line-height: 1.6; }
+.metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 18px;
+  margin: 22px 0 28px;
+}
+.metric-card {
+  padding: 22px;
+  border-radius: 18px;
+  background: var(--report-background);
+  border: 1px solid rgba(var(--accent-rgb), 0.16);
+  box-shadow: inset 0 0 0 1px rgba(var(--accent-rgb), 0.06), 0 0 30px rgba(var(--accent-rgb), 0.08);
+}
+.metric-card .kicker {
+  color: rgba(var(--text-light-blue-rgb), 0.95);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.74rem;
+}
+.metric-card .value {
+  margin-top: 8px;
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--accent);
+  text-shadow: 0 0 20px rgba(var(--accent-rgb), 0.34);
+}
+.metric-card .subtext { margin-top: 6px; color: rgba(var(--report-text-font-secondary-rgb), 0.9); }
+details.card {
+  margin: 0 0 18px;
+  background: var(--section-background);
+  border-radius: 20px;
+  border: 1px solid rgba(var(--accent-rgb), 0.14);
+  overflow: hidden;
+}
+details.card > summary {
+  list-style: none;
+  cursor: pointer;
+  padding: 20px 24px;
+  font-weight: 700;
+  font-size: 1.1rem;
+  background: rgba(255,255,255,0.02);
+}
+details.card > summary::-webkit-details-marker { display: none; }
+details.card .section-body { padding: 0 24px 24px; }
+.table-wrap { overflow-x: auto; }
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 14px 0 4px;
+  background: rgba(8, 23, 34, 0.32);
+}
+th, td {
+  padding: 12px 14px;
+  text-align: left;
+  vertical-align: top;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+th {
+  background: rgba(var(--accent-rgb), 0.12);
+  color: var(--report-text-font-primary);
+}
+td { color: rgba(var(--report-text-font-secondary-rgb), 0.98); }
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.callout-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 16px;
+  margin-top: 14px;
+}
+.callout {
+  background: rgba(8, 23, 34, 0.35);
+  border: 1px solid rgba(var(--accent-rgb), 0.12);
+  border-radius: 16px;
+  padding: 18px;
+}
+.callout h4, .scenario-card h4 { margin: 0 0 8px; }
+.callout ul { margin: 8px 0 0 18px; padding: 0; }
+.scenario-card {
+  margin-top: 16px;
+  padding: 18px;
+  border-radius: 16px;
+  background: rgba(8, 23, 34, 0.28);
+  border: 1px solid rgba(255,255,255,0.07);
+}
+.scenario-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 10px 0 12px;
+}
+.meta-pill {
+  padding: 5px 10px;
+  border-radius: 999px;
+  background: rgba(var(--accent-rgb), 0.14);
+  color: var(--report-text-font-primary);
+  font-size: 0.82rem;
+}
+.two-col {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 18px;
+}
+.nav-links {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 12px;
+  margin-top: 12px;
+}
+.nav-links a {
+  display: block;
+  padding: 14px 16px;
+  border-radius: 14px;
+  text-decoration: none;
+  background: rgba(var(--accent-rgb), 0.1);
+  border: 1px solid rgba(var(--accent-rgb), 0.16);
+}
+.footer {
+  margin-top: 32px;
+}
+.footer .small {
+  color: rgba(var(--report-text-font-secondary-rgb), 0.9);
+  line-height: 1.6;
+}
+.mermaid {
+  margin-top: 16px;
+  padding: 14px;
+  border-radius: 14px;
+  background: rgba(8, 23, 34, 0.3);
+}
+.lead-list { margin: 10px 0 0 18px; }
+.inline-note { color: rgba(var(--text-light-blue-rgb), 0.95); }
+@media (max-width: 780px) {
+  .header, .footer { flex-direction: column; align-items: flex-start; }
+  .logo-wrap { width: 180px; flex-basis: auto; }
+  .title-card h1 { font-size: 1.8rem; }
+}
+</style>
 </head>
 <body>
-  <div class="page">
-    <div class="report-shell">
-      <div class="header">
-        <div class="customer-meta">
-          <div class="font-bold text-lg mb-1" data-testid="customer-name">Client</div>
-          <div>Application modernization with Agentic AI powered by Capgemini GenSuite</div>
-        </div>
-        <div class="logo"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 50" width="200" height="50">
-  <rect width="200" height="50" rx="6" fill="#0d1117"/>
-  <text x="10" y="33" font-family="Arial,sans-serif" font-size="18" font-weight="bold" fill="#58a6ff">Portfolio</text>
-  <text x="105" y="33" font-family="Arial,sans-serif" font-size="18" fill="#8b949e">Modernization</text>
+  <div class="report-shell">
+    <header class="header">
+      <div class="brand-block">
+        <h2 data-testid="customer-name">Enterprise Client</h2>
+        <p>Application modernization with Agentic AI powered by Capgemini GenSuite</p>
+      </div>
+      <div class="logo-wrap" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 358.01 117.11">
+  <path fill="white" d="M330.21,46.53c-1.44-4.78-4.35-8.97-8.21-12.52-4.17-3.82-9.13-6.71-14.33-8.89-.42-.18-.84-.35-1.26-.51h0c-6.4,7.67-28.57,13.4-28.57,29.47,0,6.29,3.97,12.16,9.81,14.52,3.63,1.23,7.53,1,11.01-.59,3.36-1.53,5.93-4.23,7.99-7.24,2.18-3.17,3.84-6.66,5.91-9.9,1.92-3.01,4.38-6.02,8.03-6.86,3.31-.77,7.22.09,9.64,2.51h-.02ZM330.36,49.79c-1.47-2.94-4.56-4.2-7.73-4.05-3.06.14-5.29,2.09-6.99,4.49-1.93,2.71-3.28,5.8-4.85,8.72-1.52,2.81-3.15,5.57-5.33,7.92-2.42,2.61-5.46,4.58-8.88,5.61,1.58,1.14,3.77,1.39,5.66,1.47,2.13.08,4.29-.11,6.39-.49,3.84-.69,7.98-2.03,10.81-4.83-4.42.06-7.99-2.92-8.31-7.4,2.85,3.45,7.15,4.77,11.46,3.55,3.78-1.07,6.81-4.06,8.03-7.78.78-2.36.85-4.93-.26-7.2h0ZM268.07,47.47c0-3.55-.21-5.92-2.53-5.92-1.06,0-1.57.21-2.5.52.82,11.99-1.89,22.55-5.19,22.55-4.34,0-2.17-25.7-11.36-25.7-8.47,0-9.69,20.52-10.65,20.52-.66,0-.76-5.39-.72-9.49.36-1.97.55-3.74.55-5.08,0-1.91-.77-5.22-5.11-3.56.15,14.67-2.79,23.54-6.09,23.54-4.85,0-4.91-13.3-4.91-16.97s.26-8.36-5.06-6.66c-.8,12.8-4.15,22.46-6.26,22.46-3.16,0-2.52-22.11-9.34-22.11-6.12,0-8.02,20.94-9.3,20.94-2.29,0,.71-23.57-8.14-23.57-4.64,0-6.49,7.87-8.3,16.68-.35,1.71-.72,1.76-.78-.17-.05-1.58-.06-3.33-.04-4.94,2.23-8.85-.49-12.13-4.59-9.76,1.32,16.34-6.18,24.33-11.93,24.33-2.08,0-3.71-.88-4.94-2.28,6.9-4.23,9.97-9.09,9.97-13.83,0-5.14-2.95-8.11-7.86-8.11-6.85,0-10.67,7.05-10.67,13.04,0,3.22.6,5.96,1.59,8.22-2.35,1.12-4.57,2.09-6.63,3.03-.18-6.17-.88-12.64-1.41-18.61-3.64-1-4.71.75-4.99,3.99-.65,7.4-3.39,11.99-5.81,11.99-1.83,0-2.94-2.22-3.07-4.58-.68-11.86,8.95-15.16,13.99-13.44,1.05-2.61-.1-4.5-4.64-4.5-5.51,0-9.63,3.35-12.65,7.64-2.02,2.87-4.34,4.9-7.44,7.35.08-.71.12-1.41.12-2.11,0-8.37-4.53-12.04-8.86-12.04-3.58,0-5.83,2.15-7.14,5.44-.32-3.3-.98-4.73-2.9-4.73-.83,0-1.96.23-3.19.83.56,1.85.78,5.93.78,8.62,0,10.06-2.88,14.57-5.66,14.57-3.17,0-3.67-11.93-3.94-16.57-.41-.14-.86-.29-1.55-.29-2.87,0-3.24,3.85-3.95,7.39-.78,3.92-3.05,8.86-6.39,8.86-2.02,0-3.28-1.95-3.44-5.46-.33-7.11,5.59-15.54,14.85-12.92,1.21-2.83-.69-4.99-4.53-4.99-6.77,0-12.36,5.07-14.8,11.06-2.48,5.49-6.82,13.56-15.64,13.56-6.23,0-10.99-5.43-10.99-16.83,0-9.83,6.19-19.16,12.8-19.16,4.62,0,5.7,4.55,5.29,8.81,2.39,1.93,6.32.14,6.32-4.67,0-3.31-2.69-8.92-11.36-8.92-10.74,0-20.23,10.71-20.23,24.78s6.92,21.68,16.71,21.68c6.18,0,12.01-3.52,16.03-10.03,1.01,5.69,4.89,8.09,7.8,8.09,4.71,0,7.78-3.05,9.46-7.17,1.05,4.13,3.26,7.19,6.93,7.19,2.59,0,4.6-1.31,6.12-3.41-.6,14.36-1.36,23.51,7.12,21.71-1.31-4.08-1.73-11.51-1.73-18.19,0-18.26,3.01-24.27,6.79-24.27,2.73,0,3.62,3.49,3.62,7.21,0,1.99-.19,4.28-.7,6.35-4.64,2.92-8.35,5.23-8.35,8.17,0,2.32,1.72,2.54,3.21,2.54,3.56,0,7.85-3.49,10.22-10.09,2.07-1.25,4.15-2.69,6.14-4.65-.07.67-.11,1.35-.11,2.03,0,6.55,2.87,10.5,7.44,10.5,3.58,0,6.27-2.54,8.17-6.35.12,2.19.19,4.21.23,6.08-7.27,3.36-15.32,6.78-15.32,16.26,0,4.91,3.54,8.61,8.16,8.61,10.13,0,12.44-10.69,12.53-23.11,3.3-1.43,5.75-2.53,8.59-3.93,2.42,3.03,5.72,4.55,8.74,4.55,5.72,0,10.01-3.03,13.46-9.17.61,4.68,1.82,9.17,4.31,9.17,4.53,0,5.45-23.69,8.82-23.69,2.58,0,.46,25.64,7.28,25.64,5.83,0,6.93-22.56,9.77-22.56,2.01,0,2.17,20.62,8.52,20.62,3.13,0,6.52-3.75,8.22-11.62.8,5.24,3.44,11.62,8.6,11.62,3.01,0,5.6-3.05,7.6-7.1.55,4.17,1.73,7.1,4.01,7.1,5.94,0,5.74-23.65,10.44-23.65,3.67,0,2.53,23.65,11.26,23.65,4.16,0,6.12-3.54,7.29-7.98,1.61,6.53,4.2,7.98,6.34,7.98,1.35,0,2.37-.47,3.71-2.07-6.75-2.93-6.18-13.58-6.18-20.46h-.03Z"/>
 </svg></div>
+    </header>
+    <section class="title-card" data-testid="app-report-title">
+      <h1>Application Report - HRApp-004</h1>
+      <p>HRApp-004 modernization assessment covering technology health, delivery complexity, scenario applicability, and quantified business value.</p>
+    </section>
+    
+    
+    <div class="metrics-grid">
+      <div class="metric-card"><div class="kicker">Complexity</div><div class="value">7/10</div><div class="subtext">High · 1.4x multiplier</div></div>
+      <div class="metric-card"><div class="kicker">Investment</div><div class="value">$421,400</div><div class="subtext">Modeled modernization cost</div></div>
+      <div class="metric-card"><div class="kicker">Yearly Savings</div><div class="value">$190,500</div><div class="subtext">Expected run-rate benefit</div></div>
+      <div class="metric-card"><div class="kicker">ROI Payback</div><div class="value">2.21 yrs</div><div class="subtext">Simple payback estimate</div></div>
+    </div>
+    
+    <details class="card" open data-testid="section-application-overview">
+      <summary>Application Overview</summary>
+      <div class="section-body">
+        <p>HRApp-004 has a usable modernization foundation, but its hosting stack is already out of support and key lifecycle data for .NET is missing. The right approach is to stabilize the platform first, close the information gap, and then use that foundation to finish the cloud journey and reduce licensing overhead.</p>
+        <div class="table-wrap"><table><thead><tr><th>Field</th><th>Value</th></tr></thead><tbody><tr><td>App ID</td><td>app004</td></tr><tr><td>Business Unit</td><td>HR</td></tr><tr><td>Criticality</td><td>High</td></tr><tr><td>Deployment</td><td>AWS + On-Premise hybrid</td></tr><tr><td>Architecture</td><td>2-Tier</td></tr><tr><td>Users</td><td>670</td></tr><tr><td>CI/CD</td><td>Yes</td></tr><tr><td>Containers</td><td>Yes</td></tr><tr><td>APIs</td><td>12</td></tr><tr><td>External Interfaces</td><td>6</td></tr><tr><td>Database</td><td>SQL Server 2019</td></tr><tr><td>Database Size</td><td>750GB</td></tr><tr><td>License Profile</td><td>Licensed</td></tr><tr><td>Servers</td><td>sv06, sv02</td></tr><tr><td>Compute</td><td>4 CPU cores / 16GB RAM</td></tr><tr><td>Logging</td><td>Splunk</td></tr><tr><td>Monitoring</td><td>CloudWatch</td></tr><tr><td>Planned Decommission</td><td>Not stated</td></tr></tbody></table></div>
       </div>
-      <div class="content">
-        <div class="title-card" data-testid="app-report-title">
-          <h1>Application Report - Application Report — HRApp-004</h1>
-          <p class="lead">&gt; Generated: 2026-07-13 | Application ID: `app004`</p>
-        </div>
-        <details open class="section-card" data-testid="section-application-overview">
-  <summary>
-    <div>
-      <h2>Application Overview</h2>
-    </div>
-    <span class="chevron">▾</span>
-  </summary>
-  <div class="section-body">
-    <p>Field | Value</p>
-<p><strong>App ID</strong> | <code>app004</code></p>
-<p><strong>Name</strong> | HRApp-004</p>
-<p><strong>Description</strong> | HR management system</p>
-<p><strong>Solution Type</strong> | Custom made</p>
-<p><strong>Business Criticality</strong> | High</p>
-<p><strong>Status</strong> | Production</p>
-<p><strong>Decommission Date</strong> | not planned</p>
-<p><strong>Deployment Type</strong> | AWS+On-premise</p>
-<p><strong>Data Classification</strong> | Internal</p>
-<p><strong>Business Unit</strong> | HR</p>
-<p><strong>Business Capabilities</strong> | Employee Management, Payroll Processing, Benefits Administration</p>
-<p><strong>User Count</strong> | 670</p>
-<p><strong>Operating System</strong> | Windows Server 2012</p>
-<p><strong>Programming Language</strong> | .NET Core</p>
-<p><strong>Application Server</strong> | Microsoft IIS 8.0</p>
-<p><strong>Architecture</strong> | 2-Tier</p>
-<p><strong>Containerized</strong> | Yes</p>
-<p><strong>CI/CD</strong> | Yes</p>
-<p><strong>Environment Count</strong> | 2</p>
-<p><strong>Servers</strong> | sv06, sv02</p>
-<p><strong>CPU Cores</strong> | 4</p>
-<p><strong>Memory (GB)</strong> | 16</p>
-<p><strong>API Endpoints</strong> | 12</p>
-<p><strong>External Interfaces</strong> | 6</p>
-<p><strong>Database Engine</strong> | SQL Server 2019</p>
-<p><strong>Database Storage (GB)</strong> | 750</p>
-<p><strong>Database License Required</strong> | Yes</p>
-<p><strong>Logging Solution</strong> | Splunk</p>
-<p><strong>Monitoring Tool</strong> | CloudWatch</p>
-  </div>
-</details>
-
-<details open class="section-card" data-testid="section-technology-assessment">
-  <summary>
-    <div>
-      <h2>Technology Assessment</h2>
-    </div>
-    <span class="chevron">▾</span>
-  </summary>
-  <div class="section-body">
-    <p>🔴 <strong>EOL components present</strong> | 🟡 <strong>Outdated components present</strong> | ❓ <strong>Missing version data</strong></p>
-<p>Component | Type | Version | Status | EOL Date | Notes</p>
-<p><strong>Windows Server 2012</strong> | os | 2012 | 🔴 EOL | 2023-10-10 | Windows Server 2012 reached End of Extended Support on October 10, 2023. Microsoft no longer provides security updates, exposing the system to unpatched vulnerabilities.</p>
-<p><strong>.NET Core</strong> | programming_language | unknown | ❓ NO_KNOWLEDGE | N/A | The .NET Core version is not specified. Without knowing the exact version (e.g., 3.1, 5.0, 6.0, 8.0), lifecycle status cannot be determined. Version discovery is required.</p>
-<p><strong>Microsoft IIS 8.0</strong> | application_server | 8.0 | 🔴 EOL | 2023-10-10 | IIS 8.0 is bundled with Windows Server 2012 and reached End of Life on October 10, 2023, together with Windows Server 2012.</p>
-<p><strong>SQL Server 2019</strong> | database | 2019 | 🟡 OUTDATED | 2030-01-08 | SQL Server 2019 mainstream support ended January 7, 2025. It remains in Extended Support through January 8, 2030, but is no longer the current version (SQL Server 2022 is latest).</p>
-  </div>
-</details>
-
-<details open class="section-card" data-testid="section-complexity-assessment">
-  <summary>
-    <div>
-      <h2>Complexity Assessment</h2>
-    </div>
-    <span class="chevron">▾</span>
-  </summary>
-  <div class="section-body">
-    <p><strong>Complexity Score: 7/10 — 🟠 High</strong></p>
-<h3>Complexity Factors</h3>
-<p>Factor | Value</p>
-<p>Business Criticality | High</p>
-<p>Architecture Tier | 2-Tier</p>
-<p>Containerization | True</p>
-<p>Ci Cd | True</p>
-<p>Server Count | 2</p>
-<p>External Interface Count | 6</p>
-<p>Eol Components | True</p>
-<p>Outdated Components | True</p>
-<p>Technology Age | aging</p>
-<h3>Reasoning</h3>
-<p>HRApp-004 scores High complexity (7/10). The application has modernization-positive traits: containerized, CI/CD present, and already partially deployed on AWS. However, it runs on EOL Windows Server 2012 (EOL October 2023) with EOL IIS 8.0, presenting immediate security risk. The .NET Core version is unspecified, introducing lifecycle uncertainty. As a Custom made, High criticality application handling Payroll Processing and HR data (Internal classification), modernization carries significant business risk. The hybrid AWS+On-premise deployment adds architectural complexity requiring careful migration planning. SQL Server 2019 is in extended support (mainstream ended Jan 2025), and the licensed database engine adds cost and migration considerations. With 6 external interfaces and 12 API endpoints, integration re-testing will be substantial.</p>
-  </div>
-</details>
-
-<details open class="section-card" data-testid="section-scenario-applicability">
-  <summary>
-    <div>
-      <h2>Scenario Applicability</h2>
-    </div>
-    <span class="chevron">▾</span>
-  </summary>
-  <div class="section-body">
-    <p>Scenario | Status | Priority | Effort | Summary</p>
-<p><strong>Operating System Update</strong> | 🔵 APPLICABLE | Critical | Medium | Windows Server 2012 is EOL (October 10, 2023). The OS is no longer receiving security patches, repre...</p>
-<p><strong>Switch to Standard Linux Operating System</strong> | ⚪ NOT_APPLICABLE | N/A | N/A | HRApp-004 uses IIS 8.0 and .NET Core on Windows Server, which are Windows-specific components. While...</p>
-<p><strong>Switch to ARM-based CPU</strong> | 🔴 BLOCKED | Low | Very High | Windows Server 2012 does not support ARM architecture. IIS 8.0 is also Windows x86/x64 only. ARM mig...</p>
-<p><strong>Application Server Replacement</strong> | 🔵 APPLICABLE | Critical | Medium | Microsoft IIS 8.0 is EOL (tied to Windows Server 2012 EOL, October 2023). Upgrade to IIS 10.0 (Windo...</p>
-<p><strong>Application Migration to Cloud Infrastructure (Lift &amp; Shift)</strong> | 🟡 PARTIALLY_FULFILLED | High | High | HRApp-004 has a hybrid AWS+On-premise deployment. Some components are already in AWS, but on-premise...</p>
-<p><strong>Application Containerization</strong> | ✅ FULFILLED | N/A | N/A | HRApp-004 is already containerized. Container deployment is implemented.</p>
-<p><strong>Application Refactoring and De-coupling</strong> | 🔵 APPLICABLE | Medium | Very High | HRApp-004 is a Custom made 2-Tier application. Refactoring to a microservices or API-first architect...</p>
-<p><strong>Upgrade Legacy Databases</strong> | 🔵 APPLICABLE | Medium | Medium | SQL Server 2019 mainstream support ended January 7, 2025. While extended support continues until 203...</p>
-<p><strong>Switch DB Engine to Open-Source Database Solution</strong> | 🔵 APPLICABLE | Medium | High | SQL Server 2019 requires a commercial license (database_license_required: true). Migrating to Postgr...</p>
-<p><strong>Update Outdated Components</strong> | 🔵 APPLICABLE | High | High | Windows Server 2012 (EOL), IIS 8.0 (EOL), and SQL Server 2019 (outdated) all require updates. The .N...</p>
-<h3>Scenario Details</h3>
-<p>#### 🔵 Operating System Update</p>
-<ul><li><strong>Status:</strong> APPLICABLE</li><li><strong>Priority:</strong> Critical</li><li><strong>Effort:</strong> Medium</li><li><strong>Reasoning:</strong> Windows Server 2012 is EOL (October 10, 2023). The OS is no longer receiving security patches, representing a critical compliance and security risk for an HR application handling Payroll data.</li><li><strong>Suggestion:</strong> Upgrade to Windows Server 2022 (current LTS) or migrate to Windows Server 2019. For containerized components, evaluate migrating to Linux-based containers to reduce Windows licensing costs.</li></ul>
-<p>#### ⚪ Switch to Standard Linux Operating System</p>
-<ul><li><strong>Status:</strong> NOT_APPLICABLE</li><li><strong>Priority:</strong> N/A</li><li><strong>Effort:</strong> N/A</li><li><strong>Reasoning:</strong> HRApp-004 uses IIS 8.0 and .NET Core on Windows Server, which are Windows-specific components. While .NET Core is cross-platform, IIS is Windows-only. Switching to Linux would require replacing IIS with a Linux-compatible web server.</li><li><strong>Suggestion:</strong> Not directly applicable without replacing IIS. Consider migrating to Linux after replacing IIS with Nginx or Kestrel as part of a broader modernization initiative.</li></ul>
-<p>#### 🔴 Switch to ARM-based CPU</p>
-<ul><li><strong>Status:</strong> BLOCKED</li><li><strong>Priority:</strong> Low</li><li><strong>Effort:</strong> Very High</li><li><strong>Reasoning:</strong> Windows Server 2012 does not support ARM architecture. IIS 8.0 is also Windows x86/x64 only. ARM migration requires OS modernization and application server replacement first.</li><li><strong>Suggestion:</strong> ARM migration is blocked until Windows Server is upgraded to a version with ARM support and IIS is replaced with an ARM-compatible web server.</li></ul>
-<p>#### 🔵 Application Server Replacement</p>
-<ul><li><strong>Status:</strong> APPLICABLE</li><li><strong>Priority:</strong> Critical</li><li><strong>Effort:</strong> Medium</li><li><strong>Reasoning:</strong> Microsoft IIS 8.0 is EOL (tied to Windows Server 2012 EOL, October 2023). Upgrade to IIS 10.0 (Windows Server 2019/2022) or replace with a cross-platform alternative (Kestrel, Nginx).</li><li><strong>Suggestion:</strong> Upgrade IIS to version 10.0 as part of the Windows Server 2022 migration. Alternatively, evaluate Kestrel (built-in .NET web server) or Nginx for cross-platform deployment.</li></ul>
-<p>#### 🟡 Application Migration to Cloud Infrastructure (Lift &amp; Shift)</p>
-<ul><li><strong>Status:</strong> PARTIALLY_FULFILLED</li><li><strong>Priority:</strong> High</li><li><strong>Effort:</strong> High</li><li><strong>Reasoning:</strong> HRApp-004 has a hybrid AWS+On-premise deployment. Some components are already in AWS, but on-premise components remain. Full cloud migration is not yet complete.</li><li><strong>Suggestion:</strong> Complete the cloud migration by moving remaining on-premise components to AWS. Evaluate AWS ECS or EKS for the containerized components. Ensure data residency requirements for HR/Payroll data are met.</li></ul>
-<p>#### ✅ Application Containerization</p>
-<ul><li><strong>Status:</strong> FULFILLED</li><li><strong>Priority:</strong> N/A</li><li><strong>Effort:</strong> N/A</li><li><strong>Reasoning:</strong> HRApp-004 is already containerized. Container deployment is implemented.</li><li><strong>Suggestion:</strong> Containerization is fulfilled. Update container base images to resolve Windows Server 2012 EOL risk and improve container security posture.</li></ul>
-<p>#### 🔵 Application Refactoring and De-coupling</p>
-<ul><li><strong>Status:</strong> APPLICABLE</li><li><strong>Priority:</strong> Medium</li><li><strong>Effort:</strong> Very High</li><li><strong>Reasoning:</strong> HRApp-004 is a Custom made 2-Tier application. Refactoring to a microservices or API-first architecture would enable independent scaling of HR modules (Payroll, Benefits, Employee Management) and facilitate future cloud-native migration.</li><li><strong>Suggestion:</strong> Decompose the 2-Tier .NET Core application into domain-aligned microservices. Expose payroll, benefits, and employee management as independent services with REST/GraphQL APIs.</li></ul>
-<p>#### 🔵 Upgrade Legacy Databases</p>
-<ul><li><strong>Status:</strong> APPLICABLE</li><li><strong>Priority:</strong> Medium</li><li><strong>Effort:</strong> Medium</li><li><strong>Reasoning:</strong> SQL Server 2019 mainstream support ended January 7, 2025. While extended support continues until 2030, upgrading to SQL Server 2022 (current) would restore full feature and security patch coverage.</li><li><strong>Suggestion:</strong> Upgrade from SQL Server 2019 to SQL Server 2022. Use the Database Experimentation Assistant (DEA) to identify compatibility issues before migration.</li></ul>
-<p>#### 🔵 Switch DB Engine to Open-Source Database Solution</p>
-<ul><li><strong>Status:</strong> APPLICABLE</li><li><strong>Priority:</strong> Medium</li><li><strong>Effort:</strong> High</li><li><strong>Reasoning:</strong> SQL Server 2019 requires a commercial license (database_license_required: true). Migrating to PostgreSQL would eliminate SQL Server licensing costs. .NET Core has strong PostgreSQL support via Npgsql.</li><li><strong>Suggestion:</strong> Evaluate migration from SQL Server 2019 to PostgreSQL 16+. Use AWS Schema Conversion Tool or Babelfish for PostgreSQL to assess T-SQL compatibility. Test via the existing CI/CD pipeline.</li></ul>
-<p>#### 🔵 Update Outdated Components</p>
-<ul><li><strong>Status:</strong> APPLICABLE</li><li><strong>Priority:</strong> High</li><li><strong>Effort:</strong> High</li><li><strong>Reasoning:</strong> Windows Server 2012 (EOL), IIS 8.0 (EOL), and SQL Server 2019 (outdated) all require updates. The .NET Core version is unknown and must be identified and updated. CI/CD pipeline and existing containerization support systematic updates.</li><li><strong>Suggestion:</strong> Identify and document the exact .NET Core version in use. Create a component update roadmap: (1) Upgrade to Windows Server 2022 + IIS 10, (2) Identify and update .NET Core to 8.0 LTS, (3) Upgrade SQL Server 2019 to 2022.</li></ul>
-  </div>
-</details>
-
-<details open class="section-card" data-testid="section-business-case">
-  <summary>
-    <div>
-      <h2>Business Case</h2>
-    </div>
-    <span class="chevron">▾</span>
-  </summary>
-  <div class="section-body">
-    <p><strong>Total Adjusted Investment: $421,400.00</strong> <strong>Total Yearly Savings: $190,500.00</strong> <strong>Estimated ROI Payback: 2.21 years</strong></p>
-<p>Scenario | Status | Adj. Cost | Yearly Savings | ROI (years)</p>
-<p>Operating System Update | APPLICABLE | $1,400.00 | $500.00 | 2.8</p>
-<p>Application Server Replacement | APPLICABLE | $14,000.00 | $12,000.00 | 1.17</p>
-<p>Application Migration to Cloud Infrastructure (Lift &amp; Shift) | PARTIALLY_FULFILLED | $7,000.00 | $3,000.00 | 2.33</p>
-<p>Application Refactoring and De-coupling | APPLICABLE | $350,000.00 | $150,000.00 | 2.33</p>
-<p>Upgrade Legacy Databases | APPLICABLE | $14,000.00 | $10,000.00 | 1.4</p>
-<p>Switch DB Engine to Open-Source Database Solution | APPLICABLE | $35,000.00 | $15,000.00 | 2.33</p>
-<p>&gt; *Costs adjusted by complexity multiplier: <strong>1.4x</strong> (complexity score / 5)*</p>
-  </div>
-</details>
+    </details>
+    <details class="card" open data-testid="section-technology-assessment">
+      <summary>Technology Assessment</summary>
+      <div class="section-body">
+        <p class="inline-note">EOL components: Yes · Outdated components: Yes · Missing version data: Yes</p>
+        <div class="table-wrap"><table><thead><tr><th>Component</th><th>Version</th><th>Status</th><th>Assessment</th><th>EOL / Support</th><th>Confidence</th></tr></thead><tbody><tr><td>Windows Server</td><td>2012</td><td><span class="badge" style="background:rgba(239, 68, 68, 0.18);color:#ff9b9b;">EOL</span></td><td>End of life reached October 10, 2023.</td><td>2023-10-10</td><td>10</td></tr><tr><td>.NET Core</td><td>Unknown</td><td><span class="badge" style="background:rgba(148, 163, 184, 0.18);color:#d4dde7;">NO KNOWLEDGE</span></td><td>Version not supplied, so lifecycle status cannot be confirmed.</td><td>Unknown</td><td>3</td></tr><tr><td>Microsoft IIS</td><td>8.0</td><td><span class="badge" style="background:rgba(239, 68, 68, 0.18);color:#ff9b9b;">EOL</span></td><td>Lifecycle tied to Windows Server 2012 and therefore unsupported.</td><td>2023-10-10</td><td>10</td></tr><tr><td>SQL Server</td><td>2019</td><td><span class="badge" style="background:rgba(245, 158, 11, 0.18);color:#ffd27a;">OUTDATED</span></td><td>Mainstream support ended in 2025; extended support continues.</td><td>2030-01-07 (extended)</td><td>9</td></tr></tbody></table></div>
       </div>
-      <div class="footer">
-        <div>
-          <p class="meta-primary">Generated by GenDiscover</p>
-          <p class="meta-secondary">2026-07-13T13:02:47.538119+00:00</p>
-          <p class="meta-muted">Analysis ID: 6c9f8f7009201c9dd87f73ab88feb911</p>
+    </details>
+    <details class="card" open data-testid="section-complexity-assessment">
+      <summary>Complexity Assessment</summary>
+      <div class="section-body">
+        <div class="two-col">
+          <div>
+            <p><strong>Complexity score:</strong> 7/10 — High</p>
+            <p><strong>Multiplier:</strong> 1.4x</p>
+            <p>HRApp-004 mixes urgent infrastructure obsolescence with a partially modern engineering posture. It is easier to modernize than the ERP because CI/CD and containers exist, but the hybrid estate, missing .NET version data, and sensitivity of HR data make planning discipline essential before any major refactor or database change.</p>
+          </div>
+          <div class="callout">
+            <h4>Top modernization risks</h4>
+            <ul><li>Windows Server 2012 and IIS 8.0 are unsupported in a high-sensitivity HR environment.</li><li>The unknown .NET Core version introduces planning uncertainty and could hide additional runtime remediation effort.</li><li>Hybrid deployment increases operational complexity and slows standardization of controls, observability, and release procedures.</li></ul>
+          </div>
         </div>
-        <div class="logo"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 50" width="200" height="50">
-  <rect width="200" height="50" rx="6" fill="#0d1117"/>
-  <text x="10" y="33" font-family="Arial,sans-serif" font-size="18" font-weight="bold" fill="#58a6ff">Portfolio</text>
-  <text x="105" y="33" font-family="Arial,sans-serif" font-size="18" fill="#8b949e">Modernization</text>
+        <div class="table-wrap"><table><thead><tr><th>Factor</th><th>Why it matters</th></tr></thead><tbody><tr><td>High criticality HR and payroll-sensitive data</td><td>Security and downtime concerns are elevated because the system processes sensitive employee information.</td></tr><tr><td>Hybrid AWS + on-prem deployment</td><td>Operational ownership is split across environments and complicates cutover sequencing.</td></tr><tr><td>Windows Server 2012 and IIS 8.0 are EOL</td><td>Unsupported platform layers create urgent remediation pressure.</td></tr><tr><td>Unknown .NET Core version</td><td>Missing lifecycle data raises planning risk and can hide larger upgrade effort.</td></tr><tr><td>Containers and CI/CD already present</td><td>Delivery mechanics are stronger than the underlying platform health.</td></tr><tr><td>Six external interfaces and 12 APIs</td><td>Interface validation remains significant for every platform change.</td></tr><tr><td>Licensed SQL Server footprint</td><td>There is a medium-term cost optimization angle beyond support remediation.</td></tr></tbody></table></div>
+        <div class="callout-grid">
+          <div class="callout"><h4>Recommended actions</h4><ul><li>Close the .NET version data gap immediately so the rest of the remediation plan can be validated.</li><li>Replace or uplift the unsupported Windows/IIS hosting baseline as the first major engineering action.</li><li>Use the existing CI/CD and container base to complete cloud migration and stage later database/licensing improvements.</li></ul></div>
+          <div class="callout"><h4>Delivery positioning</h4><p>Wave 1 for discovery and platform hardening, Wave 2 for hosting/cloud completion, Wave 3 for refactoring and database economics.</p></div>
+        </div>
+        <div class="mermaid">pie showData
+    title HRApp-004 scenario status distribution
+    &quot;APPLICABLE&quot; : 6
+    &quot;NOT APPLICABLE&quot; : 1
+    &quot;BLOCKED&quot; : 1
+    &quot;PARTIALLY FULFILLED&quot; : 1
+    &quot;FULFILLED&quot; : 1</div>
+      </div>
+    </details>
+    <details class="card" open data-testid="section-scenario-applicability">
+      <summary>Scenario Applicability</summary>
+      <div class="section-body">
+        <div class="table-wrap"><table><thead><tr><th>Scenario</th><th>Status</th><th>Priority</th><th>Effort</th></tr></thead><tbody><tr><td>OS Update / Security Patch</td><td><span class="badge" style="background:rgba(var(--accent-rgb), 0.18);color:#97f6ff;">APPLICABLE</span></td><td>Critical</td><td>Medium</td></tr><tr><td>Switch to Standard Linux OS</td><td><span class="badge" style="background:rgba(148, 163, 184, 0.18);color:#d4dde7;">NOT APPLICABLE</span></td><td>N/A</td><td>N/A</td></tr><tr><td>Switch to ARM CPU</td><td><span class="badge" style="background:rgba(239, 68, 68, 0.18);color:#ff9b9b;">BLOCKED</span></td><td>Low</td><td>Very High</td></tr><tr><td>Application Server Replacement</td><td><span class="badge" style="background:rgba(var(--accent-rgb), 0.18);color:#97f6ff;">APPLICABLE</span></td><td>Critical</td><td>Medium</td></tr><tr><td>Cloud Lift &amp; Shift</td><td><span class="badge" style="background:rgba(245, 158, 11, 0.18);color:#ffd27a;">PARTIALLY FULFILLED</span></td><td>High</td><td>High</td></tr><tr><td>Application Containerization</td><td><span class="badge" style="background:rgba(34, 197, 94, 0.18);color:#8ff7b4;">FULFILLED</span></td><td>N/A</td><td>N/A</td></tr><tr><td>Application Refactoring / Decoupling</td><td><span class="badge" style="background:rgba(var(--accent-rgb), 0.18);color:#97f6ff;">APPLICABLE</span></td><td>Medium</td><td>Very High</td></tr><tr><td>Upgrade Legacy Databases</td><td><span class="badge" style="background:rgba(var(--accent-rgb), 0.18);color:#97f6ff;">APPLICABLE</span></td><td>Medium</td><td>Medium</td></tr><tr><td>Switch Database to Open Source</td><td><span class="badge" style="background:rgba(var(--accent-rgb), 0.18);color:#97f6ff;">APPLICABLE</span></td><td>Medium</td><td>High</td></tr><tr><td>Update Outdated Components</td><td><span class="badge" style="background:rgba(var(--accent-rgb), 0.18);color:#97f6ff;">APPLICABLE</span></td><td>High</td><td>High</td></tr></tbody></table></div>
+        
+        <div class="scenario-card">
+          <h4>OS Update / Security Patch</h4>
+          <div class="scenario-meta">
+            <span class="badge" style="background:rgba(var(--accent-rgb), 0.18);color:#97f6ff;">APPLICABLE</span>
+            <span class="meta-pill">Priority: Critical</span>
+            <span class="meta-pill">Effort: Medium</span>
+          </div>
+          <p><strong>Reasoning:</strong> The current Windows Server baseline is already EOL, so immediate remediation is required to reduce infrastructure risk.</p>
+          <p><strong>Suggestion:</strong> Run a time-boxed OS remediation program with validation of HR data handling, access controls, and recovery procedures.</p>
+        </div>
+        
+        <div class="scenario-card">
+          <h4>Switch to Standard Linux OS</h4>
+          <div class="scenario-meta">
+            <span class="badge" style="background:rgba(148, 163, 184, 0.18);color:#d4dde7;">NOT APPLICABLE</span>
+            <span class="meta-pill">Priority: N/A</span>
+            <span class="meta-pill">Effort: N/A</span>
+          </div>
+          <p><strong>Reasoning:</strong> The application is aligned to a Windows/.NET/IIS hosting model, so a Linux switch is not the direct modernization path.</p>
+          <p><strong>Suggestion:</strong> Focus on supported Windows or platform-service targets instead of forcing an OS family rewrite.</p>
+        </div>
+        
+        <div class="scenario-card">
+          <h4>Switch to ARM CPU</h4>
+          <div class="scenario-meta">
+            <span class="badge" style="background:rgba(239, 68, 68, 0.18);color:#ff9b9b;">BLOCKED</span>
+            <span class="meta-pill">Priority: Low</span>
+            <span class="meta-pill">Effort: Very High</span>
+          </div>
+          <p><strong>Reasoning:</strong> ARM does not align well with the current Windows/IIS estate and would introduce unnecessary complexity right now.</p>
+          <p><strong>Suggestion:</strong> Reassess only if the application later moves to a different supported hosting model.</p>
+        </div>
+        
+        <div class="scenario-card">
+          <h4>Application Server Replacement</h4>
+          <div class="scenario-meta">
+            <span class="badge" style="background:rgba(var(--accent-rgb), 0.18);color:#97f6ff;">APPLICABLE</span>
+            <span class="meta-pill">Priority: Critical</span>
+            <span class="meta-pill">Effort: Medium</span>
+          </div>
+          <p><strong>Reasoning:</strong> IIS 8.0 is unsupported, making application server uplift a priority alongside the OS remediation.</p>
+          <p><strong>Suggestion:</strong> Treat web/application hosting modernization as a paired workstream with the operating system update.</p>
+        </div>
+        
+        <div class="scenario-card">
+          <h4>Cloud Lift &amp; Shift</h4>
+          <div class="scenario-meta">
+            <span class="badge" style="background:rgba(245, 158, 11, 0.18);color:#ffd27a;">PARTIALLY FULFILLED</span>
+            <span class="meta-pill">Priority: High</span>
+            <span class="meta-pill">Effort: High</span>
+          </div>
+          <p><strong>Reasoning:</strong> The application already has a cloud footprint, but the remaining hybrid topology keeps operational complexity high.</p>
+          <p><strong>Suggestion:</strong> Use platform remediation to standardize deployment and retire residual on-prem dependencies where feasible.</p>
+        </div>
+        
+        <div class="scenario-card">
+          <h4>Application Containerization</h4>
+          <div class="scenario-meta">
+            <span class="badge" style="background:rgba(34, 197, 94, 0.18);color:#8ff7b4;">FULFILLED</span>
+            <span class="meta-pill">Priority: N/A</span>
+            <span class="meta-pill">Effort: N/A</span>
+          </div>
+          <p><strong>Reasoning:</strong> Containers are already in place, which reduces delivery friction for later modernization phases.</p>
+          <p><strong>Suggestion:</strong> Exploit the container baseline to rehearse runtime and hosting upgrades in lower-risk environments.</p>
+        </div>
+        
+        <div class="scenario-card">
+          <h4>Application Refactoring / Decoupling</h4>
+          <div class="scenario-meta">
+            <span class="badge" style="background:rgba(var(--accent-rgb), 0.18);color:#97f6ff;">APPLICABLE</span>
+            <span class="meta-pill">Priority: Medium</span>
+            <span class="meta-pill">Effort: Very High</span>
+          </div>
+          <p><strong>Reasoning:</strong> Deeper refactoring could simplify the hybrid architecture, but it should follow platform stabilization and .NET discovery.</p>
+          <p><strong>Suggestion:</strong> Limit initial refactoring to seams that support cloud completion, supportability, or security segregation.</p>
+        </div>
+        
+        <div class="scenario-card">
+          <h4>Upgrade Legacy Databases</h4>
+          <div class="scenario-meta">
+            <span class="badge" style="background:rgba(var(--accent-rgb), 0.18);color:#97f6ff;">APPLICABLE</span>
+            <span class="meta-pill">Priority: Medium</span>
+            <span class="meta-pill">Effort: Medium</span>
+          </div>
+          <p><strong>Reasoning:</strong> SQL Server 2019 is not EOL, but it is past mainstream support and should be aligned with broader platform modernization.</p>
+          <p><strong>Suggestion:</strong> Sequence the database upgrade after the hosting tier is stabilized to avoid stacking major changes in one release.</p>
+        </div>
+        
+        <div class="scenario-card">
+          <h4>Switch Database to Open Source</h4>
+          <div class="scenario-meta">
+            <span class="badge" style="background:rgba(var(--accent-rgb), 0.18);color:#97f6ff;">APPLICABLE</span>
+            <span class="meta-pill">Priority: Medium</span>
+            <span class="meta-pill">Effort: High</span>
+          </div>
+          <p><strong>Reasoning:</strong> There is a credible license-cost reduction path, but application compatibility and data migration need careful evaluation.</p>
+          <p><strong>Suggestion:</strong> Run a fit-gap assessment before committing to an engine switch; do not combine it with first-wave infrastructure remediation.</p>
+        </div>
+        
+        <div class="scenario-card">
+          <h4>Update Outdated Components</h4>
+          <div class="scenario-meta">
+            <span class="badge" style="background:rgba(var(--accent-rgb), 0.18);color:#97f6ff;">APPLICABLE</span>
+            <span class="meta-pill">Priority: High</span>
+            <span class="meta-pill">Effort: High</span>
+          </div>
+          <p><strong>Reasoning:</strong> SQL Server and possibly the .NET runtime need attention, but the exact scope depends on confirming the current .NET version.</p>
+          <p><strong>Suggestion:</strong> Treat component modernization as a second-stage backlog gated by version discovery and hosting remediation.</p>
+        </div>
+        
+      </div>
+    </details>
+    <details class="card" open data-testid="section-business-case">
+      <summary>Business Case</summary>
+      <div class="section-body">
+        <div class="table-wrap"><table><thead><tr><th>Scenario</th><th>Adjusted Cost</th><th>Yearly Savings</th><th>ROI (yrs)</th></tr></thead><tbody><tr><td>OS Update</td><td>$1,400</td><td>$500</td><td>2.8</td></tr><tr><td>App Server Replacement</td><td>$14,000</td><td>$12,000</td><td>1.17</td></tr><tr><td>Cloud Lift &amp; Shift (partial)</td><td>$7,000</td><td>$3,000</td><td>2.33</td></tr><tr><td>App Refactoring</td><td>$350,000</td><td>$150,000</td><td>2.33</td></tr><tr><td>Upgrade Legacy Databases</td><td>$14,000</td><td>$10,000</td><td>1.4</td></tr><tr><td>Switch DB to Open-Source</td><td>$35,000</td><td>$15,000</td><td>2.33</td></tr><tr><td>TOTAL</td><td>$421,400</td><td>$190,500</td><td>2.21</td></tr></tbody></table></div>
+        <p class="inline-note">High-value sequencing should keep low-cost risk reduction in front of any deep transformation work.</p>
+      </div>
+    </details>
+    
+    <footer class="footer">
+      <div>
+        <strong>Generated by GenDiscover</strong>
+        <div class="small">Timestamp: 2026-07-14T07:33:55Z<br/>Analysis ID: GD-2026-001</div>
+      </div>
+      <div class="logo-wrap" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 358.01 117.11">
+  <path fill="white" d="M330.21,46.53c-1.44-4.78-4.35-8.97-8.21-12.52-4.17-3.82-9.13-6.71-14.33-8.89-.42-.18-.84-.35-1.26-.51h0c-6.4,7.67-28.57,13.4-28.57,29.47,0,6.29,3.97,12.16,9.81,14.52,3.63,1.23,7.53,1,11.01-.59,3.36-1.53,5.93-4.23,7.99-7.24,2.18-3.17,3.84-6.66,5.91-9.9,1.92-3.01,4.38-6.02,8.03-6.86,3.31-.77,7.22.09,9.64,2.51h-.02ZM330.36,49.79c-1.47-2.94-4.56-4.2-7.73-4.05-3.06.14-5.29,2.09-6.99,4.49-1.93,2.71-3.28,5.8-4.85,8.72-1.52,2.81-3.15,5.57-5.33,7.92-2.42,2.61-5.46,4.58-8.88,5.61,1.58,1.14,3.77,1.39,5.66,1.47,2.13.08,4.29-.11,6.39-.49,3.84-.69,7.98-2.03,10.81-4.83-4.42.06-7.99-2.92-8.31-7.4,2.85,3.45,7.15,4.77,11.46,3.55,3.78-1.07,6.81-4.06,8.03-7.78.78-2.36.85-4.93-.26-7.2h0ZM268.07,47.47c0-3.55-.21-5.92-2.53-5.92-1.06,0-1.57.21-2.5.52.82,11.99-1.89,22.55-5.19,22.55-4.34,0-2.17-25.7-11.36-25.7-8.47,0-9.69,20.52-10.65,20.52-.66,0-.76-5.39-.72-9.49.36-1.97.55-3.74.55-5.08,0-1.91-.77-5.22-5.11-3.56.15,14.67-2.79,23.54-6.09,23.54-4.85,0-4.91-13.3-4.91-16.97s.26-8.36-5.06-6.66c-.8,12.8-4.15,22.46-6.26,22.46-3.16,0-2.52-22.11-9.34-22.11-6.12,0-8.02,20.94-9.3,20.94-2.29,0,.71-23.57-8.14-23.57-4.64,0-6.49,7.87-8.3,16.68-.35,1.71-.72,1.76-.78-.17-.05-1.58-.06-3.33-.04-4.94,2.23-8.85-.49-12.13-4.59-9.76,1.32,16.34-6.18,24.33-11.93,24.33-2.08,0-3.71-.88-4.94-2.28,6.9-4.23,9.97-9.09,9.97-13.83,0-5.14-2.95-8.11-7.86-8.11-6.85,0-10.67,7.05-10.67,13.04,0,3.22.6,5.96,1.59,8.22-2.35,1.12-4.57,2.09-6.63,3.03-.18-6.17-.88-12.64-1.41-18.61-3.64-1-4.71.75-4.99,3.99-.65,7.4-3.39,11.99-5.81,11.99-1.83,0-2.94-2.22-3.07-4.58-.68-11.86,8.95-15.16,13.99-13.44,1.05-2.61-.1-4.5-4.64-4.5-5.51,0-9.63,3.35-12.65,7.64-2.02,2.87-4.34,4.9-7.44,7.35.08-.71.12-1.41.12-2.11,0-8.37-4.53-12.04-8.86-12.04-3.58,0-5.83,2.15-7.14,5.44-.32-3.3-.98-4.73-2.9-4.73-.83,0-1.96.23-3.19.83.56,1.85.78,5.93.78,8.62,0,10.06-2.88,14.57-5.66,14.57-3.17,0-3.67-11.93-3.94-16.57-.41-.14-.86-.29-1.55-.29-2.87,0-3.24,3.85-3.95,7.39-.78,3.92-3.05,8.86-6.39,8.86-2.02,0-3.28-1.95-3.44-5.46-.33-7.11,5.59-15.54,14.85-12.92,1.21-2.83-.69-4.99-4.53-4.99-6.77,0-12.36,5.07-14.8,11.06-2.48,5.49-6.82,13.56-15.64,13.56-6.23,0-10.99-5.43-10.99-16.83,0-9.83,6.19-19.16,12.8-19.16,4.62,0,5.7,4.55,5.29,8.81,2.39,1.93,6.32.14,6.32-4.67,0-3.31-2.69-8.92-11.36-8.92-10.74,0-20.23,10.71-20.23,24.78s6.92,21.68,16.71,21.68c6.18,0,12.01-3.52,16.03-10.03,1.01,5.69,4.89,8.09,7.8,8.09,4.71,0,7.78-3.05,9.46-7.17,1.05,4.13,3.26,7.19,6.93,7.19,2.59,0,4.6-1.31,6.12-3.41-.6,14.36-1.36,23.51,7.12,21.71-1.31-4.08-1.73-11.51-1.73-18.19,0-18.26,3.01-24.27,6.79-24.27,2.73,0,3.62,3.49,3.62,7.21,0,1.99-.19,4.28-.7,6.35-4.64,2.92-8.35,5.23-8.35,8.17,0,2.32,1.72,2.54,3.21,2.54,3.56,0,7.85-3.49,10.22-10.09,2.07-1.25,4.15-2.69,6.14-4.65-.07.67-.11,1.35-.11,2.03,0,6.55,2.87,10.5,7.44,10.5,3.58,0,6.27-2.54,8.17-6.35.12,2.19.19,4.21.23,6.08-7.27,3.36-15.32,6.78-15.32,16.26,0,4.91,3.54,8.61,8.16,8.61,10.13,0,12.44-10.69,12.53-23.11,3.3-1.43,5.75-2.53,8.59-3.93,2.42,3.03,5.72,4.55,8.74,4.55,5.72,0,10.01-3.03,13.46-9.17.61,4.68,1.82,9.17,4.31,9.17,4.53,0,5.45-23.69,8.82-23.69,2.58,0,.46,25.64,7.28,25.64,5.83,0,6.93-22.56,9.77-22.56,2.01,0,2.17,20.62,8.52,20.62,3.13,0,6.52-3.75,8.22-11.62.8,5.24,3.44,11.62,8.6,11.62,3.01,0,5.6-3.05,7.6-7.1.55,4.17,1.73,7.1,4.01,7.1,5.94,0,5.74-23.65,10.44-23.65,3.67,0,2.53,23.65,11.26,23.65,4.16,0,6.12-3.54,7.29-7.98,1.61,6.53,4.2,7.98,6.34,7.98,1.35,0,2.37-.47,3.71-2.07-6.75-2.93-6.18-13.58-6.18-20.46h-.03Z"/>
 </svg></div>
-      </div>
-    </div>
+    </footer>
   </div>
-  <script type="application/json" id="report-data">{&quot;kind&quot;: &quot;application&quot;, &quot;title&quot;: &quot;Application Report - Application Report — HRApp-004&quot;, &quot;lead&quot;: &quot;&gt; Generated: 2026-07-13 | Application ID: `app004`&quot;, &quot;customer_name&quot;: &quot;Client&quot;, &quot;subtitle&quot;: &quot;Application modernization with Agentic AI powered by Capgemini GenSuite&quot;, &quot;generated_at&quot;: &quot;2026-07-13T13:02:47.538119+00:00&quot;, &quot;sections&quot;: [{&quot;title&quot;: &quot;Application Overview&quot;, &quot;slug&quot;: &quot;application-overview&quot;, &quot;html&quot;: &quot;&lt;p&gt;Field | Value&lt;/p&gt;\n&lt;p&gt;&lt;strong&gt;App ID&lt;/strong&gt; | &lt;code&gt;app004&lt;/code&gt;&lt;/p&gt;\n&lt;p&gt;&lt;strong&gt;Name&lt;/strong&gt; | HRApp-004&lt;/p&gt;\n&lt;p&gt;&lt;strong&gt;Description&lt;/strong&gt; | HR management system&lt;/p&gt;\n&lt;p&gt;&lt;strong&gt;Solution Type&lt;/strong&gt; | Custom made&lt;/p&gt;\n&lt;p&gt;&lt;strong&gt;Business Criticality&lt;/strong&gt; | High&lt;/p&gt;\n&lt;p&gt;&lt;strong&gt;Status&lt;/strong&gt; | Production&lt;/p&gt;\n&lt;p&gt;&lt;strong&gt;Decommission Date&lt;/strong&gt; | not planned&lt;/p&gt;\n&lt;p&gt;&lt;strong&gt;Deployment Type&lt;/strong&gt; | AWS+On-premise&lt;/p&gt;\n&lt;p&gt;&lt;strong&gt;Data Classification&lt;/strong&gt; | Internal&lt;/p&gt;\n&lt;p&gt;&lt;strong&gt;Business Unit&lt;/strong&gt; | HR&lt;/p&gt;\n&lt;p&gt;&lt;strong&gt;Business Capabilities&lt;/strong&gt; | Employee Management, Payroll Processing, Benefits Administration&lt;/p&gt;\n&lt;p&gt;&lt;strong&gt;User Count&lt;/strong&gt; | 670&lt;/p&gt;\n&lt;p&gt;&lt;strong&gt;Operating System&lt;/strong&gt; | Windows Server 2012&lt;/p&gt;\n&lt;p&gt;&lt;strong&gt;Programming Language&lt;/strong&gt; | .NET Core&lt;/p&gt;\n&lt;p&gt;&lt;strong&gt;Application Server&lt;/strong&gt; | Microsoft IIS 8.0&lt;/p&gt;\n&lt;p&gt;&lt;strong&gt;Architecture&lt;/strong&gt; | 2-Tier&lt;/p&gt;\n&lt;p&gt;&lt;strong&gt;Containerized&lt;/strong&gt; | Yes&lt;/p&gt;\n&lt;p&gt;&lt;strong&gt;CI/CD&lt;/strong&gt; | Yes&lt;/p&gt;\n&lt;p&gt;&lt;strong&gt;Environment Count&lt;/strong&gt; | 2&lt;/p&gt;\n&lt;p&gt;&lt;strong&gt;Servers&lt;/strong&gt; | sv06, sv02&lt;/p&gt;\n&lt;p&gt;&lt;strong&gt;CPU Cores&lt;/strong&gt; | 4&lt;/p&gt;\n&lt;p&gt;&lt;strong&gt;Memory (GB)&lt;/strong&gt; | 16&lt;/p&gt;\n&lt;p&gt;&lt;strong&gt;API Endpoints&lt;/strong&gt; | 12&lt;/p&gt;\n&lt;p&gt;&lt;strong&gt;External Interfaces&lt;/strong&gt; | 6&lt;/p&gt;\n&lt;p&gt;&lt;strong&gt;Database Engine&lt;/strong&gt; | SQL Server 2019&lt;/p&gt;\n&lt;p&gt;&lt;strong&gt;Database Storage (GB)&lt;/strong&gt; | 750&lt;/p&gt;\n&lt;p&gt;&lt;strong&gt;Database License Required&lt;/strong&gt; | Yes&lt;/p&gt;\n&lt;p&gt;&lt;strong&gt;Logging Solution&lt;/strong&gt; | Splunk&lt;/p&gt;\n&lt;p&gt;&lt;strong&gt;Monitoring Tool&lt;/strong&gt; | CloudWatch&lt;/p&gt;&quot;}, {&quot;title&quot;: &quot;Technology Assessment&quot;, &quot;slug&quot;: &quot;technology-assessment&quot;, &quot;html&quot;: &quot;&lt;p&gt;🔴 &lt;strong&gt;EOL components present&lt;/strong&gt; | 🟡 &lt;strong&gt;Outdated components present&lt;/strong&gt; | ❓ &lt;strong&gt;Missing version data&lt;/strong&gt;&lt;/p&gt;\n&lt;p&gt;Component | Type | Version | Status | EOL Date | Notes&lt;/p&gt;\n&lt;p&gt;&lt;strong&gt;Windows Server 2012&lt;/strong&gt; | os | 2012 | 🔴 EOL | 2023-10-10 | Windows Server 2012 reached End of Extended Support on October 10, 2023. Microsoft no longer provides security updates, exposing the system to unpatched vulnerabilities.&lt;/p&gt;\n&lt;p&gt;&lt;strong&gt;.NET Core&lt;/strong&gt; | programming_language | unknown | ❓ NO_KNOWLEDGE | N/A | The .NET Core version is not specified. Without knowing the exact version (e.g., 3.1, 5.0, 6.0, 8.0), lifecycle status cannot be determined. Version discovery is required.&lt;/p&gt;\n&lt;p&gt;&lt;strong&gt;Microsoft IIS 8.0&lt;/strong&gt; | application_server | 8.0 | 🔴 EOL | 2023-10-10 | IIS 8.0 is bundled with Windows Server 2012 and reached End of Life on October 10, 2023, together with Windows Server 2012.&lt;/p&gt;\n&lt;p&gt;&lt;strong&gt;SQL Server 2019&lt;/strong&gt; | database | 2019 | 🟡 OUTDATED | 2030-01-08 | SQL Server 2019 mainstream support ended January 7, 2025. It remains in Extended Support through January 8, 2030, but is no longer the current version (SQL Server 2022 is latest).&lt;/p&gt;&quot;}, {&quot;title&quot;: &quot;Complexity Assessment&quot;, &quot;slug&quot;: &quot;complexity-assessment&quot;, &quot;html&quot;: &quot;&lt;p&gt;&lt;strong&gt;Complexity Score: 7/10 — 🟠 High&lt;/strong&gt;&lt;/p&gt;\n&lt;h3&gt;Complexity Factors&lt;/h3&gt;\n&lt;p&gt;Factor | Value&lt;/p&gt;\n&lt;p&gt;Business Criticality | High&lt;/p&gt;\n&lt;p&gt;Architecture Tier | 2-Tier&lt;/p&gt;\n&lt;p&gt;Containerization | True&lt;/p&gt;\n&lt;p&gt;Ci Cd | True&lt;/p&gt;\n&lt;p&gt;Server Count | 2&lt;/p&gt;\n&lt;p&gt;External Interface Count | 6&lt;/p&gt;\n&lt;p&gt;Eol Components | True&lt;/p&gt;\n&lt;p&gt;Outdated Components | True&lt;/p&gt;\n&lt;p&gt;Technology Age | aging&lt;/p&gt;\n&lt;h3&gt;Reasoning&lt;/h3&gt;\n&lt;p&gt;HRApp-004 scores High complexity (7/10). The application has modernization-positive traits: containerized, CI/CD present, and already partially deployed on AWS. However, it runs on EOL Windows Server 2012 (EOL October 2023) with EOL IIS 8.0, presenting immediate security risk. The .NET Core version is unspecified, introducing lifecycle uncertainty. As a Custom made, High criticality application handling Payroll Processing and HR data (Internal classification), modernization carries significant business risk. The hybrid AWS+On-premise deployment adds architectural complexity requiring careful migration planning. SQL Server 2019 is in extended support (mainstream ended Jan 2025), and the licensed database engine adds cost and migration considerations. With 6 external interfaces and 12 API endpoints, integration re-testing will be substantial.&lt;/p&gt;&quot;}, {&quot;title&quot;: &quot;Scenario Applicability&quot;, &quot;slug&quot;: &quot;scenario-applicability&quot;, &quot;html&quot;: &quot;&lt;p&gt;Scenario | Status | Priority | Effort | Summary&lt;/p&gt;\n&lt;p&gt;&lt;strong&gt;Operating System Update&lt;/strong&gt; | 🔵 APPLICABLE | Critical | Medium | Windows Server 2012 is EOL (October 10, 2023). The OS is no longer receiving security patches, repre...&lt;/p&gt;\n&lt;p&gt;&lt;strong&gt;Switch to Standard Linux Operating System&lt;/strong&gt; | ⚪ NOT_APPLICABLE | N/A | N/A | HRApp-004 uses IIS 8.0 and .NET Core on Windows Server, which are Windows-specific components. While...&lt;/p&gt;\n&lt;p&gt;&lt;strong&gt;Switch to ARM-based CPU&lt;/strong&gt; | 🔴 BLOCKED | Low | Very High | Windows Server 2012 does not support ARM architecture. IIS 8.0 is also Windows x86/x64 only. ARM mig...&lt;/p&gt;\n&lt;p&gt;&lt;strong&gt;Application Server Replacement&lt;/strong&gt; | 🔵 APPLICABLE | Critical | Medium | Microsoft IIS 8.0 is EOL (tied to Windows Server 2012 EOL, October 2023). Upgrade to IIS 10.0 (Windo...&lt;/p&gt;\n&lt;p&gt;&lt;strong&gt;Application Migration to Cloud Infrastructure (Lift &amp;amp; Shift)&lt;/strong&gt; | 🟡 PARTIALLY_FULFILLED | High | High | HRApp-004 has a hybrid AWS+On-premise deployment. Some components are already in AWS, but on-premise...&lt;/p&gt;\n&lt;p&gt;&lt;strong&gt;Application Containerization&lt;/strong&gt; | ✅ FULFILLED | N/A | N/A | HRApp-004 is already containerized. Container deployment is implemented.&lt;/p&gt;\n&lt;p&gt;&lt;strong&gt;Application Refactoring and De-coupling&lt;/strong&gt; | 🔵 APPLICABLE | Medium | Very High | HRApp-004 is a Custom made 2-Tier application. Refactoring to a microservices or API-first architect...&lt;/p&gt;\n&lt;p&gt;&lt;strong&gt;Upgrade Legacy Databases&lt;/strong&gt; | 🔵 APPLICABLE | Medium | Medium | SQL Server 2019 mainstream support ended January 7, 2025. While extended support continues until 203...&lt;/p&gt;\n&lt;p&gt;&lt;strong&gt;Switch DB Engine to Open-Source Database Solution&lt;/strong&gt; | 🔵 APPLICABLE | Medium | High | SQL Server 2019 requires a commercial license (database_license_required: true). Migrating to Postgr...&lt;/p&gt;\n&lt;p&gt;&lt;strong&gt;Update Outdated Components&lt;/strong&gt; | 🔵 APPLICABLE | High | High | Windows Server 2012 (EOL), IIS 8.0 (EOL), and SQL Server 2019 (outdated) all require updates. The .N...&lt;/p&gt;\n&lt;h3&gt;Scenario Details&lt;/h3&gt;\n&lt;p&gt;#### 🔵 Operating System Update&lt;/p&gt;\n&lt;ul&gt;&lt;li&gt;&lt;strong&gt;Status:&lt;/strong&gt; APPLICABLE&lt;/li&gt;&lt;li&gt;&lt;strong&gt;Priority:&lt;/strong&gt; Critical&lt;/li&gt;&lt;li&gt;&lt;strong&gt;Effort:&lt;/strong&gt; Medium&lt;/li&gt;&lt;li&gt;&lt;strong&gt;Reasoning:&lt;/strong&gt; Windows Server 2012 is EOL (October 10, 2023). The OS is no longer receiving security patches, representing a critical compliance and security risk for an HR application handling Payroll data.&lt;/li&gt;&lt;li&gt;&lt;strong&gt;Suggestion:&lt;/strong&gt; Upgrade to Windows Server 2022 (current LTS) or migrate to Windows Server 2019. For containerized components, evaluate migrating to Linux-based containers to reduce Windows licensing costs.&lt;/li&gt;&lt;/ul&gt;\n&lt;p&gt;#### ⚪ Switch to Standard Linux Operating System&lt;/p&gt;\n&lt;ul&gt;&lt;li&gt;&lt;strong&gt;Status:&lt;/strong&gt; NOT_APPLICABLE&lt;/li&gt;&lt;li&gt;&lt;strong&gt;Priority:&lt;/strong&gt; N/A&lt;/li&gt;&lt;li&gt;&lt;strong&gt;Effort:&lt;/strong&gt; N/A&lt;/li&gt;&lt;li&gt;&lt;strong&gt;Reasoning:&lt;/strong&gt; HRApp-004 uses IIS 8.0 and .NET Core on Windows Server, which are Windows-specific components. While .NET Core is cross-platform, IIS is Windows-only. Switching to Linux would require replacing IIS with a Linux-compatible web server.&lt;/li&gt;&lt;li&gt;&lt;strong&gt;Suggestion:&lt;/strong&gt; Not directly applicable without replacing IIS. Consider migrating to Linux after replacing IIS with Nginx or Kestrel as part of a broader modernization initiative.&lt;/li&gt;&lt;/ul&gt;\n&lt;p&gt;#### 🔴 Switch to ARM-based CPU&lt;/p&gt;\n&lt;ul&gt;&lt;li&gt;&lt;strong&gt;Status:&lt;/strong&gt; BLOCKED&lt;/li&gt;&lt;li&gt;&lt;strong&gt;Priority:&lt;/strong&gt; Low&lt;/li&gt;&lt;li&gt;&lt;strong&gt;Effort:&lt;/strong&gt; Very High&lt;/li&gt;&lt;li&gt;&lt;strong&gt;Reasoning:&lt;/strong&gt; Windows Server 2012 does not support ARM architecture. IIS 8.0 is also Windows x86/x64 only. ARM migration requires OS modernization and application server replacement first.&lt;/li&gt;&lt;li&gt;&lt;strong&gt;Suggestion:&lt;/strong&gt; ARM migration is blocked until Windows Server is upgraded to a version with ARM support and IIS is replaced with an ARM-compatible web server.&lt;/li&gt;&lt;/ul&gt;\n&lt;p&gt;#### 🔵 Application Server Replacement&lt;/p&gt;\n&lt;ul&gt;&lt;li&gt;&lt;strong&gt;Status:&lt;/strong&gt; APPLICABLE&lt;/li&gt;&lt;li&gt;&lt;strong&gt;Priority:&lt;/strong&gt; Critical&lt;/li&gt;&lt;li&gt;&lt;strong&gt;Effort:&lt;/strong&gt; Medium&lt;/li&gt;&lt;li&gt;&lt;strong&gt;Reasoning:&lt;/strong&gt; Microsoft IIS 8.0 is EOL (tied to Windows Server 2012 EOL, October 2023). Upgrade to IIS 10.0 (Windows Server 2019/2022) or replace with a cross-platform alternative (Kestrel, Nginx).&lt;/li&gt;&lt;li&gt;&lt;strong&gt;Suggestion:&lt;/strong&gt; Upgrade IIS to version 10.0 as part of the Windows Server 2022 migration. Alternatively, evaluate Kestrel (built-in .NET web server) or Nginx for cross-platform deployment.&lt;/li&gt;&lt;/ul&gt;\n&lt;p&gt;#### 🟡 Application Migration to Cloud Infrastructure (Lift &amp;amp; Shift)&lt;/p&gt;\n&lt;ul&gt;&lt;li&gt;&lt;strong&gt;Status:&lt;/strong&gt; PARTIALLY_FULFILLED&lt;/li&gt;&lt;li&gt;&lt;strong&gt;Priority:&lt;/strong&gt; High&lt;/li&gt;&lt;li&gt;&lt;strong&gt;Effort:&lt;/strong&gt; High&lt;/li&gt;&lt;li&gt;&lt;strong&gt;Reasoning:&lt;/strong&gt; HRApp-004 has a hybrid AWS+On-premise deployment. Some components are already in AWS, but on-premise components remain. Full cloud migration is not yet complete.&lt;/li&gt;&lt;li&gt;&lt;strong&gt;Suggestion:&lt;/strong&gt; Complete the cloud migration by moving remaining on-premise components to AWS. Evaluate AWS ECS or EKS for the containerized components. Ensure data residency requirements for HR/Payroll data are met.&lt;/li&gt;&lt;/ul&gt;\n&lt;p&gt;#### ✅ Application Containerization&lt;/p&gt;\n&lt;ul&gt;&lt;li&gt;&lt;strong&gt;Status:&lt;/strong&gt; FULFILLED&lt;/li&gt;&lt;li&gt;&lt;strong&gt;Priority:&lt;/strong&gt; N/A&lt;/li&gt;&lt;li&gt;&lt;strong&gt;Effort:&lt;/strong&gt; N/A&lt;/li&gt;&lt;li&gt;&lt;strong&gt;Reasoning:&lt;/strong&gt; HRApp-004 is already containerized. Container deployment is implemented.&lt;/li&gt;&lt;li&gt;&lt;strong&gt;Suggestion:&lt;/strong&gt; Containerization is fulfilled. Update container base images to resolve Windows Server 2012 EOL risk and improve container security posture.&lt;/li&gt;&lt;/ul&gt;\n&lt;p&gt;#### 🔵 Application Refactoring and De-coupling&lt;/p&gt;\n&lt;ul&gt;&lt;li&gt;&lt;strong&gt;Status:&lt;/strong&gt; APPLICABLE&lt;/li&gt;&lt;li&gt;&lt;strong&gt;Priority:&lt;/strong&gt; Medium&lt;/li&gt;&lt;li&gt;&lt;strong&gt;Effort:&lt;/strong&gt; Very High&lt;/li&gt;&lt;li&gt;&lt;strong&gt;Reasoning:&lt;/strong&gt; HRApp-004 is a Custom made 2-Tier application. Refactoring to a microservices or API-first architecture would enable independent scaling of HR modules (Payroll, Benefits, Employee Management) and facilitate future cloud-native migration.&lt;/li&gt;&lt;li&gt;&lt;strong&gt;Suggestion:&lt;/strong&gt; Decompose the 2-Tier .NET Core application into domain-aligned microservices. Expose payroll, benefits, and employee management as independent services with REST/GraphQL APIs.&lt;/li&gt;&lt;/ul&gt;\n&lt;p&gt;#### 🔵 Upgrade Legacy Databases&lt;/p&gt;\n&lt;ul&gt;&lt;li&gt;&lt;strong&gt;Status:&lt;/strong&gt; APPLICABLE&lt;/li&gt;&lt;li&gt;&lt;strong&gt;Priority:&lt;/strong&gt; Medium&lt;/li&gt;&lt;li&gt;&lt;strong&gt;Effort:&lt;/strong&gt; Medium&lt;/li&gt;&lt;li&gt;&lt;strong&gt;Reasoning:&lt;/strong&gt; SQL Server 2019 mainstream support ended January 7, 2025. While extended support continues until 2030, upgrading to SQL Server 2022 (current) would restore full feature and security patch coverage.&lt;/li&gt;&lt;li&gt;&lt;strong&gt;Suggestion:&lt;/strong&gt; Upgrade from SQL Server 2019 to SQL Server 2022. Use the Database Experimentation Assistant (DEA) to identify compatibility issues before migration.&lt;/li&gt;&lt;/ul&gt;\n&lt;p&gt;#### 🔵 Switch DB Engine to Open-Source Database Solution&lt;/p&gt;\n&lt;ul&gt;&lt;li&gt;&lt;strong&gt;Status:&lt;/strong&gt; APPLICABLE&lt;/li&gt;&lt;li&gt;&lt;strong&gt;Priority:&lt;/strong&gt; Medium&lt;/li&gt;&lt;li&gt;&lt;strong&gt;Effort:&lt;/strong&gt; High&lt;/li&gt;&lt;li&gt;&lt;strong&gt;Reasoning:&lt;/strong&gt; SQL Server 2019 requires a commercial license (database_license_required: true). Migrating to PostgreSQL would eliminate SQL Server licensing costs. .NET Core has strong PostgreSQL support via Npgsql.&lt;/li&gt;&lt;li&gt;&lt;strong&gt;Suggestion:&lt;/strong&gt; Evaluate migration from SQL Server 2019 to PostgreSQL 16+. Use AWS Schema Conversion Tool or Babelfish for PostgreSQL to assess T-SQL compatibility. Test via the existing CI/CD pipeline.&lt;/li&gt;&lt;/ul&gt;\n&lt;p&gt;#### 🔵 Update Outdated Components&lt;/p&gt;\n&lt;ul&gt;&lt;li&gt;&lt;strong&gt;Status:&lt;/strong&gt; APPLICABLE&lt;/li&gt;&lt;li&gt;&lt;strong&gt;Priority:&lt;/strong&gt; High&lt;/li&gt;&lt;li&gt;&lt;strong&gt;Effort:&lt;/strong&gt; High&lt;/li&gt;&lt;li&gt;&lt;strong&gt;Reasoning:&lt;/strong&gt; Windows Server 2012 (EOL), IIS 8.0 (EOL), and SQL Server 2019 (outdated) all require updates. The .NET Core version is unknown and must be identified and updated. CI/CD pipeline and existing containerization support systematic updates.&lt;/li&gt;&lt;li&gt;&lt;strong&gt;Suggestion:&lt;/strong&gt; Identify and document the exact .NET Core version in use. Create a component update roadmap: (1) Upgrade to Windows Server 2022 + IIS 10, (2) Identify and update .NET Core to 8.0 LTS, (3) Upgrade SQL Server 2019 to 2022.&lt;/li&gt;&lt;/ul&gt;&quot;}, {&quot;title&quot;: &quot;Business Case&quot;, &quot;slug&quot;: &quot;business-case&quot;, &quot;html&quot;: &quot;&lt;p&gt;&lt;strong&gt;Total Adjusted Investment: $421,400.00&lt;/strong&gt; &lt;strong&gt;Total Yearly Savings: $190,500.00&lt;/strong&gt; &lt;strong&gt;Estimated ROI Payback: 2.21 years&lt;/strong&gt;&lt;/p&gt;\n&lt;p&gt;Scenario | Status | Adj. Cost | Yearly Savings | ROI (years)&lt;/p&gt;\n&lt;p&gt;Operating System Update | APPLICABLE | $1,400.00 | $500.00 | 2.8&lt;/p&gt;\n&lt;p&gt;Application Server Replacement | APPLICABLE | $14,000.00 | $12,000.00 | 1.17&lt;/p&gt;\n&lt;p&gt;Application Migration to Cloud Infrastructure (Lift &amp;amp; Shift) | PARTIALLY_FULFILLED | $7,000.00 | $3,000.00 | 2.33&lt;/p&gt;\n&lt;p&gt;Application Refactoring and De-coupling | APPLICABLE | $350,000.00 | $150,000.00 | 2.33&lt;/p&gt;\n&lt;p&gt;Upgrade Legacy Databases | APPLICABLE | $14,000.00 | $10,000.00 | 1.4&lt;/p&gt;\n&lt;p&gt;Switch DB Engine to Open-Source Database Solution | APPLICABLE | $35,000.00 | $15,000.00 | 2.33&lt;/p&gt;\n&lt;p&gt;&amp;gt; *Costs adjusted by complexity multiplier: &lt;strong&gt;1.4x&lt;/strong&gt; (complexity score / 5)*&lt;/p&gt;&quot;}], &quot;app_id&quot;: &quot;app004&quot;, &quot;application_name&quot;: &quot;Application Report — HRApp-004&quot;, &quot;analysis_id&quot;: &quot;6c9f8f7009201c9dd87f73ab88feb911&quot;}</script>
+  <script type="application/json" id="report-data">{
+  &quot;analysis_id&quot;: &quot;GD-2026-001&quot;,
+  &quot;generated_at&quot;: &quot;2026-07-14T07:33:55Z&quot;,
+  &quot;customer_name&quot;: &quot;Enterprise Client&quot;,
+  &quot;report_type&quot;: &quot;application&quot;,
+  &quot;application&quot;: {
+    &quot;id&quot;: &quot;app004&quot;,
+    &quot;name&quot;: &quot;HRApp-004&quot;,
+    &quot;business_unit&quot;: &quot;HR&quot;,
+    &quot;overview_line&quot;: &quot;Custom made HR management | HR BU | High criticality | AWS+On-premise hybrid | 2-Tier | .NET Core (unknown version)/Windows Server 2012/IIS 8.0/SQL Server 2019 | 670 users | CI/CD: Yes | Containers: Yes | 12 APIs | 6 external interfaces | SQL Server 750GB (licensed) | Servers: sv06, sv02 | 4 CPU cores | 16GB RAM | Splunk logging | CloudWatch monitoring&quot;,
+    &quot;deployment&quot;: &quot;AWS + On-Premise hybrid&quot;,
+    &quot;architecture&quot;: &quot;2-Tier&quot;,
+    &quot;criticality&quot;: &quot;High&quot;,
+    &quot;users&quot;: 670,
+    &quot;cicd&quot;: &quot;Yes&quot;,
+    &quot;containers&quot;: &quot;Yes&quot;,
+    &quot;apis&quot;: 12,
+    &quot;external_interfaces&quot;: 6,
+    &quot;database&quot;: &quot;SQL Server 2019&quot;,
+    &quot;database_size&quot;: &quot;750GB&quot;,
+    &quot;database_license&quot;: &quot;Licensed&quot;,
+    &quot;servers&quot;: &quot;sv06, sv02&quot;,
+    &quot;cpu&quot;: &quot;4 CPU cores&quot;,
+    &quot;ram&quot;: &quot;16GB RAM&quot;,
+    &quot;monitoring&quot;: &quot;CloudWatch&quot;,
+    &quot;logging&quot;: &quot;Splunk&quot;,
+    &quot;decommission&quot;: &quot;Not stated&quot;,
+    &quot;in_scope&quot;: true,
+    &quot;technology&quot;: [
+      {
+        &quot;component&quot;: &quot;Windows Server&quot;,
+        &quot;version&quot;: &quot;2012&quot;,
+        &quot;status&quot;: &quot;EOL&quot;,
+        &quot;icon&quot;: &quot;\ud83d\udd34&quot;,
+        &quot;rationale&quot;: &quot;End of life reached October 10, 2023.&quot;,
+        &quot;eol&quot;: &quot;2023-10-10&quot;,
+        &quot;confidence&quot;: 10
+      },
+      {
+        &quot;component&quot;: &quot;.NET Core&quot;,
+        &quot;version&quot;: &quot;Unknown&quot;,
+        &quot;status&quot;: &quot;NO_KNOWLEDGE&quot;,
+        &quot;icon&quot;: &quot;\u2753&quot;,
+        &quot;rationale&quot;: &quot;Version not supplied, so lifecycle status cannot be confirmed.&quot;,
+        &quot;eol&quot;: &quot;Unknown&quot;,
+        &quot;confidence&quot;: 3
+      },
+      {
+        &quot;component&quot;: &quot;Microsoft IIS&quot;,
+        &quot;version&quot;: &quot;8.0&quot;,
+        &quot;status&quot;: &quot;EOL&quot;,
+        &quot;icon&quot;: &quot;\ud83d\udd34&quot;,
+        &quot;rationale&quot;: &quot;Lifecycle tied to Windows Server 2012 and therefore unsupported.&quot;,
+        &quot;eol&quot;: &quot;2023-10-10&quot;,
+        &quot;confidence&quot;: 10
+      },
+      {
+        &quot;component&quot;: &quot;SQL Server&quot;,
+        &quot;version&quot;: &quot;2019&quot;,
+        &quot;status&quot;: &quot;OUTDATED&quot;,
+        &quot;icon&quot;: &quot;\ud83d\udfe1&quot;,
+        &quot;rationale&quot;: &quot;Mainstream support ended in 2025; extended support continues.&quot;,
+        &quot;eol&quot;: &quot;2030-01-07 (extended)&quot;,
+        &quot;confidence&quot;: 9
+      }
+    ],
+    &quot;flags&quot;: {
+      &quot;eol&quot;: true,
+      &quot;outdated&quot;: true,
+      &quot;missing&quot;: true
+    },
+    &quot;complexity&quot;: {
+      &quot;score&quot;: 7,
+      &quot;label&quot;: &quot;High&quot;,
+      &quot;multiplier&quot;: 1.4
+    },
+    &quot;complexity_factors&quot;: [
+      [
+        &quot;High criticality HR and payroll-sensitive data&quot;,
+        &quot;Security and downtime concerns are elevated because the system processes sensitive employee information.&quot;
+      ],
+      [
+        &quot;Hybrid AWS + on-prem deployment&quot;,
+        &quot;Operational ownership is split across environments and complicates cutover sequencing.&quot;
+      ],
+      [
+        &quot;Windows Server 2012 and IIS 8.0 are EOL&quot;,
+        &quot;Unsupported platform layers create urgent remediation pressure.&quot;
+      ],
+      [
+        &quot;Unknown .NET Core version&quot;,
+        &quot;Missing lifecycle data raises planning risk and can hide larger upgrade effort.&quot;
+      ],
+      [
+        &quot;Containers and CI/CD already present&quot;,
+        &quot;Delivery mechanics are stronger than the underlying platform health.&quot;
+      ],
+      [
+        &quot;Six external interfaces and 12 APIs&quot;,
+        &quot;Interface validation remains significant for every platform change.&quot;
+      ],
+      [
+        &quot;Licensed SQL Server footprint&quot;,
+        &quot;There is a medium-term cost optimization angle beyond support remediation.&quot;
+      ]
+    ],
+    &quot;complexity_reasoning&quot;: &quot;HRApp-004 mixes urgent infrastructure obsolescence with a partially modern engineering posture. It is easier to modernize than the ERP because CI/CD and containers exist, but the hybrid estate, missing .NET version data, and sensitivity of HR data make planning discipline essential before any major refactor or database change.&quot;,
+    &quot;summary&quot;: &quot;HRApp-004 has a usable modernization foundation, but its hosting stack is already out of support and key lifecycle data for .NET is missing. The right approach is to stabilize the platform first, close the information gap, and then use that foundation to finish the cloud journey and reduce licensing overhead.&quot;,
+    &quot;top_risks&quot;: [
+      &quot;Windows Server 2012 and IIS 8.0 are unsupported in a high-sensitivity HR environment.&quot;,
+      &quot;The unknown .NET Core version introduces planning uncertainty and could hide additional runtime remediation effort.&quot;,
+      &quot;Hybrid deployment increases operational complexity and slows standardization of controls, observability, and release procedures.&quot;
+    ],
+    &quot;recommendations&quot;: [
+      &quot;Close the .NET version data gap immediately so the rest of the remediation plan can be validated.&quot;,
+      &quot;Replace or uplift the unsupported Windows/IIS hosting baseline as the first major engineering action.&quot;,
+      &quot;Use the existing CI/CD and container base to complete cloud migration and stage later database/licensing improvements.&quot;
+    ],
+    &quot;scenarios&quot;: [
+      {
+        &quot;id&quot;: &quot;os_update_security_patch&quot;,
+        &quot;status&quot;: &quot;APPLICABLE&quot;,
+        &quot;priority&quot;: &quot;Critical&quot;,
+        &quot;effort&quot;: &quot;Medium&quot;,
+        &quot;reason&quot;: &quot;The current Windows Server baseline is already EOL, so immediate remediation is required to reduce infrastructure risk.&quot;,
+        &quot;suggestion&quot;: &quot;Run a time-boxed OS remediation program with validation of HR data handling, access controls, and recovery procedures.&quot;
+      },
+      {
+        &quot;id&quot;: &quot;switch_to_standard_linux_os&quot;,
+        &quot;status&quot;: &quot;NOT_APPLICABLE&quot;,
+        &quot;priority&quot;: &quot;N/A&quot;,
+        &quot;effort&quot;: &quot;N/A&quot;,
+        &quot;reason&quot;: &quot;The application is aligned to a Windows/.NET/IIS hosting model, so a Linux switch is not the direct modernization path.&quot;,
+        &quot;suggestion&quot;: &quot;Focus on supported Windows or platform-service targets instead of forcing an OS family rewrite.&quot;
+      },
+      {
+        &quot;id&quot;: &quot;switch_to_arm_cpu&quot;,
+        &quot;status&quot;: &quot;BLOCKED&quot;,
+        &quot;priority&quot;: &quot;Low&quot;,
+        &quot;effort&quot;: &quot;Very High&quot;,
+        &quot;reason&quot;: &quot;ARM does not align well with the current Windows/IIS estate and would introduce unnecessary complexity right now.&quot;,
+        &quot;suggestion&quot;: &quot;Reassess only if the application later moves to a different supported hosting model.&quot;
+      },
+      {
+        &quot;id&quot;: &quot;application_server_replacement&quot;,
+        &quot;status&quot;: &quot;APPLICABLE&quot;,
+        &quot;priority&quot;: &quot;Critical&quot;,
+        &quot;effort&quot;: &quot;Medium&quot;,
+        &quot;reason&quot;: &quot;IIS 8.0 is unsupported, making application server uplift a priority alongside the OS remediation.&quot;,
+        &quot;suggestion&quot;: &quot;Treat web/application hosting modernization as a paired workstream with the operating system update.&quot;
+      },
+      {
+        &quot;id&quot;: &quot;app_deployment_to_cloud&quot;,
+        &quot;status&quot;: &quot;PARTIALLY_FULFILLED&quot;,
+        &quot;priority&quot;: &quot;High&quot;,
+        &quot;effort&quot;: &quot;High&quot;,
+        &quot;reason&quot;: &quot;The application already has a cloud footprint, but the remaining hybrid topology keeps operational complexity high.&quot;,
+        &quot;suggestion&quot;: &quot;Use platform remediation to standardize deployment and retire residual on-prem dependencies where feasible.&quot;
+      },
+      {
+        &quot;id&quot;: &quot;app_containerization&quot;,
+        &quot;status&quot;: &quot;FULFILLED&quot;,
+        &quot;priority&quot;: &quot;N/A&quot;,
+        &quot;effort&quot;: &quot;N/A&quot;,
+        &quot;reason&quot;: &quot;Containers are already in place, which reduces delivery friction for later modernization phases.&quot;,
+        &quot;suggestion&quot;: &quot;Exploit the container baseline to rehearse runtime and hosting upgrades in lower-risk environments.&quot;
+      },
+      {
+        &quot;id&quot;: &quot;app_refactor_decoupling&quot;,
+        &quot;status&quot;: &quot;APPLICABLE&quot;,
+        &quot;priority&quot;: &quot;Medium&quot;,
+        &quot;effort&quot;: &quot;Very High&quot;,
+        &quot;reason&quot;: &quot;Deeper refactoring could simplify the hybrid architecture, but it should follow platform stabilization and .NET discovery.&quot;,
+        &quot;suggestion&quot;: &quot;Limit initial refactoring to seams that support cloud completion, supportability, or security segregation.&quot;
+      },
+      {
+        &quot;id&quot;: &quot;upgrade_legacy_databases&quot;,
+        &quot;status&quot;: &quot;APPLICABLE&quot;,
+        &quot;priority&quot;: &quot;Medium&quot;,
+        &quot;effort&quot;: &quot;Medium&quot;,
+        &quot;reason&quot;: &quot;SQL Server 2019 is not EOL, but it is past mainstream support and should be aligned with broader platform modernization.&quot;,
+        &quot;suggestion&quot;: &quot;Sequence the database upgrade after the hosting tier is stabilized to avoid stacking major changes in one release.&quot;
+      },
+      {
+        &quot;id&quot;: &quot;switch_db_engine_open_source&quot;,
+        &quot;status&quot;: &quot;APPLICABLE&quot;,
+        &quot;priority&quot;: &quot;Medium&quot;,
+        &quot;effort&quot;: &quot;High&quot;,
+        &quot;reason&quot;: &quot;There is a credible license-cost reduction path, but application compatibility and data migration need careful evaluation.&quot;,
+        &quot;suggestion&quot;: &quot;Run a fit-gap assessment before committing to an engine switch; do not combine it with first-wave infrastructure remediation.&quot;
+      },
+      {
+        &quot;id&quot;: &quot;update_outdated_components&quot;,
+        &quot;status&quot;: &quot;APPLICABLE&quot;,
+        &quot;priority&quot;: &quot;High&quot;,
+        &quot;effort&quot;: &quot;High&quot;,
+        &quot;reason&quot;: &quot;SQL Server and possibly the .NET runtime need attention, but the exact scope depends on confirming the current .NET version.&quot;,
+        &quot;suggestion&quot;: &quot;Treat component modernization as a second-stage backlog gated by version discovery and hosting remediation.&quot;
+      }
+    ],
+    &quot;business_case&quot;: [
+      [
+        &quot;OS Update&quot;,
+        1400,
+        500,
+        2.8
+      ],
+      [
+        &quot;App Server Replacement&quot;,
+        14000,
+        12000,
+        1.17
+      ],
+      [
+        &quot;Cloud Lift &amp; Shift (partial)&quot;,
+        7000,
+        3000,
+        2.33
+      ],
+      [
+        &quot;App Refactoring&quot;,
+        350000,
+        150000,
+        2.33
+      ],
+      [
+        &quot;Upgrade Legacy Databases&quot;,
+        14000,
+        10000,
+        1.4
+      ],
+      [
+        &quot;Switch DB to Open-Source&quot;,
+        35000,
+        15000,
+        2.33
+      ]
+    ],
+    &quot;risk_level&quot;: &quot;Critical&quot;,
+    &quot;recommended_wave&quot;: &quot;Wave 1 for discovery and platform hardening, Wave 2 for hosting/cloud completion, Wave 3 for refactoring and database economics.&quot;
+  },
+  &quot;financial_totals&quot;: {
+    &quot;investment&quot;: 421400,
+    &quot;yearly_savings&quot;: 190500,
+    &quot;roi_years&quot;: 2.21
+  }
+}</script>
+  
+<script type="module">
+  import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+  mermaid.initialize({ startOnLoad: true, theme: 'dark', securityLevel: 'loose' });
+</script>
+
 </body>
 </html>
