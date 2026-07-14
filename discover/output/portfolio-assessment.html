@@ -1,76 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Portfolio Modernization Assessment &mdash; GenDiscover</title>
-  <script type="application/json" id="report-data">
-{
-  "generated": "2026-07-14T08:15:00Z",
-  "analysis_id": "GD-2026-0714-001",
-  "customer": "Portfolio Assessment",
-  "portfolio": {
-    "total_migration_cost": 1336100,
-    "total_savings_3yr": 2153400,
-    "net_benefit_3yr": 817300,
-    "roi_3yr_pct": 61.2,
-    "payback_period_months": 22
-  },
-  "applications": [
-    {
-      "app_id": "app001",
-      "app_name": "ERPApp-001",
-      "status": "Production",
-      "criticality": "High",
-      "complexity": 8,
-      "tech_risk": "CRITICAL",
-      "business_unit": "Finance",
-      "eol_count": 2
-    },
-    {
-      "app_id": "app002",
-      "app_name": "CRMApp-002",
-      "status": "Production",
-      "criticality": "Medium",
-      "complexity": 6,
-      "tech_risk": "HIGH",
-      "business_unit": "Marketing",
-      "eol_count": 3
-    },
-    {
-      "app_id": "app003",
-      "app_name": "AnalyticsApp-003",
-      "status": "Production",
-      "criticality": "Low",
-      "complexity": 5,
-      "tech_risk": "HIGH",
-      "business_unit": "IT",
-      "eol_count": 4
-    },
-    {
-      "app_id": "app004",
-      "app_name": "HRApp-004",
-      "status": "Production",
-      "criticality": "High",
-      "complexity": 7,
-      "tech_risk": "HIGH",
-      "business_unit": "HR",
-      "eol_count": 3
-    },
-    {
-      "app_id": "app005",
-      "app_name": "EComApp-005",
-      "status": "Retired",
-      "criticality": "Critical",
-      "complexity": null,
-      "tech_risk": "OUT_OF_SCOPE",
-      "business_unit": "Operations",
-      "eol_count": null
-    }
-  ]
-}
-  </script>
-  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portfolio Modernization Report - GenDiscover</title>
   <style>
     :root {
       --primary-dark: #081722;
@@ -81,334 +14,2187 @@
       --report-text-font-primary: #e9f7ff;
       --report-text-font-secondary-rgb: 184, 216, 232;
       --text-light-blue-rgb: 154, 198, 220;
-      --card-border: rgba(30,200,215,0.25);
+      --good: #52d68a;
+      --warn: #f4c95d;
+      --bad: #ff6b6b;
+      --muted: #7fa7ba;
+      --shadow: 0 24px 60px rgba(0, 0, 0, 0.32);
+      --border: 1px solid rgba(var(--accent-rgb), 0.18);
+      --radius-xl: 24px;
+      --radius-lg: 18px;
+      --radius-md: 14px;
+      --radius-sm: 10px;
     }
-    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-    body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--primary-dark);color:var(--report-text-font-primary);line-height:1.6;min-height:100vh;}
-    .container{max-width:1200px;margin:0 auto;padding:0 1.5rem 3rem;}
-    /* Header */
-    .report-header{background:linear-gradient(135deg,var(--report-background) 0%,#0a1f35 100%);border-bottom:2px solid var(--accent);padding:1.5rem 0;margin-bottom:2rem;}
-    .header-inner{max-width:1200px;margin:0 auto;padding:0 1.5rem;display:flex;justify-content:space-between;align-items:center;}
-    .header-text h1{font-size:1.75rem;font-weight:700;color:var(--report-text-font-primary);margin-bottom:0.25rem;}
-    .header-text .customer{color:var(--accent);font-size:1rem;font-weight:600;}
-    .header-text .subtitle{color:rgba(184,216,232,1);font-size:0.8rem;margin-top:0.25rem;}
-    .header-logo svg{width:160px;height:auto;fill:var(--accent);}
-    /* KPIs */
-    .kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(175px,1fr));gap:1rem;margin-bottom:2rem;}
-    .kpi-card{background:var(--section-background);border:1px solid var(--card-border);border-radius:12px;padding:1.2rem 1rem;text-align:center;}
-    .kpi-value{font-size:1.75rem;font-weight:700;color:var(--accent);display:block;}
-    .kpi-label{font-size:0.73rem;color:rgba(184,216,232,1);text-transform:uppercase;letter-spacing:0.05em;}
-    /* Section cards */
-    .section-card{background:var(--report-background);border:1px solid var(--card-border);border-radius:12px;margin-bottom:1.5rem;overflow:hidden;}
-    .section-header{display:flex;justify-content:space-between;align-items:center;padding:1rem 1.5rem;background:var(--section-background);cursor:pointer;border-bottom:1px solid var(--card-border);transition:background 0.2s;}
-    .section-header:hover{background:rgba(30,200,215,0.12);}
-    .section-header h2{font-size:1.05rem;font-weight:600;color:var(--report-text-font-primary);}
-    .toggle{color:var(--accent);font-size:1.1rem;transition:transform 0.3s;}
-    .section-content{padding:1.5rem;}
-    .section-content.collapsed{display:none;}
-    /* Tables */
-    table{width:100%;border-collapse:collapse;font-size:0.875rem;margin:0.75rem 0;}
-    th{background:var(--section-background);color:var(--accent);padding:0.6rem 0.8rem;text-align:left;font-size:0.73rem;text-transform:uppercase;letter-spacing:0.05em;border-bottom:1px solid var(--card-border);}
-    td{padding:0.6rem 0.8rem;border-bottom:1px solid rgba(30,200,215,0.1);color:rgba(184,216,232,1);}
-    tr:hover td{background:rgba(30,200,215,0.04);}
-    /* App grid */
-    .app-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(500px,1fr));gap:1.25rem;}
-    .app-card{background:var(--section-background);border:1px solid var(--card-border);border-radius:10px;padding:1.25rem;}
-    .app-card-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:0.75rem;}
-    .app-card-title{font-size:1rem;font-weight:600;color:var(--report-text-font-primary);}
-    .app-card-meta{font-size:0.73rem;color:rgba(154,198,220,1);}
-    .bar-wrap{margin:0.5rem 0 0.75rem;}
-    .bar-label{font-size:0.72rem;color:rgba(184,216,232,1);margin-bottom:0.2rem;}
-    .bar-bg{height:6px;background:rgba(255,255,255,0.1);border-radius:3px;overflow:hidden;}
-    .bar-fill{height:100%;border-radius:3px;background:linear-gradient(90deg,var(--accent),#0a8a97);}
-    /* Badges */
-    .badge{display:inline-block;padding:0.15rem 0.5rem;border-radius:4px;font-size:0.68rem;font-weight:600;text-transform:uppercase;letter-spacing:0.04em;}
-    .b-eol{background:rgba(239,68,68,0.2);color:#f87171;border:1px solid rgba(239,68,68,0.3);}
-    .b-out{background:rgba(245,158,11,0.2);color:#fbbf24;border:1px solid rgba(245,158,11,0.3);}
-    .b-cur{background:rgba(34,197,94,0.2);color:#4ade80;border:1px solid rgba(34,197,94,0.3);}
-    .b-unk{background:rgba(107,114,128,0.2);color:#9ca3af;border:1px solid rgba(107,114,128,0.3);}
-    .b-crit{background:rgba(239,68,68,0.15);color:#fca5a5;border:1px solid rgba(239,68,68,0.25);}
-    .b-high{background:rgba(245,158,11,0.15);color:#fde68a;border:1px solid rgba(245,158,11,0.25);}
-    .b-med{background:rgba(59,130,246,0.15);color:#93c5fd;border:1px solid rgba(59,130,246,0.25);}
-    .b-low{background:rgba(34,197,94,0.15);color:#86efac;border:1px solid rgba(34,197,94,0.25);}
-    .b-app{background:rgba(30,200,215,0.15);color:#67e8f9;border:1px solid rgba(30,200,215,0.25);}
-    .b-ful{background:rgba(34,197,94,0.15);color:#4ade80;border:1px solid rgba(34,197,94,0.25);}
-    .b-blk{background:rgba(239,68,68,0.15);color:#f87171;border:1px solid rgba(239,68,68,0.25);}
-    .b-na{background:rgba(107,114,128,0.15);color:#9ca3af;border:1px solid rgba(107,114,128,0.25);}
-    .b-par{background:rgba(168,85,247,0.15);color:#c4b5fd;border:1px solid rgba(168,85,247,0.25);}
-    /* Tech rows */
-    .tr{display:flex;align-items:center;gap:0.5rem;margin:0.3rem 0;font-size:0.82rem;}
-    .tl{color:rgba(154,198,220,1);min-width:105px;}
-    .tv{color:var(--report-text-font-primary);}
-    /* Scenarios */
-    .sc-item{display:flex;justify-content:space-between;align-items:center;padding:0.4rem 0;border-bottom:1px solid rgba(30,200,215,0.12);font-size:0.82rem;}
-    .sc-name{color:rgba(184,216,232,1);flex:1;}
-    .sc-badges{display:flex;gap:0.3rem;align-items:center;}
-    /* Mermaid */
-    .mw{background:var(--section-background);border-radius:8px;padding:1rem;margin:0.75rem 0;text-align:center;}
-    /* Priority */
-    .pi{display:flex;gap:0.75rem;align-items:flex-start;padding:0.6rem 0;border-bottom:1px solid rgba(30,200,215,0.12);}
-    .pn{background:var(--accent);color:var(--primary-dark);width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.73rem;font-weight:700;flex-shrink:0;}
-    .pt{font-size:0.875rem;color:rgba(184,216,232,1);}
-    .pt strong{color:var(--report-text-font-primary);}
-    /* Finance */
-    .fh{background:rgba(30,200,215,0.08);border:1px solid rgba(30,200,215,0.25);border-radius:8px;padding:0.75rem 1rem;margin:0.5rem 0;}
-    .fhr{display:flex;justify-content:space-between;margin:0.2rem 0;font-size:0.875rem;}
-    .fhl{color:rgba(154,198,220,1);}
-    .fhv{color:var(--accent);font-weight:600;}
-    .fhv.net{color:#4ade80;}
-    /* Footer */
-    .report-footer{background:var(--section-background);border-top:1px solid var(--card-border);padding:1.5rem 0;margin-top:3rem;}
-    .footer-inner{max-width:1200px;margin:0 auto;padding:0 1.5rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;}
-    .ft{font-size:0.8rem;color:rgba(154,198,220,1);}
-    .footer-logo svg{width:100px;height:auto;fill:rgba(30,200,215,0.6);}
-    .divider{border:none;border-top:1px solid var(--card-border);margin:1rem 0;}
-    h3{font-size:0.88rem;color:var(--accent);margin:1rem 0 0.5rem;text-transform:uppercase;letter-spacing:0.05em;}
-    p{font-size:0.875rem;color:rgba(184,216,232,1);margin:0.3rem 0;}
-    @media(max-width:640px){.app-grid{grid-template-columns:1fr;}.header-inner{flex-direction:column;gap:1rem;}}
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: Inter, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+      background:
+        radial-gradient(circle at top right, rgba(var(--accent-rgb), 0.18), transparent 24%),
+        linear-gradient(180deg, var(--primary-dark) 0%, var(--report-background) 24%, #0b1d2a 100%);
+      color: var(--report-text-font-primary);
+      line-height: 1.55;
+    }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .page {
+      width: min(1480px, calc(100% - 48px));
+      margin: 0 auto;
+      padding: 24px 0 48px;
+    }
+    .hero {
+      background: linear-gradient(180deg, rgba(22,50,68,0.95), rgba(10,31,44,0.92));
+      border: var(--border);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      position: relative;
+    }
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(120deg, rgba(var(--accent-rgb), 0.15), transparent 35%, transparent 65%, rgba(var(--accent-rgb), 0.08));
+      pointer-events: none;
+    }
+    .hero-inner {
+      position: relative;
+      z-index: 1;
+      padding: 36px;
+    }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: rgba(var(--accent-rgb), 0.12);
+      color: var(--accent);
+      font-size: 12px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      font-weight: 700;
+    }
+    h1 {
+      margin: 18px 0 10px;
+      font-size: clamp(34px, 4vw, 56px);
+      line-height: 1.05;
+    }
+    .subtitle {
+      color: rgba(var(--report-text-font-secondary-rgb), 0.96);
+      font-size: 18px;
+      margin-bottom: 22px;
+    }
+    .hero-meta {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 16px;
+    }
+    .meta-card, .metric-card, .card, .table-card, .deep-dive-card, .appendix-card {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: var(--radius-lg);
+    }
+    .meta-card { padding: 16px 18px; }
+    .meta-label {
+      color: rgba(var(--text-light-blue-rgb), 0.95);
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-weight: 700;
+    }
+    .meta-value { font-size: 16px; margin-top: 6px; font-weight: 600; }
+    .section { margin-top: 24px; }
+    .collapsible {
+      background: linear-gradient(180deg, rgba(22,50,68,0.96), rgba(12,32,45,0.94));
+      border: var(--border);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+    .section-toggle {
+      width: 100%;
+      border: 0;
+      background: transparent;
+      color: inherit;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 24px 28px;
+      cursor: pointer;
+    }
+    .section-toggle:hover { background: rgba(255,255,255,0.02); }
+    .section-title-wrap { display: flex; flex-direction: column; gap: 4px; text-align: left; }
+    .section-kicker { color: var(--accent); font-size: 12px; text-transform: uppercase; letter-spacing: 0.1em; font-weight: 700; }
+    .section-title { font-size: 28px; font-weight: 800; margin: 0; }
+    .section-description { color: rgba(var(--report-text-font-secondary-rgb), 0.92); margin: 0; }
+    .chevron { font-size: 22px; transition: transform 0.25s ease; }
+    .collapsible.open .chevron { transform: rotate(180deg); }
+    .section-body { padding: 0 28px 28px; }
+    .grid-4 { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
+    .grid-3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+    .grid-2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+    .metric-card { padding: 20px; position: relative; overflow: hidden; }
+    .metric-card::after {
+      content: "";
+      position: absolute;
+      inset: auto -30px -40px auto;
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(var(--accent-rgb), 0.26), transparent 66%);
+    }
+    .metric-label { color: rgba(var(--text-light-blue-rgb), 0.96); font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.09em; }
+    .metric-value {
+      margin-top: 10px;
+      font-size: clamp(28px, 3vw, 42px);
+      font-weight: 900;
+      color: var(--accent);
+      text-shadow: 0 0 18px rgba(var(--accent-rgb), 0.38), 0 0 32px rgba(var(--accent-rgb), 0.22);
+    }
+    .metric-note { margin-top: 10px; color: rgba(var(--report-text-font-secondary-rgb), 0.88); font-size: 14px; }
+    .card { padding: 20px; }
+    .narrative { color: rgba(var(--report-text-font-secondary-rgb), 0.94); }
+    .badge-row { display: flex; flex-wrap: wrap; gap: 10px; }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 12px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+    .badge-current, .badge-fulfilled { background: rgba(82,214,138,0.14); color: #8ef0b7; }
+    .badge-outdated, .badge-partial { background: rgba(244,201,93,0.16); color: #ffe08a; }
+    .badge-eol, .badge-blocked { background: rgba(255,107,107,0.14); color: #ff9e9e; }
+    .badge-applicable { background: rgba(var(--accent-rgb), 0.14); color: #91f2fb; }
+    .badge-na, .badge-unknown { background: rgba(127,167,186,0.16); color: #c7dcea; }
+    .kpi-strip { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 12px; margin-top: 18px; }
+    .kpi-mini { padding: 14px 16px; background: rgba(255,255,255,0.025); border-radius: var(--radius-md); border: 1px solid rgba(255,255,255,0.05); }
+    .kpi-mini strong { display: block; font-size: 22px; color: var(--accent); margin-top: 6px; }
+    .bar-chart { display: grid; gap: 12px; margin-top: 8px; }
+    .bar-row { display: grid; grid-template-columns: 220px 1fr 90px; gap: 12px; align-items: center; }
+    .bar-label { font-weight: 700; color: rgba(var(--report-text-font-secondary-rgb), 0.94); }
+    .bar-track { height: 14px; border-radius: 999px; background: rgba(255,255,255,0.08); overflow: hidden; }
+    .bar-fill { height: 100%; border-radius: 999px; background: linear-gradient(90deg, rgba(var(--accent-rgb), 0.55), rgba(var(--accent-rgb), 1)); box-shadow: 0 0 12px rgba(var(--accent-rgb), 0.34); }
+    .bar-value { text-align: right; font-variant-numeric: tabular-nums; color: rgba(var(--report-text-font-secondary-rgb), 0.94); }
+    .table-card { overflow: hidden; }
+    table { width: 100%; border-collapse: collapse; }
+    thead { background: rgba(255,255,255,0.05); }
+    th, td { padding: 14px 14px; border-bottom: 1px solid rgba(255,255,255,0.06); text-align: left; vertical-align: top; }
+    th { font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em; color: rgba(var(--text-light-blue-rgb), 0.96); }
+    td { color: rgba(var(--report-text-font-secondary-rgb), 0.96); }
+    tr:hover td { background: rgba(255,255,255,0.02); }
+    .app-cards { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+    .app-card { padding: 22px; display: grid; gap: 14px; }
+    .app-card-header { display: flex; justify-content: space-between; gap: 10px; align-items: start; }
+    .app-title { margin: 0; font-size: 22px; }
+    .app-subtitle { margin: 6px 0 0; color: rgba(var(--report-text-font-secondary-rgb), 0.88); }
+    .app-meta-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+    .app-meta-cell { padding: 12px; border-radius: var(--radius-md); background: rgba(255,255,255,0.025); border: 1px solid rgba(255,255,255,0.05); }
+    .app-meta-cell span { display: block; font-size: 12px; color: rgba(var(--text-light-blue-rgb), 0.95); text-transform: uppercase; letter-spacing: 0.08em; font-weight: 700; }
+    .app-meta-cell strong { display: block; margin-top: 6px; font-size: 18px; }
+    .pill-link { display: inline-flex; align-items: center; gap: 8px; padding: 8px 14px; border-radius: 999px; background: rgba(var(--accent-rgb),0.12); border: 1px solid rgba(var(--accent-rgb),0.22); color: var(--accent); font-weight: 700; }
+    .risk-panel { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; }
+    .risk-cell { padding: 12px; border-radius: var(--radius-md); background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); }
+    .risk-cell .small { font-size: 12px; color: rgba(var(--text-light-blue-rgb), 0.95); text-transform: uppercase; font-weight: 700; letter-spacing: 0.08em; }
+    .risk-cell .big { font-size: 18px; margin-top: 8px; font-weight: 800; }
+    .roadmap { display: grid; gap: 14px; }
+    .roadmap-step { padding: 20px; border-radius: var(--radius-lg); background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); position: relative; }
+    .roadmap-step::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 5px; background: linear-gradient(180deg, rgba(var(--accent-rgb),1), rgba(var(--accent-rgb),0.12)); border-radius: 12px 0 0 12px; }
+    .roadmap-step h4 { margin: 0 0 8px; font-size: 21px; }
+    .roadmap-step p { margin: 0 0 10px; color: rgba(var(--report-text-font-secondary-rgb), 0.9); }
+    .roadmap-step ul { margin: 0; padding-left: 20px; color: rgba(var(--report-text-font-secondary-rgb), 0.92); }
+    .deep-dive-card { padding: 24px; display: grid; gap: 18px; }
+    .deep-dive-title { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+    .deep-dive-title h3 { margin: 0; font-size: 28px; }
+    .two-col { display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 16px; }
+    .definition-grid { display: grid; gap: 14px; }
+    .definition-card { padding: 18px; border-radius: var(--radius-lg); background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); }
+    .definition-card h4 { margin: 0 0 8px; font-size: 18px; }
+    .footer { text-align: center; padding: 28px 18px 12px; color: rgba(var(--report-text-font-secondary-rgb), 0.78); font-size: 14px; }
+    .small-note { font-size: 13px; color: rgba(var(--report-text-font-secondary-rgb), 0.82); }
+    .roi-callout { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 16px; }
+    .roi-box { padding: 18px; border-radius: var(--radius-lg); background: linear-gradient(180deg, rgba(var(--accent-rgb),0.12), rgba(255,255,255,0.03)); border: var(--border); }
+    .roi-box .label { font-size: 12px; text-transform: uppercase; letter-spacing: 0.1em; color: rgba(var(--text-light-blue-rgb), 0.95); font-weight: 700; }
+    .roi-box .value { font-size: 32px; font-weight: 900; color: var(--accent); margin-top: 10px; text-shadow: 0 0 16px rgba(var(--accent-rgb),0.35); }
+    .roi-box .desc { margin-top: 8px; color: rgba(var(--report-text-font-secondary-rgb),0.9); }
+    .status-grid { display: grid; grid-template-columns: repeat(5, minmax(0,1fr)); gap: 10px; }
+    .status-card { padding: 14px; border-radius: var(--radius-md); background: rgba(255,255,255,0.025); border: 1px solid rgba(255,255,255,0.05); }
+    .status-card strong { display: block; margin-top: 8px; font-size: 22px; }
+    @media (max-width: 1200px) {
+      .hero-meta, .grid-4, .grid-3, .grid-2, .roi-callout, .kpi-strip, .status-grid, .risk-panel, .app-meta-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .app-cards, .two-col { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 760px) {
+      .page { width: min(100% - 24px, 1480px); }
+      .hero-inner, .section-body, .section-toggle { padding-left: 18px; padding-right: 18px; }
+      .hero-meta, .grid-4, .grid-3, .grid-2, .roi-callout, .kpi-strip, .status-grid, .risk-panel, .app-meta-grid { grid-template-columns: 1fr; }
+      .bar-row { grid-template-columns: 1fr; }
+    }
   </style>
+  <script type="application/json" id="report-data">{
+  "generated": "2026-07-14T11:26:52Z",
+  "analysis_id": "GD-2026-07-14-PORTFOLIO",
+  "assessment_date": "2026-07-14",
+  "customer": "Portfolio Assessment",
+  "portfolio": {
+    "total_apps": 5,
+    "in_scope": 4,
+    "out_of_scope": 1,
+    "avg_complexity": 5.75,
+    "total_cost": 1055540.0,
+    "annual_savings": 418400,
+    "net3": 199660.0,
+    "net5": 1036460.0,
+    "applicable_scenarios": 21,
+    "payback_years": 2.52,
+    "roi_3yr_pct": 18.92,
+    "roi_5yr_pct": 98.19,
+    "payback_months": 30.2,
+    "tech_counts": {
+      "CURRENT_VERSION": 1,
+      "OUTDATED": 6,
+      "EOL": 8,
+      "NO_KNOWLEDGE": 0
+    }
+  },
+  "applications": [
+    {
+      "id": "app001",
+      "name": "ERPApp-001",
+      "business_unit": "Finance",
+      "criticality": "High",
+      "status": "Production",
+      "deployment": "On-Premise",
+      "complexity": 8,
+      "multiplier": 1.8,
+      "out_of_scope": false,
+      "out_of_scope_reason": null,
+      "scenario_status": {
+        "os_update_security_patch": "APPLICABLE",
+        "switch_to_standard_linux_os": "APPLICABLE",
+        "switch_to_arm_cpu": "NOT_APPLICABLE",
+        "application_server_replacement": "NOT_APPLICABLE",
+        "app_deployment_to_cloud": "APPLICABLE",
+        "app_containerization": "BLOCKED",
+        "app_refactor_decoupling": "APPLICABLE",
+        "upgrade_legacy_databases": "APPLICABLE",
+        "switch_db_engine_open_source": "APPLICABLE",
+        "update_outdated_components": "APPLICABLE"
+      },
+      "technology": [
+        [
+          "Operating System",
+          "AIX 7.2",
+          "OUTDATED",
+          "IBM extended support available but proprietary and non-standard."
+        ],
+        [
+          "Language",
+          "COBOL-2014",
+          "OUTDATED",
+          "Supported but legacy language footprint."
+        ],
+        [
+          "Application Server",
+          "None",
+          "N/A",
+          "No standalone application server is present."
+        ],
+        [
+          "Database",
+          "Oracle 19c",
+          "OUTDATED",
+          "Premier Support ended April 2024; Extended Support runs to April 2027."
+        ]
+      ],
+      "total_cost": 551340.0,
+      "total_savings": 186900,
+      "total_3yr_net": 9360.0,
+      "total_5yr_net": 383160.0
+    },
+    {
+      "id": "app002",
+      "name": "CRMApp-002",
+      "business_unit": "Marketing",
+      "criticality": "Medium",
+      "status": "Production",
+      "deployment": "AWS",
+      "complexity": 6,
+      "multiplier": 1.5,
+      "out_of_scope": false,
+      "out_of_scope_reason": null,
+      "scenario_status": {
+        "os_update_security_patch": "APPLICABLE",
+        "switch_to_standard_linux_os": "FULFILLED",
+        "switch_to_arm_cpu": "NOT_APPLICABLE",
+        "application_server_replacement": "BLOCKED",
+        "app_deployment_to_cloud": "FULFILLED",
+        "app_containerization": "NOT_APPLICABLE",
+        "app_refactor_decoupling": "NOT_APPLICABLE",
+        "upgrade_legacy_databases": "FULFILLED",
+        "switch_db_engine_open_source": "FULFILLED",
+        "update_outdated_components": "NOT_APPLICABLE"
+      },
+      "technology": [
+        [
+          "Operating System",
+          "RHEL 7",
+          "EOL",
+          "End of life was June 30, 2024."
+        ],
+        [
+          "Language",
+          "Java 11",
+          "OUTDATED",
+          "Premier support ended September 2023; some community patches still exist."
+        ],
+        [
+          "Application Server",
+          "WebSphere 7.0",
+          "EOL",
+          "End of life was December 2015."
+        ],
+        [
+          "Database",
+          "Amazon RDS MySQL",
+          "CURRENT_VERSION",
+          "Managed service assumed current."
+        ]
+      ],
+      "total_cost": 1500.0,
+      "total_savings": 500,
+      "total_3yr_net": 0.0,
+      "total_5yr_net": 1000.0
+    },
+    {
+      "id": "app003",
+      "name": "AnalyticsApp-003",
+      "business_unit": "IT",
+      "criticality": "Low",
+      "status": "Production",
+      "deployment": "AWS",
+      "complexity": 4,
+      "multiplier": 1.3,
+      "out_of_scope": false,
+      "out_of_scope_reason": null,
+      "scenario_status": {
+        "os_update_security_patch": "APPLICABLE",
+        "switch_to_standard_linux_os": "FULFILLED",
+        "switch_to_arm_cpu": "APPLICABLE",
+        "application_server_replacement": "APPLICABLE",
+        "app_deployment_to_cloud": "FULFILLED",
+        "app_containerization": "FULFILLED",
+        "app_refactor_decoupling": "NOT_APPLICABLE",
+        "upgrade_legacy_databases": "APPLICABLE",
+        "switch_db_engine_open_source": "FULFILLED",
+        "update_outdated_components": "APPLICABLE"
+      },
+      "technology": [
+        [
+          "Operating System",
+          "RHEL 7",
+          "EOL",
+          "End of life was June 30, 2024."
+        ],
+        [
+          "Language",
+          "Python 3.9",
+          "EOL",
+          "Security support ended October 2025."
+        ],
+        [
+          "Application Server",
+          "Apache Tomcat 6.1",
+          "EOL",
+          "End of life was December 2016."
+        ],
+        [
+          "Database",
+          "PostgreSQL 13",
+          "EOL",
+          "End of life was November 13, 2025."
+        ]
+      ],
+      "total_cost": 53300.0,
+      "total_savings": 31500,
+      "total_3yr_net": 41200.0,
+      "total_5yr_net": 104200.0
+    },
+    {
+      "id": "app004",
+      "name": "HRApp-004",
+      "business_unit": "HR",
+      "criticality": "High",
+      "status": "Production",
+      "deployment": "AWS + On-premise (hybrid)",
+      "complexity": 5,
+      "multiplier": 1.4,
+      "out_of_scope": false,
+      "out_of_scope_reason": null,
+      "scenario_status": {
+        "os_update_security_patch": "APPLICABLE",
+        "switch_to_standard_linux_os": "NOT_APPLICABLE",
+        "switch_to_arm_cpu": "APPLICABLE",
+        "application_server_replacement": "APPLICABLE",
+        "app_deployment_to_cloud": "PARTIALLY_FULFILLED",
+        "app_containerization": "FULFILLED",
+        "app_refactor_decoupling": "APPLICABLE",
+        "upgrade_legacy_databases": "APPLICABLE",
+        "switch_db_engine_open_source": "APPLICABLE",
+        "update_outdated_components": "APPLICABLE"
+      },
+      "technology": [
+        [
+          "Operating System",
+          "Windows Server 2012",
+          "EOL",
+          "Extended support ended October 10, 2023."
+        ],
+        [
+          "Language",
+          ".NET Core (version unspecified)",
+          "OUTDATED",
+          "Version unspecified; treat as outdated with low confidence."
+        ],
+        [
+          "Application Server",
+          "Microsoft IIS 8.0",
+          "EOL",
+          "Tied to Windows Server 2012 and therefore effectively end of life."
+        ],
+        [
+          "Database",
+          "SQL Server 2019",
+          "OUTDATED",
+          "Mainstream support ended January 7, 2025; Extended Support runs to January 2030."
+        ]
+      ],
+      "total_cost": 449400.0,
+      "total_savings": 199500,
+      "total_3yr_net": 149100.0,
+      "total_5yr_net": 548100.0
+    },
+    {
+      "id": "app005",
+      "name": "EComApp-005",
+      "business_unit": "N/A",
+      "criticality": "N/A",
+      "status": "RETIRED",
+      "deployment": "N/A",
+      "complexity": null,
+      "multiplier": null,
+      "out_of_scope": true,
+      "out_of_scope_reason": "STATUS=RETIRED",
+      "scenario_status": null,
+      "technology": null,
+      "total_cost": null,
+      "total_savings": null,
+      "total_3yr_net": null,
+      "total_5yr_net": null
+    }
+  ],
+  "scenarios": {
+    "os_update_security_patch": {
+      "name": "OS Update & Security Patch",
+      "cost": 1000,
+      "savings": 500,
+      "priority": "High",
+      "description": "Update operating systems to supported patch levels and close security gaps."
+    },
+    "switch_to_standard_linux_os": {
+      "name": "Switch to Standard Linux OS",
+      "cost": 300,
+      "savings": 400,
+      "priority": "Medium",
+      "description": "Move from proprietary or non-standard operating systems to standard Linux."
+    },
+    "switch_to_arm_cpu": {
+      "name": "Switch to ARM-based CPU",
+      "cost": 5000,
+      "savings": 1000,
+      "priority": "Medium",
+      "description": "Migrate workloads to ARM-compatible infrastructure to reduce compute cost."
+    },
+    "application_server_replacement": {
+      "name": "Application Server Replacement",
+      "cost": 10000,
+      "savings": 12000,
+      "priority": "Medium",
+      "description": "Replace obsolete middleware or application servers with supported alternatives."
+    },
+    "app_deployment_to_cloud": {
+      "name": "Lift & Shift to Cloud",
+      "cost": 5000,
+      "savings": 3000,
+      "priority": "High",
+      "description": "Move workloads to cloud infrastructure without major application redesign."
+    },
+    "app_containerization": {
+      "name": "Application Containerization",
+      "cost": 100000,
+      "savings": 100000,
+      "priority": "High",
+      "description": "Package workloads into containers and standardize runtime operations."
+    },
+    "app_refactor_decoupling": {
+      "name": "Application Refactoring & Decoupling",
+      "cost": 250000,
+      "savings": 150000,
+      "priority": "High",
+      "description": "Refactor tightly coupled applications into more modular architectures."
+    },
+    "upgrade_legacy_databases": {
+      "name": "Upgrade Legacy Databases",
+      "cost": 10000,
+      "savings": 10000,
+      "priority": "High",
+      "description": "Upgrade database platforms that are close to or beyond support deadlines."
+    },
+    "switch_db_engine_open_source": {
+      "name": "Switch DB Engine to Open Source",
+      "cost": 25000,
+      "savings": 15000,
+      "priority": "High",
+      "description": "Move commercial or legacy database engines to open-source alternatives where feasible."
+    },
+    "update_outdated_components": {
+      "name": "Update Outdated Components",
+      "cost": 15000,
+      "savings": 8000,
+      "priority": "High",
+      "description": "Refresh outdated language runtimes, frameworks, and dependent components."
+    }
+  },
+  "roadmap": [
+    {
+      "phase": "Phase 1: Immediate risk reduction (0-3 months)",
+      "focus": "Patch exposure, confirm retirement boundaries, and arrest unsupported platform risk.",
+      "items": [
+        "Execute OS Update & Security Patch for app001, app002, app003, and app004.",
+        "Confirm whether ERPApp-001 will actually decommission in 2027; if yes, keep spending tactical.",
+        "Launch upgrade planning for EOL stacks in app003 and app004 because all core runtime layers are unsupported or outdated.",
+        "Escalate vendor dependency for CRMApp-002 WebSphere 7.0 remediation because application_server_replacement is BLOCKED."
+      ]
+    },
+    {
+      "phase": "Phase 2: Platform remediation (3-9 months)",
+      "focus": "Remove the most exposed EOL middleware and database risks.",
+      "items": [
+        "For app003, replace Apache Tomcat 6.1, upgrade PostgreSQL 13, and update Python 3.9 runtime components.",
+        "For app004, remediate Windows Server 2012 / IIS 8.0 exposure and execute SQL Server upgrade planning.",
+        "For app001, upgrade Oracle-related risk controls and complete target-state decisioning for Linux/cloud migration.",
+        "For app002, complete the OS patch path while negotiating vendor-supported middleware replacement options."
+      ]
+    },
+    {
+      "phase": "Phase 3: Structural modernization (9-18 months)",
+      "focus": "Invest where the portfolio gets durable architectural value.",
+      "items": [
+        "Advance HRApp-004 refactoring and decoupling because it already has containers and CI/CD and yields the strongest 5-year economics.",
+        "Use AnalyticsApp-003 as the quick-win modernization pattern because it has low criticality and a comparatively simple operational footprint.",
+        "Complete partially fulfilled cloud modernization for HRApp-004 to simplify the hybrid deployment model.",
+        "Pursue ARM-based optimization only where workloads and runtime compatibility are validated first."
+      ]
+    },
+    {
+      "phase": "Phase 4: Strategic disposition (18-24+ months)",
+      "focus": "Resolve long-horizon platform choices and avoid stranded investment.",
+      "items": [
+        "If ERPApp-001 remains in service beyond 2027, fund Application Refactoring & Decoupling and associated database/hosting transformation.",
+        "Where applicable, evaluate open-source database switching only after application compatibility and support obligations are verified.",
+        "Retain EComApp-005 as out of scope unless retirement status changes."
+      ]
+    }
+  ]
+}</script>
 </head>
 <body>
-
-<header class="report-header">
-  <div class="header-inner">
-    <div class="header-text">
-      <div class="customer" data-testid="customer-name">Portfolio Assessment</div>
-      <h1>Application Modernization Report</h1>
-      <div class="subtitle">Application modernization with Agentic AI powered by Capgemini GenSuite</div>
-    </div>
-    <div class="header-logo"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 358.01 117.11">
-  <path d="M330.21,46.53c-1.44-4.78-4.35-8.97-8.21-12.52-4.17-3.82-9.13-6.71-14.33-8.89-.42-.18-.84-.35-1.26-.51h0c-6.4,7.67-28.57,13.4-28.57,29.47,0,6.29,3.97,12.16,9.81,14.52,3.63,1.23,7.53,1,11.01-.59,3.36-1.53,5.93-4.23,7.99-7.24,2.18-3.17,3.84-6.66,5.91-9.9,1.92-3.01,4.38-6.02,8.03-6.86,3.31-.77,7.22.09,9.64,2.51h-.02ZM330.36,49.79c-1.47-2.94-4.56-4.2-7.73-4.05-3.06.14-5.29,2.09-6.99,4.49-1.93,2.71-3.28,5.8-4.85,8.72-1.52,2.81-3.15,5.57-5.33,7.92-2.42,2.61-5.46,4.58-8.88,5.61,1.58,1.14,3.77,1.39,5.66,1.47,2.13.08,4.29-.11,6.39-.49,3.84-.69,7.98-2.03,10.81-4.83-4.42.06-7.99-2.92-8.31-7.4,2.85,3.45,7.15,4.77,11.46,3.55,3.78-1.07,6.81-4.06,8.03-7.78.78-2.36.85-4.93-.26-7.2h0ZM268.07,47.47c0-3.55-.21-5.92-2.53-5.92-1.06,0-1.57.21-2.5.52.82,11.99-1.89,22.55-5.19,22.55-4.34,0-2.17-25.7-11.36-25.7-8.47,0-9.69,20.52-10.65,20.52-.66,0-.76-5.39-.72-9.49.36-1.97.55-3.74.55-5.08,0-1.91-.77-5.22-5.11-3.56.15,14.67-2.79,23.54-6.09,23.54-4.85,0-4.91-13.3-4.91-16.97s.26-8.36-5.06-6.66c-.8,12.8-4.15,22.46-6.26,22.46-3.16,0-2.52-22.11-9.34-22.11-6.12,0-8.02,20.94-9.3,20.94-2.29,0,.71-23.57-8.14-23.57-4.64,0-6.49,7.87-8.3,16.68-.35,1.71-.72,1.76-.78-.17-.05-1.58-.06-3.33-.04-4.94,2.23-8.85-.49-12.13-4.59-9.76,1.32,16.34-6.18,24.33-11.93,24.33-2.08,0-3.71-.88-4.94-2.28,6.9-4.23,9.97-9.09,9.97-13.83,0-5.14-2.95-8.11-7.86-8.11-6.85,0-10.67,7.05-10.67,13.04,0,3.22.6,5.96,1.59,8.22-2.35,1.12-4.57,2.09-6.63,3.03-.18-6.17-.88-12.64-1.41-18.61-3.64-1-4.71.75-4.99,3.99-.65,7.4-3.39,11.99-5.81,11.99-1.83,0-2.94-2.22-3.07-4.58-.68-11.86,8.95-15.16,13.99-13.44,1.05-2.61-.1-4.5-4.64-4.5-5.51,0-9.63,3.35-12.65,7.64-2.02,2.87-4.34,4.9-7.44,7.35.08-.71.12-1.41.12-2.11,0-8.37-4.53-12.04-8.86-12.04-3.58,0-5.83,2.15-7.14,5.44-.32-3.3-.98-4.73-2.9-4.73-.83,0-1.96.23-3.19.83.56,1.85.78,5.93.78,8.62,0,10.06-2.88,14.57-5.66,14.57-3.17,0-3.67-11.93-3.94-16.57-.41-.14-.86-.29-1.55-.29-2.87,0-3.24,3.85-3.95,7.39-.78,3.92-3.05,8.86-6.39,8.86-2.02,0-3.28-1.95-3.44-5.46-.33-7.11,5.59-15.54,14.85-12.92,1.21-2.83-.69-4.99-4.53-4.99-6.77,0-12.36,5.07-14.8,11.06-2.48,5.49-6.82,13.56-15.64,13.56-6.23,0-10.99-5.43-10.99-16.83,0-9.83,6.19-19.16,12.8-19.16,4.62,0,5.7,4.55,5.29,8.81,2.39,1.93,6.32.14,6.32-4.67,0-3.31-2.69-8.92-11.36-8.92-10.74,0-20.23,10.71-20.23,24.78s6.92,21.68,16.71,21.68c6.18,0,12.01-3.52,16.03-10.03,1.01,5.69,4.89,8.09,7.8,8.09,4.71,0,7.78-3.05,9.46-7.17,1.05,4.13,3.26,7.19,6.93,7.19,2.59,0,4.6-1.31,6.12-3.41-.6,14.36-1.36,23.51,7.12,21.71-1.31-4.08-1.73-11.51-1.73-18.19,0-18.26,3.01-24.27,6.79-24.27,2.73,0,3.62,3.49,3.62,7.21,0,1.99-.19,4.28-.7,6.35-4.64,2.92-8.35,5.23-8.35,8.17,0,2.32,1.72,2.54,3.21,2.54,3.56,0,7.85-3.49,10.22-10.09,2.07-1.25,4.15-2.69,6.14-4.65-.07.67-.11,1.35-.11,2.03,0,6.55,2.87,10.5,7.44,10.5,3.58,0,6.27-2.54,8.17-6.35.12,2.19.19,4.21.23,6.08-7.27,3.36-15.32,6.78-15.32,16.26,0,4.91,3.54,8.61,8.16,8.61,10.13,0,12.44-10.69,12.53-23.11,3.3-1.43,5.75-2.53,8.59-3.93,2.42,3.03,5.72,4.55,8.74,4.55,5.72,0,10.01-3.03,13.46-9.17.61,4.68,1.82,9.17,4.31,9.17,4.53,0,5.45-23.69,8.82-23.69,2.58,0,.46,25.64,7.28,25.64,5.83,0,6.93-22.56,9.77-22.56,2.01,0,2.17,20.62,8.52,20.62,3.13,0,6.52-3.75,8.22-11.62.8,5.24,3.44,11.62,8.6,11.62,3.01,0,5.6-3.05,7.6-7.1.55,4.17,1.73,7.1,4.01,7.1,5.94,0,5.74-23.65,10.44-23.65,3.67,0,2.53,23.65,11.26,23.65,4.16,0,6.12-3.54,7.29-7.98,1.61,6.53,4.2,7.98,6.34,7.98,1.35,0,2.37-.47,3.71-2.07-6.75-2.93-6.18-13.58-6.18-20.46h-.03Z"/>
-</svg></div>
-  </div>
-</header>
-
-<div class="container">
-
-  <div class="kpi-grid">
-    <div class="kpi-card"><span class="kpi-value">5</span><span class="kpi-label">Total Applications</span></div>
-    <div class="kpi-card"><span class="kpi-value">4</span><span class="kpi-label">In-Scope Apps</span></div>
-    <div class="kpi-card"><span class="kpi-value">6.5</span><span class="kpi-label">Avg Complexity</span></div>
-    <div class="kpi-card"><span class="kpi-value">$1336K</span><span class="kpi-label">Migration Investment</span></div>
-    <div class="kpi-card"><span class="kpi-value">$2153K</span><span class="kpi-label">3-Year Savings</span></div>
-    <div class="kpi-card"><span class="kpi-value">61.2%</span><span class="kpi-label">3-Year ROI</span></div>
-  </div>
-
-  <!-- Technology Risk -->
-  <div class="section-card" data-testid="section-tech-risk">
-    <div class="section-header" onclick="toggleSection(this)"><h2>&#x1F52C; Technology Risk Overview</h2><span class="toggle">&#x25BC;</span></div>
-    <div class="section-content">
-      <div class="mw"><div class="mermaid">
-pie title EOL Component Distribution (In-Scope Apps)
-    "EOL" : 8
-    "OUTDATED" : 3
-    "CURRENT" : 2
-    "NO_KNOWLEDGE" : 1
-    "N/A" : 1
-      </div></div>
-      <table>
-        <thead><tr><th>Application</th><th>OS</th><th>Language</th><th>App Server</th><th>Database</th><th>Risk</th></tr></thead>
-        <tbody>
-          <tr><td><strong>ERPApp-001</strong></td><td><span class="badge b-eol">EOL</span> AIX 7.2</td><td><span class="badge b-unk">NO_KNOWLEDGE</span> COBOL-2014</td><td><span class="badge b-na">N/A</span></td><td><span class="badge b-cur">CURRENT</span> Oracle 19c</td><td><span class="badge b-crit">CRITICAL</span></td></tr>
-          <tr><td><strong>CRMApp-002</strong></td><td><span class="badge b-eol">EOL</span> RHEL 7</td><td><span class="badge b-out">OUTDATED</span> Java 11</td><td><span class="badge b-eol">EOL</span> WAS 7.0</td><td><span class="badge b-cur">CURRENT</span> RDS MySQL</td><td><span class="badge b-high">HIGH</span></td></tr>
-          <tr><td><strong>AnalyticsApp-003</strong></td><td><span class="badge b-eol">EOL</span> RHEL 7</td><td><span class="badge b-eol">EOL</span> Python 3.9</td><td><span class="badge b-eol">EOL</span> Tomcat 6.1</td><td><span class="badge b-eol">EOL</span> PG 13</td><td><span class="badge b-high">HIGH</span></td></tr>
-          <tr><td><strong>HRApp-004</strong></td><td><span class="badge b-eol">EOL</span> WS 2012</td><td><span class="badge b-out">OUTDATED</span> .NET Core</td><td><span class="badge b-eol">EOL</span> IIS 8.0</td><td><span class="badge b-out">OUTDATED</span> SQL Svr 2019</td><td><span class="badge b-high">HIGH</span></td></tr>
-          <tr><td><em>EComApp-005</em></td><td colspan="4" style="color:#6b7280;font-style:italic;">Retired &mdash; excluded from assessment</td><td><span class="badge b-na">RETIRED</span></td></tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-
-  <!-- Complexity -->
-  <div class="section-card" data-testid="section-complexity">
-    <div class="section-header" onclick="toggleSection(this)"><h2>&#x1F4CA; Complexity Analysis</h2><span class="toggle">&#x25BC;</span></div>
-    <div class="section-content">
-      <div class="mw"><div class="mermaid">
-xychart-beta
-    title "Modernization Complexity Scores (1-10)"
-    x-axis ["ERPApp-001", "CRMApp-002", "AnalyticsApp-003", "HRApp-004"]
-    y-axis "Score" 0 --> 10
-    bar [8, 6, 5, 7]
-      </div></div>
-      <div class="app-grid">
-        <div class="app-card">
-          <div class="app-card-header"><div><div class="app-card-title">ERPApp-001</div><div class="app-card-meta">Finance &middot; On-Premise &middot; Custom &middot; 350 users</div></div><span class="badge b-high">8/10</span></div>
-          <div class="bar-wrap"><div class="bar-label">Complexity: Very High</div><div class="bar-bg"><div class="bar-fill" style="width:80%"></div></div></div>
-          <div class="tr"><span class="tl">OS:</span><span class="tv">AIX 7.2</span><span class="badge b-eol">EOL</span></div>
-          <div class="tr"><span class="tl">Language:</span><span class="tv">COBOL-2014</span><span class="badge b-unk">NO_KNOWLEDGE</span></div>
-          <div class="tr"><span class="tl">Database:</span><span class="tv">Oracle 19c</span><span class="badge b-cur">CURRENT</span></div>
-          <div class="tr"><span class="tl">Containerized:</span><span class="tv">No &nbsp; | &nbsp; CI/CD: No</span></div>
-          <p style="margin-top:0.5rem;font-size:0.78rem;">COBOL monolith on EOL proprietary AIX. Largest modernization challenge in portfolio. No CI/CD.</p>
-        </div>
-        <div class="app-card">
-          <div class="app-card-header"><div><div class="app-card-title">CRMApp-002</div><div class="app-card-meta">Marketing &middot; AWS &middot; 3rd Party &middot; 1,200 users</div></div><span class="badge b-med">6/10</span></div>
-          <div class="bar-wrap"><div class="bar-label">Complexity: Medium-High</div><div class="bar-bg"><div class="bar-fill" style="width:60%"></div></div></div>
-          <div class="tr"><span class="tl">OS:</span><span class="tv">RHEL 7</span><span class="badge b-eol">EOL</span></div>
-          <div class="tr"><span class="tl">Language:</span><span class="tv">Java 11</span><span class="badge b-out">OUTDATED</span></div>
-          <div class="tr"><span class="tl">App Server:</span><span class="tv">WebSphere 7.0</span><span class="badge b-eol">EOL</span></div>
-          <div class="tr"><span class="tl">Database:</span><span class="tv">RDS MySQL</span><span class="badge b-cur">CURRENT</span></div>
-          <p style="margin-top:0.5rem;font-size:0.78rem;">WebSphere 7.0 EOL since 2015 &mdash; critical security exposure requiring immediate action.</p>
-        </div>
-        <div class="app-card">
-          <div class="app-card-header"><div><div class="app-card-title">AnalyticsApp-003</div><div class="app-card-meta">IT &middot; AWS &middot; Open Source &middot; 480 users</div></div><span class="badge b-low">5/10</span></div>
-          <div class="bar-wrap"><div class="bar-label">Complexity: Medium</div><div class="bar-bg"><div class="bar-fill" style="width:50%"></div></div></div>
-          <div class="tr"><span class="tl">OS:</span><span class="tv">RHEL 7</span><span class="badge b-eol">EOL</span></div>
-          <div class="tr"><span class="tl">Language:</span><span class="tv">Python 3.9</span><span class="badge b-eol">EOL</span></div>
-          <div class="tr"><span class="tl">App Server:</span><span class="tv">Tomcat 6.1</span><span class="badge b-eol">EOL</span></div>
-          <div class="tr"><span class="tl">Database:</span><span class="tv">PostgreSQL 13</span><span class="badge b-eol">EOL</span></div>
-          <p style="margin-top:0.5rem;font-size:0.78rem;">All 4 components EOL, but already containerized &mdash; best effort/value modernization opportunity.</p>
-        </div>
-        <div class="app-card">
-          <div class="app-card-header"><div><div class="app-card-title">HRApp-004</div><div class="app-card-meta">HR &middot; Hybrid AWS+OnPrem &middot; Custom &middot; 670 users</div></div><span class="badge b-high">7/10</span></div>
-          <div class="bar-wrap"><div class="bar-label">Complexity: High</div><div class="bar-bg"><div class="bar-fill" style="width:70%"></div></div></div>
-          <div class="tr"><span class="tl">OS:</span><span class="tv">Windows Server 2012</span><span class="badge b-eol">EOL</span></div>
-          <div class="tr"><span class="tl">Language:</span><span class="tv">.NET Core</span><span class="badge b-out">OUTDATED</span></div>
-          <div class="tr"><span class="tl">App Server:</span><span class="tv">IIS 8.0</span><span class="badge b-eol">EOL</span></div>
-          <div class="tr"><span class="tl">Database:</span><span class="tv">SQL Server 2019</span><span class="badge b-out">OUTDATED</span></div>
-          <p style="margin-top:0.5rem;font-size:0.78rem;">HR/payroll data on EOL OS &mdash; compliance risk. Hybrid deployment adds migration complexity.</p>
+  <div class="page">
+    <header class="hero">
+      <div class="hero-inner">
+        <div class="eyebrow">GenDiscover Portfolio Intelligence</div>
+        <h1 data-testid="app-report-title">Portfolio Modernization Report</h1>
+        <div class="subtitle">Application modernization with Agentic AI powered by Capgemini GenSuite</div>
+        <div class="hero-meta">
+          <div class="meta-card" data-testid="customer-name">
+            <div class="meta-label">Customer</div>
+            <div class="meta-value">Portfolio Assessment</div>
+          </div>
+          <div class="meta-card">
+            <div class="meta-label">Assessment Date</div>
+            <div class="meta-value">2026-07-14</div>
+          </div>
+          <div class="meta-card">
+            <div class="meta-label">Analysis ID</div>
+            <div class="meta-value">GD-2026-07-14-PORTFOLIO</div>
+          </div>
+          <div class="meta-card">
+            <div class="meta-label">Scope</div>
+            <div class="meta-value">4 in scope / 1 excluded</div>
+          </div>
         </div>
       </div>
-    </div>
-  </div>
-
-  <!-- Scenarios -->
-  <div class="section-card" data-testid="section-scenarios">
-    <div class="section-header" onclick="toggleSection(this)"><h2>&#x1F504; Scenario Analysis</h2><span class="toggle">&#x25BC;</span></div>
-    <div class="section-content">
-      <h3>ERPApp-001</h3>
-      <div class="sc-item"><span class="sc-name">OS Update / Security Patch</span><div class="sc-badges"><span class="badge b-app">APPLICABLE</span><span class="badge b-crit">Critical</span></div></div>
-      <div class="sc-item"><span class="sc-name">Switch to Standard Linux OS</span><div class="sc-badges"><span class="badge b-app">APPLICABLE</span><span class="badge b-high">High</span></div></div>
-      <div class="sc-item"><span class="sc-name">App Deployment to Cloud</span><div class="sc-badges"><span class="badge b-app">APPLICABLE</span><span class="badge b-med">Medium</span></div></div>
-      <div class="sc-item"><span class="sc-name">App Refactor / Decoupling</span><div class="sc-badges"><span class="badge b-app">APPLICABLE</span><span class="badge b-high">High</span></div></div>
-      <div class="sc-item"><span class="sc-name">Switch to Managed DB</span><div class="sc-badges"><span class="badge b-app">APPLICABLE</span><span class="badge b-med">Medium</span></div></div>
-      <div class="sc-item"><span class="sc-name">Switch DB Engine to PostgreSQL</span><div class="sc-badges"><span class="badge b-app">APPLICABLE</span><span class="badge b-low">Low</span></div></div>
-      <div class="sc-item"><span class="sc-name">App Containerization</span><div class="sc-badges"><span class="badge b-blk">BLOCKED</span></div></div>
-      <div class="sc-item"><span class="sc-name">Application Server Replacement</span><div class="sc-badges"><span class="badge b-na">N/A</span></div></div>
-      <hr class="divider"/>
-      <h3>CRMApp-002</h3>
-      <div class="sc-item"><span class="sc-name">OS Update / Security Patch</span><div class="sc-badges"><span class="badge b-app">APPLICABLE</span><span class="badge b-crit">Critical</span></div></div>
-      <div class="sc-item"><span class="sc-name">Application Server Replacement</span><div class="sc-badges"><span class="badge b-app">APPLICABLE</span><span class="badge b-crit">Critical</span></div></div>
-      <div class="sc-item"><span class="sc-name">App Containerization</span><div class="sc-badges"><span class="badge b-app">APPLICABLE</span><span class="badge b-med">Medium</span></div></div>
-      <div class="sc-item"><span class="sc-name">Switch to ARM CPU</span><div class="sc-badges"><span class="badge b-app">APPLICABLE</span><span class="badge b-med">Medium</span></div></div>
-      <div class="sc-item"><span class="sc-name">Managed ARM DB</span><div class="sc-badges"><span class="badge b-app">APPLICABLE</span><span class="badge b-low">Low</span></div></div>
-      <div class="sc-item"><span class="sc-name">Serverless DB Migration</span><div class="sc-badges"><span class="badge b-app">APPLICABLE</span><span class="badge b-low">Low</span></div></div>
-      <div class="sc-item"><span class="sc-name">Switch to Standard Linux OS</span><div class="sc-badges"><span class="badge b-ful">FULFILLED</span></div></div>
-      <div class="sc-item"><span class="sc-name">App Deployment to Cloud</span><div class="sc-badges"><span class="badge b-ful">FULFILLED</span></div></div>
-      <div class="sc-item"><span class="sc-name">Switch to Managed DB</span><div class="sc-badges"><span class="badge b-ful">FULFILLED</span></div></div>
-      <hr class="divider"/>
-      <h3>AnalyticsApp-003</h3>
-      <div class="sc-item"><span class="sc-name">OS Update / Security Patch</span><div class="sc-badges"><span class="badge b-app">APPLICABLE</span><span class="badge b-crit">Critical</span></div></div>
-      <div class="sc-item"><span class="sc-name">Application Server Replacement</span><div class="sc-badges"><span class="badge b-app">APPLICABLE</span><span class="badge b-crit">Critical</span></div></div>
-      <div class="sc-item"><span class="sc-name">Upgrade Legacy Databases</span><div class="sc-badges"><span class="badge b-app">APPLICABLE</span><span class="badge b-crit">Critical</span></div></div>
-      <div class="sc-item"><span class="sc-name">Switch to Managed DB</span><div class="sc-badges"><span class="badge b-app">APPLICABLE</span><span class="badge b-med">Medium</span></div></div>
-      <div class="sc-item"><span class="sc-name">Serverless DB Migration</span><div class="sc-badges"><span class="badge b-app">APPLICABLE</span><span class="badge b-med">Medium</span></div></div>
-      <div class="sc-item"><span class="sc-name">Switch to ARM CPU</span><div class="sc-badges"><span class="badge b-app">APPLICABLE</span><span class="badge b-med">Medium</span></div></div>
-      <div class="sc-item"><span class="sc-name">Managed ARM DB</span><div class="sc-badges"><span class="badge b-app">APPLICABLE</span><span class="badge b-low">Low</span></div></div>
-      <div class="sc-item"><span class="sc-name">App Refactor / Decoupling</span><div class="sc-badges"><span class="badge b-par">PARTIAL</span><span class="badge b-low">Low</span></div></div>
-      <div class="sc-item"><span class="sc-name">App Containerization</span><div class="sc-badges"><span class="badge b-ful">FULFILLED</span></div></div>
-      <div class="sc-item"><span class="sc-name">App Deployment to Cloud</span><div class="sc-badges"><span class="badge b-ful">FULFILLED</span></div></div>
-      <div class="sc-item"><span class="sc-name">Switch DB Engine to PostgreSQL</span><div class="sc-badges"><span class="badge b-ful">FULFILLED</span></div></div>
-      <hr class="divider"/>
-      <h3>HRApp-004</h3>
-      <div class="sc-item"><span class="sc-name">OS Update / Security Patch</span><div class="sc-badges"><span class="badge b-app">APPLICABLE</span><span class="badge b-crit">Critical</span></div></div>
-      <div class="sc-item"><span class="sc-name">Application Server Replacement</span><div class="sc-badges"><span class="badge b-app">APPLICABLE</span><span class="badge b-crit">Critical</span></div></div>
-      <div class="sc-item"><span class="sc-name">App Deployment to Cloud</span><div class="sc-badges"><span class="badge b-par">PARTIAL</span><span class="badge b-high">High</span></div></div>
-      <div class="sc-item"><span class="sc-name">Upgrade Legacy Databases</span><div class="sc-badges"><span class="badge b-app">APPLICABLE</span><span class="badge b-med">Medium</span></div></div>
-      <div class="sc-item"><span class="sc-name">Switch to Managed DB</span><div class="sc-badges"><span class="badge b-app">APPLICABLE</span><span class="badge b-med">Medium</span></div></div>
-      <div class="sc-item"><span class="sc-name">App Refactor / Decoupling</span><div class="sc-badges"><span class="badge b-app">APPLICABLE</span><span class="badge b-med">Medium</span></div></div>
-      <div class="sc-item"><span class="sc-name">Switch to Standard Linux OS</span><div class="sc-badges"><span class="badge b-app">APPLICABLE</span><span class="badge b-med">Medium</span></div></div>
-      <div class="sc-item"><span class="sc-name">Switch to ARM CPU</span><div class="sc-badges"><span class="badge b-app">APPLICABLE</span><span class="badge b-med">Medium</span></div></div>
-      <div class="sc-item"><span class="sc-name">Switch DB Engine to PostgreSQL</span><div class="sc-badges"><span class="badge b-app">APPLICABLE</span><span class="badge b-low">Low</span></div></div>
-      <div class="sc-item"><span class="sc-name">App Containerization</span><div class="sc-badges"><span class="badge b-ful">FULFILLED</span></div></div>
-    </div>
-  </div>
-
-  <!-- Business Case -->
-  <div class="section-card" data-testid="section-business-case">
-    <div class="section-header" onclick="toggleSection(this)"><h2>&#x1F4B0; Business Case</h2><span class="toggle">&#x25BC;</span></div>
-    <div class="section-content">
-      <div class="mw"><div class="mermaid">
-xychart-beta
-    title "Migration Cost vs 3-Year Savings (USD thousands)"
-    x-axis ["ERPApp-001", "CRMApp-002", "AnalyticsApp-003", "HRApp-004"]
-    y-axis "Amount (USD K)" 0 --> 700
-    bar [458, 151, 291, 436]
-    line [537, 401, 611, 606]
-      </div></div>
-      <div class="fh">
-        <div class="fhr"><span class="fhl">Total Portfolio Migration Investment</span><span class="fhv">$1,336,100</span></div>
-        <div class="fhr"><span class="fhl">3-Year Total Savings</span><span class="fhv">$2,153,400</span></div>
-        <div class="fhr"><span class="fhl">3-Year Net Benefit</span><span class="fhv net">+$817,300</span></div>
-        <div class="fhr"><span class="fhl">Portfolio 3-Year ROI</span><span class="fhv net">61.2%</span></div>
-        <div class="fhr"><span class="fhl">Estimated Payback Period</span><span class="fhv">~22 months</span></div>
+    </header>
+    <section class="section collapsible open" data-testid="section-summary">
+      <button class="section-toggle" type="button" aria-expanded="true">
+        <div class="section-title-wrap">
+          <div class="section-kicker">Executive Overview</div>
+          <div class="section-title">Summary</div>
+          <p class="section-description">Portfolio-wide risk, value, and scope summary for the supplied application estate.</p>
+        </div>
+        <div class="chevron">⌄</div>
+      </button>
+      <div class="section-body">
+        <div class="grid-4">
+          <div class="metric-card">
+            <div class="metric-label">In-Scope Apps</div>
+            <div class="metric-value">4</div>
+            <div class="metric-note">Four production applications are included in modernization planning.</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-label">EOL Components</div>
+            <div class="metric-value">8</div>
+            <div class="metric-note">EOL risk is concentrated in OS, middleware, runtime, and database layers.</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-label">5-Year Net Value</div>
+            <div class="metric-value">€1,036,460</div>
+            <div class="metric-note">Portfolio economics are strongly positive over five years.</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-label">Payback</div>
+            <div class="metric-value">2.52 yrs</div>
+            <div class="metric-note">The aggregate breakeven point is approximately 30.2 months.</div>
+          </div>
+        </div>
+        <div class="grid-2" style="margin-top:16px;">
+          <div class="card">
+            <h3>Executive Summary</h3>
+            <p class="narrative">The supplied portfolio consists of five applications. Four are in scope for modernization assessment and one application, app005 / EComApp-005, is excluded because its status is RETIRED. The in-scope estate shows heavy technical debt concentration: 8 assessed components are end of life and 6 are outdated. Only one assessed component is classified as current version.</p>
+            <p class="narrative">From a value perspective, the portfolio produces a positive business case when all APPLICABLE and PARTIALLY_FULFILLED scenarios are aggregated: €1,055,540 of investment yields €418,400 annual savings, €199,660 net value over 3 years, and €1,036,460 net value over 5 years. The strongest long-horizon value sits in HRApp-004 and ERPApp-001 refactoring scenarios, while AnalyticsApp-003 is the fastest practical quick win.</p>
+            <div class="badge-row">
+              <span class="badge badge-applicable">4 In Scope</span>
+              <span class="badge badge-applicable">1 Retired</span>
+              <span class="badge badge-applicable">21 Actionable Scenarios</span>
+              <span class="badge badge-applicable">Average Complexity 5.75/10</span>
+            </div>
+          </div>
+          <div class="card">
+            <h3>Technology Risk Distribution</h3>
+            <div class="status-grid">
+              <div class="status-card">
+                <span class="badge badge-current">CURRENT_VERSION</span>
+                <strong>1</strong>
+              </div>
+              <div class="status-card">
+                <span class="badge badge-outdated">OUTDATED</span>
+                <strong>6</strong>
+              </div>
+              <div class="status-card">
+                <span class="badge badge-eol">EOL</span>
+                <strong>8</strong>
+              </div>
+              <div class="status-card">
+                <span class="badge badge-unknown">NO_KNOWLEDGE</span>
+                <strong>0</strong>
+              </div>
+              <div class="status-card">
+                <span class="badge badge-na">OUT OF SCOPE</span>
+                <strong>1</strong>
+              </div>
+            </div>
+            <div class="kpi-strip">
+              <div class="kpi-mini">
+                <span>3-Year ROI</span>
+                <strong>18.92%</strong>
+              </div>
+              <div class="kpi-mini">
+                <span>5-Year ROI</span>
+                <strong>98.19%</strong>
+              </div>
+              <div class="kpi-mini">
+                <span>Annual Savings</span>
+                <strong>€418,400</strong>
+              </div>
+              <div class="kpi-mini">
+                <span>Applicable Scenarios</span>
+                <strong>21</strong>
+              </div>
+              <div class="kpi-mini">
+                <span>Excluded Apps</span>
+                <strong>1</strong>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-      <table>
-        <thead><tr><th>Application</th><th>Complexity</th><th>Multiplier</th><th>Migration Cost</th><th>Annual Savings</th><th>3-yr ROI</th></tr></thead>
-        <tbody>
-          <tr><td><strong>ERPApp-001</strong></td><td>8/10</td><td>1.60&times;</td><td>$458,080</td><td>$178,900/yr</td><td>17.2%</td></tr>
-          <tr><td><strong>CRMApp-002</strong></td><td>6/10</td><td>1.20&times;</td><td>$151,200</td><td>$133,500/yr</td><td>164.9%</td></tr>
-          <tr><td><strong>AnalyticsApp-003</strong></td><td>5/10</td><td>1.00&times;</td><td>$291,000</td><td>$203,500/yr</td><td>109.8%</td></tr>
-          <tr><td><strong>HRApp-004</strong></td><td>7/10</td><td>1.40&times;</td><td>$435,820</td><td>$201,900/yr</td><td>39.0%</td></tr>
-          <tr><td colspan="3"><strong>Portfolio Total</strong></td><td><strong>$1,336,100</strong></td><td><strong>$717,800/yr</strong></td><td><strong>61.2%</strong></td></tr>
-        </tbody>
-      </table>
-      <p style="font-size:0.73rem;margin-top:0.5rem;color:rgba(154,198,220,0.7);">Migration costs apply complexity multiplier (score/5). Savings are base rates from finance configuration.</p>
-    </div>
+    </section>
+    <section class="section collapsible open" data-testid="section-modernization-opportunities">
+      <button class="section-toggle" type="button" aria-expanded="true">
+        <div class="section-title-wrap">
+          <div class="section-kicker">Investment Lens</div>
+          <div class="section-title">Modernization Opportunities</div>
+          <p class="section-description">Business case highlights, top-value scenarios, and per-application economics.</p>
+        </div>
+        <div class="chevron">⌄</div>
+      </button>
+      <div class="section-body">
+        <div class="roi-callout">
+          <div class="roi-box">
+            <div class="label">Portfolio Cost</div>
+            <div class="value">€1,055,540</div>
+            <div class="desc">Total cost after applying app-specific complexity multipliers.</div>
+          </div>
+          <div class="roi-box">
+            <div class="label">3-Year Net</div>
+            <div class="value">€199,660</div>
+            <div class="desc">Positive net value is achieved within the 3-year view.</div>
+          </div>
+          <div class="roi-box">
+            <div class="label">5-Year Net</div>
+            <div class="value">€1,036,460</div>
+            <div class="desc">Long-term portfolio value exceeds one million euros.</div>
+          </div>
+        </div>
+        <div class="grid-2" style="margin-top:16px;">
+          <div class="table-card">
+            <table>
+              <thead>
+                <tr>
+                  <th>Application</th>
+                  <th>Applicable Scenarios</th>
+                  <th>Cost</th>
+                  <th>Annual Savings</th>
+                  <th>Breakeven</th>
+                  <th>3-Year Net</th>
+                  <th>5-Year Net</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>ERPApp-001</strong><br><span class="small-note">app001</span></td>
+                  <td>7</td>
+                  <td>€551,340</td>
+                  <td>€186,900</td>
+                  <td>2.95 yrs</td>
+                  <td>€9,360</td>
+                  <td>€383,160</td>
+                </tr>
+                <tr>
+                  <td><strong>CRMApp-002</strong><br><span class="small-note">app002</span></td>
+                  <td>1</td>
+                  <td>€1,500</td>
+                  <td>€500</td>
+                  <td>3.0 yrs</td>
+                  <td>€0</td>
+                  <td>€1,000</td>
+                </tr>
+                <tr>
+                  <td><strong>AnalyticsApp-003</strong><br><span class="small-note">app003</span></td>
+                  <td>5</td>
+                  <td>€53,300</td>
+                  <td>€31,500</td>
+                  <td>1.69 yrs</td>
+                  <td>€41,200</td>
+                  <td>€104,200</td>
+                </tr>
+                <tr>
+                  <td><strong>HRApp-004</strong><br><span class="small-note">app004</span></td>
+                  <td>8</td>
+                  <td>€449,400</td>
+                  <td>€199,500</td>
+                  <td>2.25 yrs</td>
+                  <td>€149,100</td>
+                  <td>€548,100</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="card">
+            <h3>Top 5 Scenarios by 5-Year Net Value</h3>
+            <div class="bar-chart">
+              <div class="bar-row">
+                <div class="bar-label">HRApp-004<br><span class="small-note">Application Refactoring &amp; Decoupling</span></div>
+                <div class="bar-track">
+                  <div class="bar-fill" style="width:100.0%;"></div>
+                </div>
+                <div class="bar-value">€400,000</div>
+              </div>
+              <div class="bar-row">
+                <div class="bar-label">ERPApp-001<br><span class="small-note">Application Refactoring &amp; Decoupling</span></div>
+                <div class="bar-track">
+                  <div class="bar-fill" style="width:75.0%;"></div>
+                </div>
+                <div class="bar-value">€300,000</div>
+              </div>
+              <div class="bar-row">
+                <div class="bar-label">AnalyticsApp-003<br><span class="small-note">Application Server Replacement</span></div>
+                <div class="bar-track">
+                  <div class="bar-fill" style="width:11.8%;"></div>
+                </div>
+                <div class="bar-value">€47,000</div>
+              </div>
+              <div class="bar-row">
+                <div class="bar-label">HRApp-004<br><span class="small-note">Application Server Replacement</span></div>
+                <div class="bar-track">
+                  <div class="bar-fill" style="width:11.5%;"></div>
+                </div>
+                <div class="bar-value">€46,000</div>
+              </div>
+              <div class="bar-row">
+                <div class="bar-label">HRApp-004<br><span class="small-note">Switch DB Engine to Open Source</span></div>
+                <div class="bar-track">
+                  <div class="bar-fill" style="width:10.0%;"></div>
+                </div>
+                <div class="bar-value">€40,000</div>
+              </div>
+            </div>
+            <p class="small-note" style="margin-top:14px;">The most valuable long-horizon scenarios are refactoring-oriented. HRApp-004 refactoring produces the highest 5-year net value, followed by ERPApp-001 refactoring.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="section collapsible open" data-testid="section-roadmap-proposal">
+      <button class="section-toggle" type="button" aria-expanded="true">
+        <div class="section-title-wrap">
+          <div class="section-kicker">Delivery Sequencing</div>
+          <div class="section-title">Roadmap Proposal</div>
+          <p class="section-description">Four-phase roadmap aligned to risk, readiness, and economic value.</p>
+        </div>
+        <div class="chevron">⌄</div>
+      </button>
+      <div class="section-body">
+        <div class="roadmap">
+          <div class="roadmap-step">
+            <h4>Phase 1: Immediate risk reduction (0-3 months)</h4>
+            <p>Patch exposure, confirm retirement boundaries, and arrest unsupported platform risk.</p>
+            <ul>
+              <li>Execute OS Update &amp; Security Patch for app001, app002, app003, and app004.</li>
+              <li>Confirm whether ERPApp-001 will actually decommission in 2027; if yes, keep spending tactical.</li>
+              <li>Launch upgrade planning for EOL stacks in app003 and app004 because all core runtime layers are unsupported or outdated.</li>
+              <li>Escalate vendor dependency for CRMApp-002 WebSphere 7.0 remediation because application_server_replacement is BLOCKED.</li>
+            </ul>
+          </div>
+          <div class="roadmap-step">
+            <h4>Phase 2: Platform remediation (3-9 months)</h4>
+            <p>Remove the most exposed EOL middleware and database risks.</p>
+            <ul>
+              <li>For app003, replace Apache Tomcat 6.1, upgrade PostgreSQL 13, and update Python 3.9 runtime components.</li>
+              <li>For app004, remediate Windows Server 2012 / IIS 8.0 exposure and execute SQL Server upgrade planning.</li>
+              <li>For app001, upgrade Oracle-related risk controls and complete target-state decisioning for Linux/cloud migration.</li>
+              <li>For app002, complete the OS patch path while negotiating vendor-supported middleware replacement options.</li>
+            </ul>
+          </div>
+          <div class="roadmap-step">
+            <h4>Phase 3: Structural modernization (9-18 months)</h4>
+            <p>Invest where the portfolio gets durable architectural value.</p>
+            <ul>
+              <li>Advance HRApp-004 refactoring and decoupling because it already has containers and CI/CD and yields the strongest 5-year economics.</li>
+              <li>Use AnalyticsApp-003 as the quick-win modernization pattern because it has low criticality and a comparatively simple operational footprint.</li>
+              <li>Complete partially fulfilled cloud modernization for HRApp-004 to simplify the hybrid deployment model.</li>
+              <li>Pursue ARM-based optimization only where workloads and runtime compatibility are validated first.</li>
+            </ul>
+          </div>
+          <div class="roadmap-step">
+            <h4>Phase 4: Strategic disposition (18-24+ months)</h4>
+            <p>Resolve long-horizon platform choices and avoid stranded investment.</p>
+            <ul>
+              <li>If ERPApp-001 remains in service beyond 2027, fund Application Refactoring &amp; Decoupling and associated database/hosting transformation.</li>
+              <li>Where applicable, evaluate open-source database switching only after application compatibility and support obligations are verified.</li>
+              <li>Retain EComApp-005 as out of scope unless retirement status changes.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="section collapsible open" data-testid="section-scenario-overview">
+      <button class="section-toggle" type="button" aria-expanded="true">
+        <div class="section-title-wrap">
+          <div class="section-kicker">Scenario Coverage</div>
+          <div class="section-title">Scenario Overview</div>
+          <p class="section-description">Exact scenario applicability statuses provided in the input, shown without inference.</p>
+        </div>
+        <div class="chevron">⌄</div>
+      </button>
+      <div class="section-body">
+        <div class="table-card">
+          <table>
+            <thead>
+              <tr>
+                <th>Scenario</th>
+                <th>app001</th>
+                <th>app002</th>
+                <th>app003</th>
+                <th>app004</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>OS Update &amp; Security Patch</strong><br><span class="small-note">os_update_security_patch</span></td>
+                <td><span class="badge badge-applicable">APPLICABLE</span></td>
+                <td><span class="badge badge-applicable">APPLICABLE</span></td>
+                <td><span class="badge badge-applicable">APPLICABLE</span></td>
+                <td><span class="badge badge-applicable">APPLICABLE</span></td>
+              </tr>
+              <tr>
+                <td><strong>Switch to Standard Linux OS</strong><br><span class="small-note">switch_to_standard_linux_os</span></td>
+                <td><span class="badge badge-applicable">APPLICABLE</span></td>
+                <td><span class="badge badge-fulfilled">FULFILLED</span></td>
+                <td><span class="badge badge-fulfilled">FULFILLED</span></td>
+                <td><span class="badge badge-na">NOT_APPLICABLE</span></td>
+              </tr>
+              <tr>
+                <td><strong>Switch to ARM-based CPU</strong><br><span class="small-note">switch_to_arm_cpu</span></td>
+                <td><span class="badge badge-na">NOT_APPLICABLE</span></td>
+                <td><span class="badge badge-na">NOT_APPLICABLE</span></td>
+                <td><span class="badge badge-applicable">APPLICABLE</span></td>
+                <td><span class="badge badge-applicable">APPLICABLE</span></td>
+              </tr>
+              <tr>
+                <td><strong>Application Server Replacement</strong><br><span class="small-note">application_server_replacement</span></td>
+                <td><span class="badge badge-na">NOT_APPLICABLE</span></td>
+                <td><span class="badge badge-blocked">BLOCKED</span></td>
+                <td><span class="badge badge-applicable">APPLICABLE</span></td>
+                <td><span class="badge badge-applicable">APPLICABLE</span></td>
+              </tr>
+              <tr>
+                <td><strong>Lift &amp; Shift to Cloud</strong><br><span class="small-note">app_deployment_to_cloud</span></td>
+                <td><span class="badge badge-applicable">APPLICABLE</span></td>
+                <td><span class="badge badge-fulfilled">FULFILLED</span></td>
+                <td><span class="badge badge-fulfilled">FULFILLED</span></td>
+                <td><span class="badge badge-partial">PARTIALLY_FULFILLED</span></td>
+              </tr>
+              <tr>
+                <td><strong>Application Containerization</strong><br><span class="small-note">app_containerization</span></td>
+                <td><span class="badge badge-blocked">BLOCKED</span></td>
+                <td><span class="badge badge-na">NOT_APPLICABLE</span></td>
+                <td><span class="badge badge-fulfilled">FULFILLED</span></td>
+                <td><span class="badge badge-fulfilled">FULFILLED</span></td>
+              </tr>
+              <tr>
+                <td><strong>Application Refactoring &amp; Decoupling</strong><br><span class="small-note">app_refactor_decoupling</span></td>
+                <td><span class="badge badge-applicable">APPLICABLE</span></td>
+                <td><span class="badge badge-na">NOT_APPLICABLE</span></td>
+                <td><span class="badge badge-na">NOT_APPLICABLE</span></td>
+                <td><span class="badge badge-applicable">APPLICABLE</span></td>
+              </tr>
+              <tr>
+                <td><strong>Upgrade Legacy Databases</strong><br><span class="small-note">upgrade_legacy_databases</span></td>
+                <td><span class="badge badge-applicable">APPLICABLE</span></td>
+                <td><span class="badge badge-fulfilled">FULFILLED</span></td>
+                <td><span class="badge badge-applicable">APPLICABLE</span></td>
+                <td><span class="badge badge-applicable">APPLICABLE</span></td>
+              </tr>
+              <tr>
+                <td><strong>Switch DB Engine to Open Source</strong><br><span class="small-note">switch_db_engine_open_source</span></td>
+                <td><span class="badge badge-applicable">APPLICABLE</span></td>
+                <td><span class="badge badge-fulfilled">FULFILLED</span></td>
+                <td><span class="badge badge-fulfilled">FULFILLED</span></td>
+                <td><span class="badge badge-applicable">APPLICABLE</span></td>
+              </tr>
+              <tr>
+                <td><strong>Update Outdated Components</strong><br><span class="small-note">update_outdated_components</span></td>
+                <td><span class="badge badge-applicable">APPLICABLE</span></td>
+                <td><span class="badge badge-na">NOT_APPLICABLE</span></td>
+                <td><span class="badge badge-applicable">APPLICABLE</span></td>
+                <td><span class="badge badge-applicable">APPLICABLE</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+    <section class="section">
+      <div class="grid-2">
+        <div class="table-card">
+          <table>
+            <thead>
+              <tr><th colspan="3">Out-of-Scope Applications</th></tr>
+              <tr><th>App ID</th><th>Application</th><th>Reason</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>app005</td><td>EComApp-005</td><td>STATUS=RETIRED</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="table-card">
+          <table>
+            <thead>
+              <tr><th colspan="4">Complexity Assessment</th></tr>
+              <tr><th>Application</th><th>Score</th><th>Multiplier</th><th>Rationale</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>ERPApp-001<br><span class="small-note">app001</span></td><td>8</td><td>1.8x</td><td>High criticality + COBOL + AIX + Oracle + no CI/CD + no containers + legacy architecture</td></tr>
+              <tr><td>CRMApp-002<br><span class="small-note">app002</span></td><td>6</td><td>1.5x</td><td>3rd party constraints + WebSphere EOL + RHEL 7 EOL + no containers</td></tr>
+              <tr><td>AnalyticsApp-003<br><span class="small-note">app003</span></td><td>4</td><td>1.3x</td><td>Already containerized + CI/CD + low criticality + simpler stack</td></tr>
+              <tr><td>HRApp-004<br><span class="small-note">app004</span></td><td>5</td><td>1.4x</td><td>Already containerized + CI/CD + .NET Core + but Windows EOL + hybrid deployment + High criticality</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+    <section class="section">
+      <div class="card">
+        <h2>Application Summary Cards</h2>
+        <p class="narrative">Each card links to the expected per-application HTML report location and summarizes risk, readiness, and economics.</p>
+        <div class="app-cards">
+          <div class="card app-card">
+            <div class="app-card-header">
+              <div>
+                <h3 class="app-title">ERPApp-001 <span class="small-note">(app001)</span></h3>
+                <p class="app-subtitle">Core ERP system handling financial transactions, general ledger, and regulatory reporting</p>
+              </div>
+              <a class="pill-link" href="application_reports/application_report_app001.html">Open app report</a>
+            </div>
+            <div class="badge-row">
+              <span class="badge badge-eol">High</span>
+              <span class="badge badge-applicable">On-Premise</span>
+              <span class="badge badge-partial">Complexity 8/10</span>
+              <span class="badge badge-fulfilled">7 actionable scenarios</span>
+            </div>
+            <div class="app-meta-grid">
+              <div class="app-meta-cell">
+                <span>Users</span>
+                <strong>350</strong>
+              </div>
+              <div class="app-meta-cell">
+                <span>APIs</span>
+                <strong>0</strong>
+              </div>
+              <div class="app-meta-cell">
+                <span>Interfaces</span>
+                <strong>5</strong>
+              </div>
+              <div class="app-meta-cell">
+                <span>Containerized</span>
+                <strong>No</strong>
+              </div>
+              <div class="app-meta-cell">
+                <span>CI/CD</span>
+                <strong>No</strong>
+              </div>
+              <div class="app-meta-cell">
+                <span>Servers</span>
+                <strong>2</strong>
+              </div>
+            </div>
+            <div class="risk-panel">
+              <div class="risk-cell">
+                <div class="small">OS</div>
+                <div class="big">OUTDATED</div>
+              </div>
+              <div class="risk-cell">
+                <div class="small">Language</div>
+                <div class="big">OUTDATED</div>
+              </div>
+              <div class="risk-cell">
+                <div class="small">Middleware</div>
+                <div class="big">N/A</div>
+              </div>
+              <div class="risk-cell">
+                <div class="small">Database</div>
+                <div class="big">OUTDATED</div>
+              </div>
+            </div>
+            <p class="narrative">Contain risk immediately and use the 2027 decommission date as a decision gate: either retire on time with tactical remediation only, or fund a structured refactor if the platform must survive beyond 2027.</p>
+            <p class="narrative"><strong>Economics:</strong> €551,340 cost, €186,900 annual savings, €383,160 5-year net.</p>
+          </div>
+          <div class="card app-card">
+            <div class="app-card-header">
+              <div>
+                <h3 class="app-title">CRMApp-002 <span class="small-note">(app002)</span></h3>
+                <p class="app-subtitle">Customer relationship management system for tracking leads, opportunities, and customer interactions</p>
+              </div>
+              <a class="pill-link" href="application_reports/application_report_app002.html">Open app report</a>
+            </div>
+            <div class="badge-row">
+              <span class="badge badge-outdated">Medium</span>
+              <span class="badge badge-applicable">AWS</span>
+              <span class="badge badge-partial">Complexity 6/10</span>
+              <span class="badge badge-fulfilled">1 actionable scenarios</span>
+            </div>
+            <div class="app-meta-grid">
+              <div class="app-meta-cell">
+                <span>Users</span>
+                <strong>1200</strong>
+              </div>
+              <div class="app-meta-cell">
+                <span>APIs</span>
+                <strong>15</strong>
+              </div>
+              <div class="app-meta-cell">
+                <span>Interfaces</span>
+                <strong>8</strong>
+              </div>
+              <div class="app-meta-cell">
+                <span>Containerized</span>
+                <strong>No</strong>
+              </div>
+              <div class="app-meta-cell">
+                <span>CI/CD</span>
+                <strong>Yes</strong>
+              </div>
+              <div class="app-meta-cell">
+                <span>Servers</span>
+                <strong>2</strong>
+              </div>
+            </div>
+            <div class="risk-panel">
+              <div class="risk-cell">
+                <div class="small">OS</div>
+                <div class="big">EOL</div>
+              </div>
+              <div class="risk-cell">
+                <div class="small">Language</div>
+                <div class="big">OUTDATED</div>
+              </div>
+              <div class="risk-cell">
+                <div class="small">Middleware</div>
+                <div class="big">EOL</div>
+              </div>
+              <div class="risk-cell">
+                <div class="small">Database</div>
+                <div class="big">CURRENT_VERSION</div>
+              </div>
+            </div>
+            <p class="narrative">Treat this as a vendor-constrained stabilization effort: patch the OS exposure immediately and pursue middleware remediation through the product vendor rather than a self-directed redesign.</p>
+            <p class="narrative"><strong>Economics:</strong> €1,500 cost, €500 annual savings, €1,000 5-year net.</p>
+          </div>
+          <div class="card app-card">
+            <div class="app-card-header">
+              <div>
+                <h3 class="app-title">AnalyticsApp-003 <span class="small-note">(app003)</span></h3>
+                <p class="app-subtitle">Analytics platform for generating operational reports and business insights from logistics data</p>
+              </div>
+              <a class="pill-link" href="application_reports/application_report_app003.html">Open app report</a>
+            </div>
+            <div class="badge-row">
+              <span class="badge badge-outdated">Low</span>
+              <span class="badge badge-applicable">AWS</span>
+              <span class="badge badge-partial">Complexity 4/10</span>
+              <span class="badge badge-fulfilled">5 actionable scenarios</span>
+            </div>
+            <div class="app-meta-grid">
+              <div class="app-meta-cell">
+                <span>Users</span>
+                <strong>480</strong>
+              </div>
+              <div class="app-meta-cell">
+                <span>APIs</span>
+                <strong>8</strong>
+              </div>
+              <div class="app-meta-cell">
+                <span>Interfaces</span>
+                <strong>3</strong>
+              </div>
+              <div class="app-meta-cell">
+                <span>Containerized</span>
+                <strong>Yes</strong>
+              </div>
+              <div class="app-meta-cell">
+                <span>CI/CD</span>
+                <strong>Yes</strong>
+              </div>
+              <div class="app-meta-cell">
+                <span>Servers</span>
+                <strong>1</strong>
+              </div>
+            </div>
+            <div class="risk-panel">
+              <div class="risk-cell">
+                <div class="small">OS</div>
+                <div class="big">EOL</div>
+              </div>
+              <div class="risk-cell">
+                <div class="small">Language</div>
+                <div class="big">EOL</div>
+              </div>
+              <div class="risk-cell">
+                <div class="small">Middleware</div>
+                <div class="big">EOL</div>
+              </div>
+              <div class="risk-cell">
+                <div class="small">Database</div>
+                <div class="big">EOL</div>
+              </div>
+            </div>
+            <p class="narrative">Prioritize this application as the quickest modernization win: it is already containerized and automated, so component upgrades should be lower friction and produce rapid risk reduction.</p>
+            <p class="narrative"><strong>Economics:</strong> €53,300 cost, €31,500 annual savings, €104,200 5-year net.</p>
+          </div>
+          <div class="card app-card">
+            <div class="app-card-header">
+              <div>
+                <h3 class="app-title">HRApp-004 <span class="small-note">(app004)</span></h3>
+                <p class="app-subtitle">Human resources management system handling employee records, benefits, and HR workflows</p>
+              </div>
+              <a class="pill-link" href="application_reports/application_report_app004.html">Open app report</a>
+            </div>
+            <div class="badge-row">
+              <span class="badge badge-eol">High</span>
+              <span class="badge badge-applicable">AWS + On-premise (hybrid)</span>
+              <span class="badge badge-partial">Complexity 5/10</span>
+              <span class="badge badge-fulfilled">8 actionable scenarios</span>
+            </div>
+            <div class="app-meta-grid">
+              <div class="app-meta-cell">
+                <span>Users</span>
+                <strong>670</strong>
+              </div>
+              <div class="app-meta-cell">
+                <span>APIs</span>
+                <strong>12</strong>
+              </div>
+              <div class="app-meta-cell">
+                <span>Interfaces</span>
+                <strong>6</strong>
+              </div>
+              <div class="app-meta-cell">
+                <span>Containerized</span>
+                <strong>Yes</strong>
+              </div>
+              <div class="app-meta-cell">
+                <span>CI/CD</span>
+                <strong>Yes</strong>
+              </div>
+              <div class="app-meta-cell">
+                <span>Servers</span>
+                <strong>2</strong>
+              </div>
+            </div>
+            <div class="risk-panel">
+              <div class="risk-cell">
+                <div class="small">OS</div>
+                <div class="big">EOL</div>
+              </div>
+              <div class="risk-cell">
+                <div class="small">Language</div>
+                <div class="big">OUTDATED</div>
+              </div>
+              <div class="risk-cell">
+                <div class="small">Middleware</div>
+                <div class="big">EOL</div>
+              </div>
+              <div class="risk-cell">
+                <div class="small">Database</div>
+                <div class="big">OUTDATED</div>
+              </div>
+            </div>
+            <p class="narrative">Use this as a strategic modernization target: the platform already has containers and CI/CD, but its Windows/IIS foundation is EOL and the hybrid footprint increases operational complexity.</p>
+            <p class="narrative"><strong>Economics:</strong> €449,400 cost, €199,500 annual savings, €548,100 5-year net.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="section">
+      <div class="table-card">
+        <table>
+          <thead>
+            <tr><th colspan="7">Technology Assessment Summary</th></tr>
+            <tr><th>Application</th><th>OS</th><th>Language</th><th>Application Server</th><th>Database</th><th>Confidence Note</th><th>Operational Context</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>ERPApp-001</strong><br><span class="small-note">app001</span></td>
+              <td>AIX 7.2<br><span class="badge badge-outdated">OUTDATED</span></td>
+              <td>COBOL-2014<br><span class="badge badge-outdated">OUTDATED</span></td>
+              <td>None<br><span class="badge badge-na">N/A</span></td>
+              <td>Oracle 19c<br><span class="badge badge-outdated">OUTDATED</span></td>
+              <td>No application server present.</td>
+              <td>Deployment: On-Premise | Monitoring: unknown | Logging: unknown</td>
+            </tr>
+            <tr>
+              <td><strong>CRMApp-002</strong><br><span class="small-note">app002</span></td>
+              <td>RHEL 7<br><span class="badge badge-eol">EOL</span></td>
+              <td>Java 11<br><span class="badge badge-outdated">OUTDATED</span></td>
+              <td>WebSphere 7.0<br><span class="badge badge-eol">EOL</span></td>
+              <td>Amazon RDS MySQL<br><span class="badge badge-current">CURRENT_VERSION</span></td>
+              <td>-</td>
+              <td>Deployment: AWS | Monitoring: Datadog | Logging: CloudWatch</td>
+            </tr>
+            <tr>
+              <td><strong>AnalyticsApp-003</strong><br><span class="small-note">app003</span></td>
+              <td>RHEL 7<br><span class="badge badge-eol">EOL</span></td>
+              <td>Python 3.9<br><span class="badge badge-eol">EOL</span></td>
+              <td>Apache Tomcat 6.1<br><span class="badge badge-eol">EOL</span></td>
+              <td>PostgreSQL 13<br><span class="badge badge-eol">EOL</span></td>
+              <td>-</td>
+              <td>Deployment: AWS | Monitoring: Prometheus | Logging: ELK</td>
+            </tr>
+            <tr>
+              <td><strong>HRApp-004</strong><br><span class="small-note">app004</span></td>
+              <td>Windows Server 2012<br><span class="badge badge-eol">EOL</span></td>
+              <td>.NET Core (version unspecified)<br><span class="badge badge-outdated">OUTDATED</span></td>
+              <td>Microsoft IIS 8.0<br><span class="badge badge-eol">EOL</span></td>
+              <td>SQL Server 2019<br><span class="badge badge-outdated">OUTDATED</span></td>
+              <td>Low confidence on .NET Core version assumption.</td>
+              <td>Deployment: AWS + On-premise (hybrid) | Monitoring: CloudWatch | Logging: Splunk</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+    <section class="section">
+      <div class="card">
+        <h2>Application Deep Dives</h2>
+        <p class="narrative">Detailed views combine supplied inventory attributes, exact lifecycle classifications, scenario statuses, and business case math.</p>
+      </div>
+      <div class="deep-dive-card" style="margin-top:16px;">
+        <div class="deep-dive-title">
+          <h3>ERPApp-001 <span class="small-note">(app001)</span></h3>
+          <div class="badge-row">
+            <span class="badge badge-applicable">On-Premise</span>
+            <span class="badge badge-partial">Complexity 8/10</span>
+            <span class="badge badge-eol">Criticality High</span>
+          </div>
+        </div>
+        <p class="narrative">Core ERP system handling financial transactions, general ledger, and regulatory reporting </p>
+        <div class="two-col">
+          <div class="table-card">
+            <table>
+              <thead>
+                <tr><th colspan="2">Application Profile</th></tr>
+              </thead>
+              <tbody>
+                <tr><th>Solution type</th><td>Custom made</td></tr>
+                <tr><th>Status</th><td>Production</td></tr>
+                <tr><th>Business unit</th><td>Finance</td></tr>
+                <tr><th>Architecture</th><td>1-Tier</td></tr>
+                <tr><th>Containerized</th><td>No</td></tr>
+                <tr><th>CI/CD</th><td>No</td></tr>
+                <tr><th>API endpoints</th><td>0</td></tr>
+                <tr><th>External interfaces</th><td>5</td></tr>
+                <tr><th>Servers</th><td>sv01, sv02</td></tr>
+                <tr><th>CPU</th><td>4 cores</td></tr>
+                <tr><th>RAM</th><td>16GB</td></tr>
+                <tr><th>Users</th><td>350</td></tr>
+                <tr><th>Database</th><td>Oracle 19c</td></tr>
+                <tr><th>DB storage</th><td>1000 GB</td></tr>
+                <tr><th>DB license</th><td>Yes</td></tr>
+                <tr><th>Decommission date</th><td>2027</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="card">
+            <h4>Assessment Highlights</h4>
+            <p class="narrative">Contain risk immediately and use the 2027 decommission date as a decision gate: either retire on time with tactical remediation only, or fund a structured refactor if the platform must survive beyond 2027.</p>
+            <div class="kpi-strip">
+              <div class="kpi-mini">
+                <span>Cost</span>
+                <strong>€551,340</strong>
+              </div>
+              <div class="kpi-mini">
+                <span>Savings</span>
+                <strong>€186,900/yr</strong>
+              </div>
+              <div class="kpi-mini">
+                <span>3-Year Net</span>
+                <strong>€9,360</strong>
+              </div>
+              <div class="kpi-mini">
+                <span>5-Year Net</span>
+                <strong>€383,160</strong>
+              </div>
+              <div class="kpi-mini">
+                <span>Breakeven</span>
+                <strong>2.95 yrs</strong>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="table-card">
+          <table>
+            <thead>
+              <tr><th colspan="4">Technology Lifecycle Assessment</th></tr>
+              <tr><th>Layer</th><th>Component</th><th>Status</th><th>Evidence</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Operating System</td>
+                <td>AIX 7.2</td>
+                <td><span class="badge badge-outdated">OUTDATED</span></td>
+                <td>IBM extended support available but proprietary and non-standard.</td>
+              </tr>
+              <tr>
+                <td>Language</td>
+                <td>COBOL-2014</td>
+                <td><span class="badge badge-outdated">OUTDATED</span></td>
+                <td>Supported but legacy language footprint.</td>
+              </tr>
+              <tr>
+                <td>Application Server</td>
+                <td>None</td>
+                <td><span class="badge badge-na">N/A</span></td>
+                <td>No standalone application server is present.</td>
+              </tr>
+              <tr>
+                <td>Database</td>
+                <td>Oracle 19c</td>
+                <td><span class="badge badge-outdated">OUTDATED</span></td>
+                <td>Premier Support ended April 2024; Extended Support runs to April 2027.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="table-card">
+          <table>
+            <thead>
+              <tr><th colspan="8">Scenario Economics (APPLICABLE / PARTIALLY_FULFILLED only)</th></tr>
+              <tr><th>Scenario</th><th>Status</th><th>Priority</th><th>Base Cost</th><th>Cost with Multiplier</th><th>Annual Savings</th><th>3-Year Net</th><th>5-Year Net</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>OS Update &amp; Security Patch<br><span class="small-note">Breakeven: 3.6 yrs</span></td>
+                <td><span class="badge badge-applicable">APPLICABLE</span></td>
+                <td>High</td>
+                <td>€1,000</td>
+                <td>€1,800</td>
+                <td>€500</td>
+                <td>€-300</td>
+                <td>€700</td>
+              </tr>
+              <tr>
+                <td>Switch to Standard Linux OS<br><span class="small-note">Breakeven: 1.35 yrs</span></td>
+                <td><span class="badge badge-applicable">APPLICABLE</span></td>
+                <td>Medium</td>
+                <td>€300</td>
+                <td>€540</td>
+                <td>€400</td>
+                <td>€660</td>
+                <td>€1,460</td>
+              </tr>
+              <tr>
+                <td>Lift &amp; Shift to Cloud<br><span class="small-note">Breakeven: 3.0 yrs</span></td>
+                <td><span class="badge badge-applicable">APPLICABLE</span></td>
+                <td>High</td>
+                <td>€5,000</td>
+                <td>€9,000</td>
+                <td>€3,000</td>
+                <td>€0</td>
+                <td>€6,000</td>
+              </tr>
+              <tr>
+                <td>Application Refactoring &amp; Decoupling<br><span class="small-note">Breakeven: 3.0 yrs</span></td>
+                <td><span class="badge badge-applicable">APPLICABLE</span></td>
+                <td>High</td>
+                <td>€250,000</td>
+                <td>€450,000</td>
+                <td>€150,000</td>
+                <td>€0</td>
+                <td>€300,000</td>
+              </tr>
+              <tr>
+                <td>Upgrade Legacy Databases<br><span class="small-note">Breakeven: 1.8 yrs</span></td>
+                <td><span class="badge badge-applicable">APPLICABLE</span></td>
+                <td>High</td>
+                <td>€10,000</td>
+                <td>€18,000</td>
+                <td>€10,000</td>
+                <td>€12,000</td>
+                <td>€32,000</td>
+              </tr>
+              <tr>
+                <td>Switch DB Engine to Open Source<br><span class="small-note">Breakeven: 3.0 yrs</span></td>
+                <td><span class="badge badge-applicable">APPLICABLE</span></td>
+                <td>High</td>
+                <td>€25,000</td>
+                <td>€45,000</td>
+                <td>€15,000</td>
+                <td>€0</td>
+                <td>€30,000</td>
+              </tr>
+              <tr>
+                <td>Update Outdated Components<br><span class="small-note">Breakeven: 3.38 yrs</span></td>
+                <td><span class="badge badge-applicable">APPLICABLE</span></td>
+                <td>High</td>
+                <td>€15,000</td>
+                <td>€27,000</td>
+                <td>€8,000</td>
+                <td>€-3,000</td>
+                <td>€13,000</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="table-card">
+          <table>
+            <thead>
+              <tr><th colspan="2">Exact Scenario Statuses</th></tr>
+              <tr><th>Scenario</th><th>Status</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>OS Update &amp; Security Patch<br><span class="small-note">os_update_security_patch</span></td><td><span class="badge badge-applicable">APPLICABLE</span></td></tr>
+              <tr><td>Switch to Standard Linux OS<br><span class="small-note">switch_to_standard_linux_os</span></td><td><span class="badge badge-applicable">APPLICABLE</span></td></tr>
+              <tr><td>Switch to ARM-based CPU<br><span class="small-note">switch_to_arm_cpu</span></td><td><span class="badge badge-na">NOT_APPLICABLE</span></td></tr>
+              <tr><td>Application Server Replacement<br><span class="small-note">application_server_replacement</span></td><td><span class="badge badge-na">NOT_APPLICABLE</span></td></tr>
+              <tr><td>Lift &amp; Shift to Cloud<br><span class="small-note">app_deployment_to_cloud</span></td><td><span class="badge badge-applicable">APPLICABLE</span></td></tr>
+              <tr><td>Application Containerization<br><span class="small-note">app_containerization</span></td><td><span class="badge badge-blocked">BLOCKED</span></td></tr>
+              <tr><td>Application Refactoring &amp; Decoupling<br><span class="small-note">app_refactor_decoupling</span></td><td><span class="badge badge-applicable">APPLICABLE</span></td></tr>
+              <tr><td>Upgrade Legacy Databases<br><span class="small-note">upgrade_legacy_databases</span></td><td><span class="badge badge-applicable">APPLICABLE</span></td></tr>
+              <tr><td>Switch DB Engine to Open Source<br><span class="small-note">switch_db_engine_open_source</span></td><td><span class="badge badge-applicable">APPLICABLE</span></td></tr>
+              <tr><td>Update Outdated Components<br><span class="small-note">update_outdated_components</span></td><td><span class="badge badge-applicable">APPLICABLE</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="deep-dive-card" style="margin-top:16px;">
+        <div class="deep-dive-title">
+          <h3>CRMApp-002 <span class="small-note">(app002)</span></h3>
+          <div class="badge-row">
+            <span class="badge badge-applicable">AWS</span>
+            <span class="badge badge-partial">Complexity 6/10</span>
+            <span class="badge badge-outdated">Criticality Medium</span>
+          </div>
+        </div>
+        <p class="narrative">Customer relationship management system for tracking leads, opportunities, and customer interactions </p>
+        <div class="two-col">
+          <div class="table-card">
+            <table>
+              <thead>
+                <tr><th colspan="2">Application Profile</th></tr>
+              </thead>
+              <tbody>
+                <tr><th>Solution type</th><td>3rd party software</td></tr>
+                <tr><th>Status</th><td>Production</td></tr>
+                <tr><th>Business unit</th><td>Marketing</td></tr>
+                <tr><th>Architecture</th><td>unknown</td></tr>
+                <tr><th>Containerized</th><td>No</td></tr>
+                <tr><th>CI/CD</th><td>Yes</td></tr>
+                <tr><th>API endpoints</th><td>15</td></tr>
+                <tr><th>External interfaces</th><td>8</td></tr>
+                <tr><th>Servers</th><td>sv05, sv07</td></tr>
+                <tr><th>CPU</th><td>2 cores</td></tr>
+                <tr><th>RAM</th><td>8GB</td></tr>
+                <tr><th>Users</th><td>1200</td></tr>
+                <tr><th>Database</th><td>Amazon RDS MySQL</td></tr>
+                <tr><th>DB storage</th><td>500 GB</td></tr>
+                <tr><th>DB license</th><td>No</td></tr>
+                <tr><th>Decommission date</th><td>N/A</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="card">
+            <h4>Assessment Highlights</h4>
+            <p class="narrative">Treat this as a vendor-constrained stabilization effort: patch the OS exposure immediately and pursue middleware remediation through the product vendor rather than a self-directed redesign.</p>
+            <div class="kpi-strip">
+              <div class="kpi-mini">
+                <span>Cost</span>
+                <strong>€1,500</strong>
+              </div>
+              <div class="kpi-mini">
+                <span>Savings</span>
+                <strong>€500/yr</strong>
+              </div>
+              <div class="kpi-mini">
+                <span>3-Year Net</span>
+                <strong>€0</strong>
+              </div>
+              <div class="kpi-mini">
+                <span>5-Year Net</span>
+                <strong>€1,000</strong>
+              </div>
+              <div class="kpi-mini">
+                <span>Breakeven</span>
+                <strong>3.0 yrs</strong>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="table-card">
+          <table>
+            <thead>
+              <tr><th colspan="4">Technology Lifecycle Assessment</th></tr>
+              <tr><th>Layer</th><th>Component</th><th>Status</th><th>Evidence</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Operating System</td>
+                <td>RHEL 7</td>
+                <td><span class="badge badge-eol">EOL</span></td>
+                <td>End of life was June 30, 2024.</td>
+              </tr>
+              <tr>
+                <td>Language</td>
+                <td>Java 11</td>
+                <td><span class="badge badge-outdated">OUTDATED</span></td>
+                <td>Premier support ended September 2023; some community patches still exist.</td>
+              </tr>
+              <tr>
+                <td>Application Server</td>
+                <td>WebSphere 7.0</td>
+                <td><span class="badge badge-eol">EOL</span></td>
+                <td>End of life was December 2015.</td>
+              </tr>
+              <tr>
+                <td>Database</td>
+                <td>Amazon RDS MySQL</td>
+                <td><span class="badge badge-current">CURRENT_VERSION</span></td>
+                <td>Managed service assumed current.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="table-card">
+          <table>
+            <thead>
+              <tr><th colspan="8">Scenario Economics (APPLICABLE / PARTIALLY_FULFILLED only)</th></tr>
+              <tr><th>Scenario</th><th>Status</th><th>Priority</th><th>Base Cost</th><th>Cost with Multiplier</th><th>Annual Savings</th><th>3-Year Net</th><th>5-Year Net</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>OS Update &amp; Security Patch<br><span class="small-note">Breakeven: 3.0 yrs</span></td>
+                <td><span class="badge badge-applicable">APPLICABLE</span></td>
+                <td>High</td>
+                <td>€1,000</td>
+                <td>€1,500</td>
+                <td>€500</td>
+                <td>€0</td>
+                <td>€1,000</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="table-card">
+          <table>
+            <thead>
+              <tr><th colspan="2">Exact Scenario Statuses</th></tr>
+              <tr><th>Scenario</th><th>Status</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>OS Update &amp; Security Patch<br><span class="small-note">os_update_security_patch</span></td><td><span class="badge badge-applicable">APPLICABLE</span></td></tr>
+              <tr><td>Switch to Standard Linux OS<br><span class="small-note">switch_to_standard_linux_os</span></td><td><span class="badge badge-fulfilled">FULFILLED</span></td></tr>
+              <tr><td>Switch to ARM-based CPU<br><span class="small-note">switch_to_arm_cpu</span></td><td><span class="badge badge-na">NOT_APPLICABLE</span></td></tr>
+              <tr><td>Application Server Replacement<br><span class="small-note">application_server_replacement</span></td><td><span class="badge badge-blocked">BLOCKED</span></td></tr>
+              <tr><td>Lift &amp; Shift to Cloud<br><span class="small-note">app_deployment_to_cloud</span></td><td><span class="badge badge-fulfilled">FULFILLED</span></td></tr>
+              <tr><td>Application Containerization<br><span class="small-note">app_containerization</span></td><td><span class="badge badge-na">NOT_APPLICABLE</span></td></tr>
+              <tr><td>Application Refactoring &amp; Decoupling<br><span class="small-note">app_refactor_decoupling</span></td><td><span class="badge badge-na">NOT_APPLICABLE</span></td></tr>
+              <tr><td>Upgrade Legacy Databases<br><span class="small-note">upgrade_legacy_databases</span></td><td><span class="badge badge-fulfilled">FULFILLED</span></td></tr>
+              <tr><td>Switch DB Engine to Open Source<br><span class="small-note">switch_db_engine_open_source</span></td><td><span class="badge badge-fulfilled">FULFILLED</span></td></tr>
+              <tr><td>Update Outdated Components<br><span class="small-note">update_outdated_components</span></td><td><span class="badge badge-na">NOT_APPLICABLE</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="deep-dive-card" style="margin-top:16px;">
+        <div class="deep-dive-title">
+          <h3>AnalyticsApp-003 <span class="small-note">(app003)</span></h3>
+          <div class="badge-row">
+            <span class="badge badge-applicable">AWS</span>
+            <span class="badge badge-partial">Complexity 4/10</span>
+            <span class="badge badge-outdated">Criticality Low</span>
+          </div>
+        </div>
+        <p class="narrative">Analytics platform for generating operational reports and business insights from logistics data </p>
+        <div class="two-col">
+          <div class="table-card">
+            <table>
+              <thead>
+                <tr><th colspan="2">Application Profile</th></tr>
+              </thead>
+              <tbody>
+                <tr><th>Solution type</th><td>Open Source</td></tr>
+                <tr><th>Status</th><td>Production</td></tr>
+                <tr><th>Business unit</th><td>IT</td></tr>
+                <tr><th>Architecture</th><td>3-Tier</td></tr>
+                <tr><th>Containerized</th><td>Yes</td></tr>
+                <tr><th>CI/CD</th><td>Yes</td></tr>
+                <tr><th>API endpoints</th><td>8</td></tr>
+                <tr><th>External interfaces</th><td>3</td></tr>
+                <tr><th>Servers</th><td>sv03</td></tr>
+                <tr><th>CPU</th><td>2 cores</td></tr>
+                <tr><th>RAM</th><td>8GB</td></tr>
+                <tr><th>Users</th><td>480</td></tr>
+                <tr><th>Database</th><td>PostgreSQL 13</td></tr>
+                <tr><th>DB storage</th><td>200 GB</td></tr>
+                <tr><th>DB license</th><td>No</td></tr>
+                <tr><th>Decommission date</th><td>N/A</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="card">
+            <h4>Assessment Highlights</h4>
+            <p class="narrative">Prioritize this application as the quickest modernization win: it is already containerized and automated, so component upgrades should be lower friction and produce rapid risk reduction.</p>
+            <div class="kpi-strip">
+              <div class="kpi-mini">
+                <span>Cost</span>
+                <strong>€53,300</strong>
+              </div>
+              <div class="kpi-mini">
+                <span>Savings</span>
+                <strong>€31,500/yr</strong>
+              </div>
+              <div class="kpi-mini">
+                <span>3-Year Net</span>
+                <strong>€41,200</strong>
+              </div>
+              <div class="kpi-mini">
+                <span>5-Year Net</span>
+                <strong>€104,200</strong>
+              </div>
+              <div class="kpi-mini">
+                <span>Breakeven</span>
+                <strong>1.69 yrs</strong>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="table-card">
+          <table>
+            <thead>
+              <tr><th colspan="4">Technology Lifecycle Assessment</th></tr>
+              <tr><th>Layer</th><th>Component</th><th>Status</th><th>Evidence</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Operating System</td>
+                <td>RHEL 7</td>
+                <td><span class="badge badge-eol">EOL</span></td>
+                <td>End of life was June 30, 2024.</td>
+              </tr>
+              <tr>
+                <td>Language</td>
+                <td>Python 3.9</td>
+                <td><span class="badge badge-eol">EOL</span></td>
+                <td>Security support ended October 2025.</td>
+              </tr>
+              <tr>
+                <td>Application Server</td>
+                <td>Apache Tomcat 6.1</td>
+                <td><span class="badge badge-eol">EOL</span></td>
+                <td>End of life was December 2016.</td>
+              </tr>
+              <tr>
+                <td>Database</td>
+                <td>PostgreSQL 13</td>
+                <td><span class="badge badge-eol">EOL</span></td>
+                <td>End of life was November 13, 2025.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="table-card">
+          <table>
+            <thead>
+              <tr><th colspan="8">Scenario Economics (APPLICABLE / PARTIALLY_FULFILLED only)</th></tr>
+              <tr><th>Scenario</th><th>Status</th><th>Priority</th><th>Base Cost</th><th>Cost with Multiplier</th><th>Annual Savings</th><th>3-Year Net</th><th>5-Year Net</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>OS Update &amp; Security Patch<br><span class="small-note">Breakeven: 2.6 yrs</span></td>
+                <td><span class="badge badge-applicable">APPLICABLE</span></td>
+                <td>High</td>
+                <td>€1,000</td>
+                <td>€1,300</td>
+                <td>€500</td>
+                <td>€200</td>
+                <td>€1,200</td>
+              </tr>
+              <tr>
+                <td>Switch to ARM-based CPU<br><span class="small-note">Breakeven: 6.5 yrs</span></td>
+                <td><span class="badge badge-applicable">APPLICABLE</span></td>
+                <td>Medium</td>
+                <td>€5,000</td>
+                <td>€6,500</td>
+                <td>€1,000</td>
+                <td>€-3,500</td>
+                <td>€-1,500</td>
+              </tr>
+              <tr>
+                <td>Application Server Replacement<br><span class="small-note">Breakeven: 1.08 yrs</span></td>
+                <td><span class="badge badge-applicable">APPLICABLE</span></td>
+                <td>Medium</td>
+                <td>€10,000</td>
+                <td>€13,000</td>
+                <td>€12,000</td>
+                <td>€23,000</td>
+                <td>€47,000</td>
+              </tr>
+              <tr>
+                <td>Upgrade Legacy Databases<br><span class="small-note">Breakeven: 1.3 yrs</span></td>
+                <td><span class="badge badge-applicable">APPLICABLE</span></td>
+                <td>High</td>
+                <td>€10,000</td>
+                <td>€13,000</td>
+                <td>€10,000</td>
+                <td>€17,000</td>
+                <td>€37,000</td>
+              </tr>
+              <tr>
+                <td>Update Outdated Components<br><span class="small-note">Breakeven: 2.44 yrs</span></td>
+                <td><span class="badge badge-applicable">APPLICABLE</span></td>
+                <td>High</td>
+                <td>€15,000</td>
+                <td>€19,500</td>
+                <td>€8,000</td>
+                <td>€4,500</td>
+                <td>€20,500</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="table-card">
+          <table>
+            <thead>
+              <tr><th colspan="2">Exact Scenario Statuses</th></tr>
+              <tr><th>Scenario</th><th>Status</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>OS Update &amp; Security Patch<br><span class="small-note">os_update_security_patch</span></td><td><span class="badge badge-applicable">APPLICABLE</span></td></tr>
+              <tr><td>Switch to Standard Linux OS<br><span class="small-note">switch_to_standard_linux_os</span></td><td><span class="badge badge-fulfilled">FULFILLED</span></td></tr>
+              <tr><td>Switch to ARM-based CPU<br><span class="small-note">switch_to_arm_cpu</span></td><td><span class="badge badge-applicable">APPLICABLE</span></td></tr>
+              <tr><td>Application Server Replacement<br><span class="small-note">application_server_replacement</span></td><td><span class="badge badge-applicable">APPLICABLE</span></td></tr>
+              <tr><td>Lift &amp; Shift to Cloud<br><span class="small-note">app_deployment_to_cloud</span></td><td><span class="badge badge-fulfilled">FULFILLED</span></td></tr>
+              <tr><td>Application Containerization<br><span class="small-note">app_containerization</span></td><td><span class="badge badge-fulfilled">FULFILLED</span></td></tr>
+              <tr><td>Application Refactoring &amp; Decoupling<br><span class="small-note">app_refactor_decoupling</span></td><td><span class="badge badge-na">NOT_APPLICABLE</span></td></tr>
+              <tr><td>Upgrade Legacy Databases<br><span class="small-note">upgrade_legacy_databases</span></td><td><span class="badge badge-applicable">APPLICABLE</span></td></tr>
+              <tr><td>Switch DB Engine to Open Source<br><span class="small-note">switch_db_engine_open_source</span></td><td><span class="badge badge-fulfilled">FULFILLED</span></td></tr>
+              <tr><td>Update Outdated Components<br><span class="small-note">update_outdated_components</span></td><td><span class="badge badge-applicable">APPLICABLE</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="deep-dive-card" style="margin-top:16px;">
+        <div class="deep-dive-title">
+          <h3>HRApp-004 <span class="small-note">(app004)</span></h3>
+          <div class="badge-row">
+            <span class="badge badge-applicable">AWS + On-premise (hybrid)</span>
+            <span class="badge badge-partial">Complexity 5/10</span>
+            <span class="badge badge-eol">Criticality High</span>
+          </div>
+        </div>
+        <p class="narrative">Human resources management system handling employee records, benefits, and HR workflows </p>
+        <div class="two-col">
+          <div class="table-card">
+            <table>
+              <thead>
+                <tr><th colspan="2">Application Profile</th></tr>
+              </thead>
+              <tbody>
+                <tr><th>Solution type</th><td>Custom made</td></tr>
+                <tr><th>Status</th><td>Production</td></tr>
+                <tr><th>Business unit</th><td>HR</td></tr>
+                <tr><th>Architecture</th><td>2-Tier</td></tr>
+                <tr><th>Containerized</th><td>Yes</td></tr>
+                <tr><th>CI/CD</th><td>Yes</td></tr>
+                <tr><th>API endpoints</th><td>12</td></tr>
+                <tr><th>External interfaces</th><td>6</td></tr>
+                <tr><th>Servers</th><td>sv06, sv02</td></tr>
+                <tr><th>CPU</th><td>4 cores</td></tr>
+                <tr><th>RAM</th><td>16GB</td></tr>
+                <tr><th>Users</th><td>670</td></tr>
+                <tr><th>Database</th><td>SQL Server 2019</td></tr>
+                <tr><th>DB storage</th><td>750 GB</td></tr>
+                <tr><th>DB license</th><td>Yes</td></tr>
+                <tr><th>Decommission date</th><td>N/A</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="card">
+            <h4>Assessment Highlights</h4>
+            <p class="narrative">Use this as a strategic modernization target: the platform already has containers and CI/CD, but its Windows/IIS foundation is EOL and the hybrid footprint increases operational complexity.</p>
+            <div class="kpi-strip">
+              <div class="kpi-mini">
+                <span>Cost</span>
+                <strong>€449,400</strong>
+              </div>
+              <div class="kpi-mini">
+                <span>Savings</span>
+                <strong>€199,500/yr</strong>
+              </div>
+              <div class="kpi-mini">
+                <span>3-Year Net</span>
+                <strong>€149,100</strong>
+              </div>
+              <div class="kpi-mini">
+                <span>5-Year Net</span>
+                <strong>€548,100</strong>
+              </div>
+              <div class="kpi-mini">
+                <span>Breakeven</span>
+                <strong>2.25 yrs</strong>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="table-card">
+          <table>
+            <thead>
+              <tr><th colspan="4">Technology Lifecycle Assessment</th></tr>
+              <tr><th>Layer</th><th>Component</th><th>Status</th><th>Evidence</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Operating System</td>
+                <td>Windows Server 2012</td>
+                <td><span class="badge badge-eol">EOL</span></td>
+                <td>Extended support ended October 10, 2023.</td>
+              </tr>
+              <tr>
+                <td>Language</td>
+                <td>.NET Core (version unspecified)</td>
+                <td><span class="badge badge-outdated">OUTDATED</span></td>
+                <td>Version unspecified; treat as outdated with low confidence.</td>
+              </tr>
+              <tr>
+                <td>Application Server</td>
+                <td>Microsoft IIS 8.0</td>
+                <td><span class="badge badge-eol">EOL</span></td>
+                <td>Tied to Windows Server 2012 and therefore effectively end of life.</td>
+              </tr>
+              <tr>
+                <td>Database</td>
+                <td>SQL Server 2019</td>
+                <td><span class="badge badge-outdated">OUTDATED</span></td>
+                <td>Mainstream support ended January 7, 2025; Extended Support runs to January 2030.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="table-card">
+          <table>
+            <thead>
+              <tr><th colspan="8">Scenario Economics (APPLICABLE / PARTIALLY_FULFILLED only)</th></tr>
+              <tr><th>Scenario</th><th>Status</th><th>Priority</th><th>Base Cost</th><th>Cost with Multiplier</th><th>Annual Savings</th><th>3-Year Net</th><th>5-Year Net</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>OS Update &amp; Security Patch<br><span class="small-note">Breakeven: 2.8 yrs</span></td>
+                <td><span class="badge badge-applicable">APPLICABLE</span></td>
+                <td>High</td>
+                <td>€1,000</td>
+                <td>€1,400</td>
+                <td>€500</td>
+                <td>€100</td>
+                <td>€1,100</td>
+              </tr>
+              <tr>
+                <td>Switch to ARM-based CPU<br><span class="small-note">Breakeven: 7.0 yrs</span></td>
+                <td><span class="badge badge-applicable">APPLICABLE</span></td>
+                <td>Medium</td>
+                <td>€5,000</td>
+                <td>€7,000</td>
+                <td>€1,000</td>
+                <td>€-4,000</td>
+                <td>€-2,000</td>
+              </tr>
+              <tr>
+                <td>Application Server Replacement<br><span class="small-note">Breakeven: 1.17 yrs</span></td>
+                <td><span class="badge badge-applicable">APPLICABLE</span></td>
+                <td>Medium</td>
+                <td>€10,000</td>
+                <td>€14,000</td>
+                <td>€12,000</td>
+                <td>€22,000</td>
+                <td>€46,000</td>
+              </tr>
+              <tr>
+                <td>Lift &amp; Shift to Cloud<br><span class="small-note">Breakeven: 2.33 yrs</span></td>
+                <td><span class="badge badge-partial">PARTIALLY_FULFILLED</span></td>
+                <td>High</td>
+                <td>€5,000</td>
+                <td>€7,000</td>
+                <td>€3,000</td>
+                <td>€2,000</td>
+                <td>€8,000</td>
+              </tr>
+              <tr>
+                <td>Application Refactoring &amp; Decoupling<br><span class="small-note">Breakeven: 2.33 yrs</span></td>
+                <td><span class="badge badge-applicable">APPLICABLE</span></td>
+                <td>High</td>
+                <td>€250,000</td>
+                <td>€350,000</td>
+                <td>€150,000</td>
+                <td>€100,000</td>
+                <td>€400,000</td>
+              </tr>
+              <tr>
+                <td>Upgrade Legacy Databases<br><span class="small-note">Breakeven: 1.4 yrs</span></td>
+                <td><span class="badge badge-applicable">APPLICABLE</span></td>
+                <td>High</td>
+                <td>€10,000</td>
+                <td>€14,000</td>
+                <td>€10,000</td>
+                <td>€16,000</td>
+                <td>€36,000</td>
+              </tr>
+              <tr>
+                <td>Switch DB Engine to Open Source<br><span class="small-note">Breakeven: 2.33 yrs</span></td>
+                <td><span class="badge badge-applicable">APPLICABLE</span></td>
+                <td>High</td>
+                <td>€25,000</td>
+                <td>€35,000</td>
+                <td>€15,000</td>
+                <td>€10,000</td>
+                <td>€40,000</td>
+              </tr>
+              <tr>
+                <td>Update Outdated Components<br><span class="small-note">Breakeven: 2.62 yrs</span></td>
+                <td><span class="badge badge-applicable">APPLICABLE</span></td>
+                <td>High</td>
+                <td>€15,000</td>
+                <td>€21,000</td>
+                <td>€8,000</td>
+                <td>€3,000</td>
+                <td>€19,000</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="table-card">
+          <table>
+            <thead>
+              <tr><th colspan="2">Exact Scenario Statuses</th></tr>
+              <tr><th>Scenario</th><th>Status</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>OS Update &amp; Security Patch<br><span class="small-note">os_update_security_patch</span></td><td><span class="badge badge-applicable">APPLICABLE</span></td></tr>
+              <tr><td>Switch to Standard Linux OS<br><span class="small-note">switch_to_standard_linux_os</span></td><td><span class="badge badge-na">NOT_APPLICABLE</span></td></tr>
+              <tr><td>Switch to ARM-based CPU<br><span class="small-note">switch_to_arm_cpu</span></td><td><span class="badge badge-applicable">APPLICABLE</span></td></tr>
+              <tr><td>Application Server Replacement<br><span class="small-note">application_server_replacement</span></td><td><span class="badge badge-applicable">APPLICABLE</span></td></tr>
+              <tr><td>Lift &amp; Shift to Cloud<br><span class="small-note">app_deployment_to_cloud</span></td><td><span class="badge badge-partial">PARTIALLY_FULFILLED</span></td></tr>
+              <tr><td>Application Containerization<br><span class="small-note">app_containerization</span></td><td><span class="badge badge-fulfilled">FULFILLED</span></td></tr>
+              <tr><td>Application Refactoring &amp; Decoupling<br><span class="small-note">app_refactor_decoupling</span></td><td><span class="badge badge-applicable">APPLICABLE</span></td></tr>
+              <tr><td>Upgrade Legacy Databases<br><span class="small-note">upgrade_legacy_databases</span></td><td><span class="badge badge-applicable">APPLICABLE</span></td></tr>
+              <tr><td>Switch DB Engine to Open Source<br><span class="small-note">switch_db_engine_open_source</span></td><td><span class="badge badge-applicable">APPLICABLE</span></td></tr>
+              <tr><td>Update Outdated Components<br><span class="small-note">update_outdated_components</span></td><td><span class="badge badge-applicable">APPLICABLE</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+    <section class="section">
+      <div class="appendix-card">
+        <div class="card">
+          <h2>Appendix: Scenario Definitions</h2>
+          <p class="narrative">Base cost and savings values are reproduced exactly from the supplied input data. The switch_db_engine_open_source scenario uses the finance values specified for switch_db_engine_postgresql.</p>
+          <div class="definition-grid">
+            <div class="definition-card">
+              <h4>OS Update &amp; Security Patch</h4>
+              <div class="badge-row">
+                <span class="badge badge-applicable">os_update_security_patch</span>
+                <span class="badge badge-partial">Priority High </span>
+                <span class="badge badge-fulfilled">Base cost €1,000</span>
+                <span class="badge badge-outdated">Savings €500/yr</span>
+              </div>
+              <p class="narrative">Update operating systems to supported patch levels and close security gaps.</p>
+            </div>
+            <div class="definition-card">
+              <h4>Switch to Standard Linux OS</h4>
+              <div class="badge-row">
+                <span class="badge badge-applicable">switch_to_standard_linux_os</span>
+                <span class="badge badge-partial">Priority Medium </span>
+                <span class="badge badge-fulfilled">Base cost €300</span>
+                <span class="badge badge-outdated">Savings €400/yr</span>
+              </div>
+              <p class="narrative">Move from proprietary or non-standard operating systems to standard Linux.</p>
+            </div>
+            <div class="definition-card">
+              <h4>Switch to ARM-based CPU</h4>
+              <div class="badge-row">
+                <span class="badge badge-applicable">switch_to_arm_cpu</span>
+                <span class="badge badge-partial">Priority Medium </span>
+                <span class="badge badge-fulfilled">Base cost €5,000</span>
+                <span class="badge badge-outdated">Savings €1,000/yr</span>
+              </div>
+              <p class="narrative">Migrate workloads to ARM-compatible infrastructure to reduce compute cost.</p>
+            </div>
+            <div class="definition-card">
+              <h4>Application Server Replacement</h4>
+              <div class="badge-row">
+                <span class="badge badge-applicable">application_server_replacement</span>
+                <span class="badge badge-partial">Priority Medium </span>
+                <span class="badge badge-fulfilled">Base cost €10,000</span>
+                <span class="badge badge-outdated">Savings €12,000/yr</span>
+              </div>
+              <p class="narrative">Replace obsolete middleware or application servers with supported alternatives.</p>
+            </div>
+            <div class="definition-card">
+              <h4>Lift &amp; Shift to Cloud</h4>
+              <div class="badge-row">
+                <span class="badge badge-applicable">app_deployment_to_cloud</span>
+                <span class="badge badge-partial">Priority High </span>
+                <span class="badge badge-fulfilled">Base cost €5,000</span>
+                <span class="badge badge-outdated">Savings €3,000/yr</span>
+              </div>
+              <p class="narrative">Move workloads to cloud infrastructure without major application redesign.</p>
+            </div>
+            <div class="definition-card">
+              <h4>Application Containerization</h4>
+              <div class="badge-row">
+                <span class="badge badge-applicable">app_containerization</span>
+                <span class="badge badge-partial">Priority High </span>
+                <span class="badge badge-fulfilled">Base cost €100,000</span>
+                <span class="badge badge-outdated">Savings €100,000/yr</span>
+              </div>
+              <p class="narrative">Package workloads into containers and standardize runtime operations.</p>
+            </div>
+            <div class="definition-card">
+              <h4>Application Refactoring &amp; Decoupling</h4>
+              <div class="badge-row">
+                <span class="badge badge-applicable">app_refactor_decoupling</span>
+                <span class="badge badge-partial">Priority High </span>
+                <span class="badge badge-fulfilled">Base cost €250,000</span>
+                <span class="badge badge-outdated">Savings €150,000/yr</span>
+              </div>
+              <p class="narrative">Refactor tightly coupled applications into more modular architectures.</p>
+            </div>
+            <div class="definition-card">
+              <h4>Upgrade Legacy Databases</h4>
+              <div class="badge-row">
+                <span class="badge badge-applicable">upgrade_legacy_databases</span>
+                <span class="badge badge-partial">Priority High </span>
+                <span class="badge badge-fulfilled">Base cost €10,000</span>
+                <span class="badge badge-outdated">Savings €10,000/yr</span>
+              </div>
+              <p class="narrative">Upgrade database platforms that are close to or beyond support deadlines.</p>
+            </div>
+            <div class="definition-card">
+              <h4>Switch DB Engine to Open Source</h4>
+              <div class="badge-row">
+                <span class="badge badge-applicable">switch_db_engine_open_source</span>
+                <span class="badge badge-partial">Priority High </span>
+                <span class="badge badge-fulfilled">Base cost €25,000</span>
+                <span class="badge badge-outdated">Savings €15,000/yr</span>
+              </div>
+              <p class="narrative">Move commercial or legacy database engines to open-source alternatives where feasible.</p>
+            </div>
+            <div class="definition-card">
+              <h4>Update Outdated Components</h4>
+              <div class="badge-row">
+                <span class="badge badge-applicable">update_outdated_components</span>
+                <span class="badge badge-partial">Priority High </span>
+                <span class="badge badge-fulfilled">Base cost €15,000</span>
+                <span class="badge badge-outdated">Savings €8,000/yr</span>
+              </div>
+              <p class="narrative">Refresh outdated language runtimes, frameworks, and dependent components.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <footer class="footer">
+      Generated by GenDiscover with timestamp 2026-07-14T11:26:52Z
+    </footer>
   </div>
-
-  <!-- Roadmap -->
-  <div class="section-card" data-testid="section-roadmap">
-    <div class="section-header" onclick="toggleSection(this)"><h2>&#x1F5FA;&#xFE0F; Prioritized Modernization Roadmap</h2><span class="toggle">&#x25BC;</span></div>
-    <div class="section-content">
-      <h3>&#x1F534; Immediate Actions (0&ndash;3 months)</h3>
-      <div class="pi"><div class="pn">1</div><div class="pt"><strong>Replace WebSphere 7.0 on CRMApp-002</strong> &mdash; EOL since 2015. Active security risk with no vendor patches for 10+ years.</div></div>
-      <div class="pi"><div class="pn">2</div><div class="pt"><strong>Upgrade Windows Server 2012 on HRApp-004</strong> &mdash; HR/payroll data on unpatched OS is a compliance violation.</div></div>
-      <div class="pi"><div class="pn">3</div><div class="pt"><strong>Upgrade IIS 8.0 on HRApp-004</strong> &mdash; Replace with IIS 10 on Windows 2022, or migrate to containerized Kestrel/Nginx.</div></div>
-      <div class="pi"><div class="pn">4</div><div class="pt"><strong>Upgrade RHEL 7 on CRMApp-002 and AnalyticsApp-003</strong> &mdash; Both OS instances require upgrade to RHEL 8/9.</div></div>
-      <h3>&#x1F7E1; Short-Term (3&ndash;12 months)</h3>
-      <div class="pi"><div class="pn">5</div><div class="pt"><strong>Full EOL stack upgrade for AnalyticsApp-003</strong> &mdash; Python 3.9&rarr;3.12, Tomcat 6.1&rarr;10.x, PostgreSQL 13&rarr;16. Low risk, already containerized.</div></div>
-      <div class="pi"><div class="pn">6</div><div class="pt"><strong>Containerize CRMApp-002</strong> &mdash; Enable Kubernetes on AWS EKS for portability and easier future upgrades.</div></div>
-      <div class="pi"><div class="pn">7</div><div class="pt"><strong>Clarify .NET Core version on HRApp-004</strong> &mdash; If .NET Core 3.1 (EOL), upgrade to .NET 8 LTS immediately.</div></div>
-      <div class="pi"><div class="pn">8</div><div class="pt"><strong>Upgrade Java 11 &rarr; 21 on CRMApp-002</strong> &mdash; Move to current LTS for long-term security support.</div></div>
-      <h3>&#x1F7E2; Medium-Term (1&ndash;2 years)</h3>
-      <div class="pi"><div class="pn">9</div><div class="pt"><strong>Full cloud migration for HRApp-004</strong> &mdash; Eliminate hybrid on-premise footprint and consolidate to AWS.</div></div>
-      <div class="pi"><div class="pn">10</div><div class="pt"><strong>ERPApp-001: AIX &rarr; Linux OS migration</strong> &mdash; Move from proprietary IBM AIX to RHEL/Ubuntu. Eliminate AIX license and EOL risk.</div></div>
-      <div class="pi"><div class="pn">11</div><div class="pt"><strong>Oracle 19c managed DB migration for ERPApp-001</strong> &mdash; Plan migration to RDS Oracle or managed service before April 2027 EOL.</div></div>
-      <h3>&#x1F535; Long-Term (2&ndash;5 years)</h3>
-      <div class="pi"><div class="pn">12</div><div class="pt"><strong>ERPApp-001 COBOL modernization</strong> &mdash; Strangler-fig pattern to incrementally replace COBOL modules with modern services over 3-5 years.</div></div>
-      <div class="pi"><div class="pn">13</div><div class="pt"><strong>SQL Server &rarr; PostgreSQL for HRApp-004</strong> &mdash; High effort but eliminates SQL Server licensing cost long-term.</div></div>
-      <div class="pi"><div class="pn">14</div><div class="pt"><strong>ARM/Graviton for CRMApp-002 and AnalyticsApp-003</strong> &mdash; 20-40% compute cost reduction on AWS Graviton instances.</div></div>
-    </div>
-  </div>
-
-  <!-- Out of scope -->
-  <div class="section-card" data-testid="section-out-of-scope">
-    <div class="section-header" onclick="toggleSection(this)"><h2>&#x1F6AB; Out-of-Scope Applications</h2><span class="toggle">&#x25BC;</span></div>
-    <div class="section-content">
-      <table>
-        <thead><tr><th>App ID</th><th>Name</th><th>Status</th><th>Reason</th><th>BU</th></tr></thead>
-        <tbody>
-          <tr><td>app005</td><td><strong>EComApp-005</strong></td><td><span class="badge b-na">Retired</span></td><td>Application has been decommissioned. No modernization assessment required.</td><td>Operations</td></tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-
-</div>
-
-<footer class="report-footer">
-  <div class="footer-inner">
-    <div class="ft"><div><strong>Generated by GenDiscover</strong></div><div>Generated: 2026-07-14T08:15:00Z &nbsp;&middot;&nbsp; Analysis ID: GD-2026-0714-001</div></div>
-    <div class="footer-logo"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 358.01 117.11">
-  <path d="M330.21,46.53c-1.44-4.78-4.35-8.97-8.21-12.52-4.17-3.82-9.13-6.71-14.33-8.89-.42-.18-.84-.35-1.26-.51h0c-6.4,7.67-28.57,13.4-28.57,29.47,0,6.29,3.97,12.16,9.81,14.52,3.63,1.23,7.53,1,11.01-.59,3.36-1.53,5.93-4.23,7.99-7.24,2.18-3.17,3.84-6.66,5.91-9.9,1.92-3.01,4.38-6.02,8.03-6.86,3.31-.77,7.22.09,9.64,2.51h-.02ZM330.36,49.79c-1.47-2.94-4.56-4.2-7.73-4.05-3.06.14-5.29,2.09-6.99,4.49-1.93,2.71-3.28,5.8-4.85,8.72-1.52,2.81-3.15,5.57-5.33,7.92-2.42,2.61-5.46,4.58-8.88,5.61,1.58,1.14,3.77,1.39,5.66,1.47,2.13.08,4.29-.11,6.39-.49,3.84-.69,7.98-2.03,10.81-4.83-4.42.06-7.99-2.92-8.31-7.4,2.85,3.45,7.15,4.77,11.46,3.55,3.78-1.07,6.81-4.06,8.03-7.78.78-2.36.85-4.93-.26-7.2h0ZM268.07,47.47c0-3.55-.21-5.92-2.53-5.92-1.06,0-1.57.21-2.5.52.82,11.99-1.89,22.55-5.19,22.55-4.34,0-2.17-25.7-11.36-25.7-8.47,0-9.69,20.52-10.65,20.52-.66,0-.76-5.39-.72-9.49.36-1.97.55-3.74.55-5.08,0-1.91-.77-5.22-5.11-3.56.15,14.67-2.79,23.54-6.09,23.54-4.85,0-4.91-13.3-4.91-16.97s.26-8.36-5.06-6.66c-.8,12.8-4.15,22.46-6.26,22.46-3.16,0-2.52-22.11-9.34-22.11-6.12,0-8.02,20.94-9.3,20.94-2.29,0,.71-23.57-8.14-23.57-4.64,0-6.49,7.87-8.3,16.68-.35,1.71-.72,1.76-.78-.17-.05-1.58-.06-3.33-.04-4.94,2.23-8.85-.49-12.13-4.59-9.76,1.32,16.34-6.18,24.33-11.93,24.33-2.08,0-3.71-.88-4.94-2.28,6.9-4.23,9.97-9.09,9.97-13.83,0-5.14-2.95-8.11-7.86-8.11-6.85,0-10.67,7.05-10.67,13.04,0,3.22.6,5.96,1.59,8.22-2.35,1.12-4.57,2.09-6.63,3.03-.18-6.17-.88-12.64-1.41-18.61-3.64-1-4.71.75-4.99,3.99-.65,7.4-3.39,11.99-5.81,11.99-1.83,0-2.94-2.22-3.07-4.58-.68-11.86,8.95-15.16,13.99-13.44,1.05-2.61-.1-4.5-4.64-4.5-5.51,0-9.63,3.35-12.65,7.64-2.02,2.87-4.34,4.9-7.44,7.35.08-.71.12-1.41.12-2.11,0-8.37-4.53-12.04-8.86-12.04-3.58,0-5.83,2.15-7.14,5.44-.32-3.3-.98-4.73-2.9-4.73-.83,0-1.96.23-3.19.83.56,1.85.78,5.93.78,8.62,0,10.06-2.88,14.57-5.66,14.57-3.17,0-3.67-11.93-3.94-16.57-.41-.14-.86-.29-1.55-.29-2.87,0-3.24,3.85-3.95,7.39-.78,3.92-3.05,8.86-6.39,8.86-2.02,0-3.28-1.95-3.44-5.46-.33-7.11,5.59-15.54,14.85-12.92,1.21-2.83-.69-4.99-4.53-4.99-6.77,0-12.36,5.07-14.8,11.06-2.48,5.49-6.82,13.56-15.64,13.56-6.23,0-10.99-5.43-10.99-16.83,0-9.83,6.19-19.16,12.8-19.16,4.62,0,5.7,4.55,5.29,8.81,2.39,1.93,6.32.14,6.32-4.67,0-3.31-2.69-8.92-11.36-8.92-10.74,0-20.23,10.71-20.23,24.78s6.92,21.68,16.71,21.68c6.18,0,12.01-3.52,16.03-10.03,1.01,5.69,4.89,8.09,7.8,8.09,4.71,0,7.78-3.05,9.46-7.17,1.05,4.13,3.26,7.19,6.93,7.19,2.59,0,4.6-1.31,6.12-3.41-.6,14.36-1.36,23.51,7.12,21.71-1.31-4.08-1.73-11.51-1.73-18.19,0-18.26,3.01-24.27,6.79-24.27,2.73,0,3.62,3.49,3.62,7.21,0,1.99-.19,4.28-.7,6.35-4.64,2.92-8.35,5.23-8.35,8.17,0,2.32,1.72,2.54,3.21,2.54,3.56,0,7.85-3.49,10.22-10.09,2.07-1.25,4.15-2.69,6.14-4.65-.07.67-.11,1.35-.11,2.03,0,6.55,2.87,10.5,7.44,10.5,3.58,0,6.27-2.54,8.17-6.35.12,2.19.19,4.21.23,6.08-7.27,3.36-15.32,6.78-15.32,16.26,0,4.91,3.54,8.61,8.16,8.61,10.13,0,12.44-10.69,12.53-23.11,3.3-1.43,5.75-2.53,8.59-3.93,2.42,3.03,5.72,4.55,8.74,4.55,5.72,0,10.01-3.03,13.46-9.17.61,4.68,1.82,9.17,4.31,9.17,4.53,0,5.45-23.69,8.82-23.69,2.58,0,.46,25.64,7.28,25.64,5.83,0,6.93-22.56,9.77-22.56,2.01,0,2.17,20.62,8.52,20.62,3.13,0,6.52-3.75,8.22-11.62.8,5.24,3.44,11.62,8.6,11.62,3.01,0,5.6-3.05,7.6-7.1.55,4.17,1.73,7.1,4.01,7.1,5.94,0,5.74-23.65,10.44-23.65,3.67,0,2.53,23.65,11.26,23.65,4.16,0,6.12-3.54,7.29-7.98,1.61,6.53,4.2,7.98,6.34,7.98,1.35,0,2.37-.47,3.71-2.07-6.75-2.93-6.18-13.58-6.18-20.46h-.03Z"/>
-</svg></div>
-  </div>
-</footer>
-
-<script>
-  mermaid.initialize({startOnLoad:true,theme:'dark',themeVariables:{darkMode:true,background:'#163244',primaryColor:'#1ec8d7',primaryTextColor:'#e9f7ff',secondaryColor:'#102737',fontSize:'13px'}});
-  function toggleSection(h){var c=h.nextElementSibling,t=h.querySelector('.toggle');if(c.classList.contains('collapsed')){c.classList.remove('collapsed');t.style.transform='rotate(0deg)';}else{c.classList.add('collapsed');t.style.transform='rotate(-90deg)';}}
-  var reportData=JSON.parse(document.getElementById('report-data').textContent);console.log('GenDiscover:',reportData);
-</script>
+  <script>
+    document.querySelectorAll(".collapsible").forEach(function(section) {
+      var button = section.querySelector(".section-toggle");
+      var body = section.querySelector(".section-body");
+      if (!button || !body) return;
+      button.addEventListener("click", function() {
+        var open = section.classList.toggle("open");
+        button.setAttribute("aria-expanded", open ? "true" : "false");
+        body.style.display = open ? "block" : "none";
+      });
+      body.style.display = section.classList.contains("open") ? "block" : "none";
+    });
+  </script>
 </body>
 </html>
