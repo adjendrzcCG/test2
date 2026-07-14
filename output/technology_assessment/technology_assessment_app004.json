@@ -1,0 +1,40 @@
+{
+  "app_id": "app004",
+  "app_name": "HRApp-004",
+  "assessment_date": "2026-07-14",
+  "overall_tech_risk": "HIGH",
+  "eol_component_count": 3,
+  "components": [
+    {
+      "component_type": "operating_system",
+      "name": "Windows Server 2012",
+      "vendor": "Microsoft",
+      "status": "EOL",
+      "eol_date": "2023-10-10",
+      "notes": "Windows Server 2012/R2 reached End of Extended Support on October 10, 2023."
+    },
+    {
+      "component_type": "programming_language",
+      "name": ".NET Core",
+      "vendor": "Microsoft",
+      "status": "OUTDATED",
+      "notes": "'.NET Core' without a specific version is ambiguous. If .NET Core 3.1, EOL Dec 2022. If .NET 6+, current. Classified OUTDATED due to version ambiguity \u2014 must clarify and upgrade."
+    },
+    {
+      "component_type": "application_server",
+      "name": "Microsoft IIS 8.0",
+      "vendor": "Microsoft",
+      "status": "EOL",
+      "eol_date": "2023-10-10",
+      "notes": "IIS 8.0 ships with Windows Server 2012 and shares its EOL date of October 10, 2023."
+    },
+    {
+      "component_type": "database",
+      "name": "SQL Server 2019",
+      "vendor": "Microsoft",
+      "status": "OUTDATED",
+      "notes": "SQL Server 2019 Mainstream Support ended January 7, 2025. Extended Support until January 8, 2030. Functional but not current."
+    }
+  ],
+  "summary": "HRApp-004 runs on EOL Windows Server 2012 with EOL IIS 8.0 and an ambiguously versioned .NET Core. SQL Server 2019 is in extended support. High criticality (HR/payroll data) amplifies risk. Hybrid deployment adds complexity."
+}

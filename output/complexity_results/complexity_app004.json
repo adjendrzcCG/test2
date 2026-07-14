@@ -1,0 +1,48 @@
+{
+  "app_id": "app004",
+  "app_name": "HRApp-004",
+  "complexity_score": 7,
+  "complexity_label": "High",
+  "assessment_date": "2026-07-14",
+  "scoring_breakdown": {
+    "eol_components": {
+      "score": 2,
+      "max": 2,
+      "rationale": "Windows Server 2012 EOL, IIS 8.0 EOL"
+    },
+    "architecture_complexity": {
+      "score": 1.5,
+      "max": 2,
+      "rationale": "2-Tier hybrid deployment (AWS + On-premise) adds complexity"
+    },
+    "business_criticality": {
+      "score": 2,
+      "max": 2,
+      "rationale": "High criticality \u2014 HR and payroll data"
+    },
+    "external_interfaces": {
+      "score": 1,
+      "max": 2,
+      "rationale": "6 external interfaces"
+    },
+    "server_count": {
+      "score": 0.5,
+      "max": 1,
+      "rationale": "2 servers in hybrid environment"
+    },
+    "environments": {
+      "score": 0,
+      "max": 1,
+      "rationale": "2 environments"
+    }
+  },
+  "key_risk_factors": [
+    "Windows Server 2012 EOL creates OS-level security exposure for HR/payroll data",
+    "IIS 8.0 EOL on EOL OS",
+    ".NET Core version ambiguity \u2014 may require full framework upgrade",
+    "Hybrid AWS + On-premise deployment complicates migration",
+    "SQL Server 2019 in extended support \u2014 license cost with EOL in 2030",
+    "HR data sensitivity requires careful compliance planning during migration"
+  ],
+  "modernization_notes": "HRApp-004 requires a carefully sequenced modernization due to high data sensitivity and hybrid deployment. OS and IIS upgrades are critical first steps. .NET version must be clarified before planning application modernization."
+}

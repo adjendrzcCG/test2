@@ -1,0 +1,107 @@
+{
+  "app_id": "app002",
+  "assessment_date": "2026-07-14",
+  "total_scenarios": 12,
+  "applicable_count": 6,
+  "fulfilled_count": 3,
+  "not_applicable_count": 2,
+  "blocked_count": 0,
+  "scenarios": [
+    {
+      "scenario_id": "os_update_security_patch",
+      "scenario_name": "Operating System Update",
+      "status": "APPLICABLE",
+      "rationale": "RHEL 7 is EOL. Upgrade to RHEL 8/9 is required. AWS deployment facilitates OS upgrade with reduced downtime.",
+      "priority": "Critical",
+      "effort": "Medium",
+      "risk": "Medium"
+    },
+    {
+      "scenario_id": "switch_to_standard_linux_os",
+      "scenario_name": "Switch to Standard Linux OS",
+      "status": "FULFILLED",
+      "rationale": "App already runs on Linux (RHEL 7). OS upgrade to current RHEL version is needed, but Linux OS is already in use.",
+      "priority": "Medium"
+    },
+    {
+      "scenario_id": "switch_to_arm_cpu",
+      "scenario_name": "Switch to ARM CPU",
+      "status": "APPLICABLE",
+      "rationale": "AWS deployment allows migration to Graviton (ARM) instances for cost savings. Requires Java 11 \u2192 Java 21 upgrade and testing.",
+      "priority": "Medium",
+      "effort": "Medium",
+      "risk": "Low"
+    },
+    {
+      "scenario_id": "application_server_replacement",
+      "scenario_name": "Application Server Replacement",
+      "status": "APPLICABLE",
+      "rationale": "WebSphere 7.0 is critically EOL (2015). Replace with modern application server (WildFly, Spring Boot embedded, or Jakarta EE).",
+      "priority": "Critical",
+      "effort": "High",
+      "risk": "High"
+    },
+    {
+      "scenario_id": "app_deployment_to_cloud",
+      "scenario_name": "Application Deployment to Cloud",
+      "status": "FULFILLED",
+      "rationale": "CRMApp-002 is already deployed on AWS. Cloud deployment objective is fulfilled.",
+      "priority": "Medium"
+    },
+    {
+      "scenario_id": "app_containerization",
+      "scenario_name": "Application Containerization",
+      "status": "APPLICABLE",
+      "rationale": "Currently not containerized despite AWS deployment. Containerization would improve portability and enable Kubernetes orchestration.",
+      "priority": "Medium",
+      "effort": "Medium",
+      "risk": "Medium"
+    },
+    {
+      "scenario_id": "app_refactor_decoupling",
+      "scenario_name": "Application Refactor / Decoupling",
+      "status": "LACK_OF_DATA",
+      "rationale": "Architecture is marked 'unknown' for this 3rd-party CRM. Refactoring scope depends on vendor-provided customization boundaries.",
+      "priority": "Medium"
+    },
+    {
+      "scenario_id": "upgrade_legacy_databases",
+      "scenario_name": "Upgrade Legacy Databases",
+      "status": "NOT_APPLICABLE",
+      "rationale": "Amazon RDS MySQL is a managed service \u2014 AWS handles version upgrades automatically.",
+      "priority": "Medium"
+    },
+    {
+      "scenario_id": "switch_to_managed_db",
+      "scenario_name": "Switch to Managed Database",
+      "status": "FULFILLED",
+      "rationale": "Amazon RDS MySQL is already a managed database service.",
+      "priority": "Medium"
+    },
+    {
+      "scenario_id": "managed_arm_db",
+      "scenario_name": "Managed ARM Database",
+      "status": "APPLICABLE",
+      "rationale": "Amazon RDS MySQL can run on Graviton (ARM) instances. Migration from x86 RDS to Graviton RDS yields cost savings.",
+      "priority": "Low",
+      "effort": "Low",
+      "risk": "Low"
+    },
+    {
+      "scenario_id": "serverless_db_migration",
+      "scenario_name": "Serverless Database Migration",
+      "status": "APPLICABLE",
+      "rationale": "Amazon Aurora Serverless v2 could replace RDS MySQL for variable CRM workloads, reducing cost during off-peak periods.",
+      "priority": "Low",
+      "effort": "Medium",
+      "risk": "Low"
+    },
+    {
+      "scenario_id": "switch_db_engine_postgresql",
+      "scenario_name": "Switch DB Engine to PostgreSQL",
+      "status": "NOT_APPLICABLE",
+      "rationale": "Amazon RDS MySQL is already managed and cost-effective. PostgreSQL switch would not provide meaningful benefit for this 3rd-party CRM.",
+      "priority": "Medium"
+    }
+  ]
+}

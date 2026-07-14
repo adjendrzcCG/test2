@@ -1,0 +1,8 @@
+{
+  "app_id": "app002",
+  "app_name": "CRMApp-002",
+  "out_of_scope": false,
+  "reason": "Application status is Production",
+  "application_status": "Production",
+  "assessment_date": "2026-07-14"
+}

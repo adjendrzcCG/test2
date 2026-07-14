@@ -1,0 +1,113 @@
+{
+  "app_id": "app004",
+  "assessment_date": "2026-07-14",
+  "total_scenarios": 12,
+  "applicable_count": 9,
+  "fulfilled_count": 1,
+  "not_applicable_count": 2,
+  "blocked_count": 0,
+  "scenarios": [
+    {
+      "scenario_id": "os_update_security_patch",
+      "scenario_name": "Operating System Update",
+      "status": "APPLICABLE",
+      "rationale": "Windows Server 2012 is EOL (Oct 2023). Must upgrade to Windows Server 2022/2025 to restore security patch coverage.",
+      "priority": "Critical",
+      "effort": "Medium",
+      "risk": "Medium"
+    },
+    {
+      "scenario_id": "switch_to_standard_linux_os",
+      "scenario_name": "Switch to Standard Linux OS",
+      "status": "APPLICABLE",
+      "rationale": ".NET Core is cross-platform. Migrating to Linux OS would reduce Windows Server licensing costs and leverage Linux ecosystem.",
+      "priority": "Medium",
+      "effort": "High",
+      "risk": "Medium"
+    },
+    {
+      "scenario_id": "switch_to_arm_cpu",
+      "scenario_name": "Switch to ARM CPU",
+      "status": "APPLICABLE",
+      "rationale": ".NET 6+ supports ARM64 natively. If .NET version is confirmed current, AWS Graviton migration is feasible.",
+      "priority": "Medium",
+      "effort": "Medium",
+      "risk": "Low"
+    },
+    {
+      "scenario_id": "application_server_replacement",
+      "scenario_name": "Application Server Replacement",
+      "status": "APPLICABLE",
+      "rationale": "IIS 8.0 is EOL (Oct 2023). Upgrade to IIS 10 on Windows Server 2022, or migrate to Kestrel/Nginx if moving to Linux.",
+      "priority": "Critical",
+      "effort": "Medium",
+      "risk": "Medium"
+    },
+    {
+      "scenario_id": "app_deployment_to_cloud",
+      "scenario_name": "Application Deployment to Cloud",
+      "status": "PARTIALLY_FULFILLED",
+      "rationale": "Partial cloud deployment on AWS exists but hybrid on-premise footprint remains. Full cloud migration pending.",
+      "priority": "High",
+      "effort": "Medium",
+      "risk": "Medium"
+    },
+    {
+      "scenario_id": "app_containerization",
+      "scenario_name": "Application Containerization",
+      "status": "FULFILLED",
+      "rationale": "HRApp-004 is already containerized.",
+      "priority": "Medium"
+    },
+    {
+      "scenario_id": "app_refactor_decoupling",
+      "scenario_name": "Application Refactor / Decoupling",
+      "status": "APPLICABLE",
+      "rationale": "2-Tier architecture could benefit from refactoring to microservices, especially to separate HR modules (payroll, benefits, employee records).",
+      "priority": "Medium",
+      "effort": "High",
+      "risk": "High"
+    },
+    {
+      "scenario_id": "upgrade_legacy_databases",
+      "scenario_name": "Upgrade Legacy Databases",
+      "status": "APPLICABLE",
+      "rationale": "SQL Server 2019 is in extended support. Upgrade to SQL Server 2022 is recommended to extend support to 2033.",
+      "priority": "Medium",
+      "effort": "Medium",
+      "risk": "Low"
+    },
+    {
+      "scenario_id": "switch_to_managed_db",
+      "scenario_name": "Switch to Managed Database",
+      "status": "APPLICABLE",
+      "rationale": "On-premise SQL Server could move to Amazon RDS SQL Server or Azure SQL to eliminate DBA management overhead.",
+      "priority": "Medium",
+      "effort": "Medium",
+      "risk": "Medium"
+    },
+    {
+      "scenario_id": "managed_arm_db",
+      "scenario_name": "Managed ARM Database",
+      "status": "NOT_APPLICABLE",
+      "rationale": "SQL Server on ARM is not available as a managed service from AWS or Azure. Not applicable.",
+      "priority": "Medium"
+    },
+    {
+      "scenario_id": "serverless_db_migration",
+      "scenario_name": "Serverless Database Migration",
+      "status": "NOT_APPLICABLE",
+      "rationale": "HR/payroll database has consistent load patterns and strict ACID requirements. Serverless DB is not suitable.",
+      "priority": "Medium"
+    },
+    {
+      "scenario_id": "switch_db_engine_postgresql",
+      "scenario_name": "Switch DB Engine to PostgreSQL",
+      "status": "APPLICABLE",
+      "rationale": "Migrating from SQL Server 2019 to PostgreSQL would eliminate SQL Server licensing. High effort but significant long-term savings.",
+      "priority": "Low",
+      "effort": "High",
+      "risk": "High"
+    }
+  ]
+}

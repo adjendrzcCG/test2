@@ -1,0 +1,52 @@
+{
+  "extraction_date": "2026-07-14",
+  "source_file": "apps_db_complete_short 1.xlsx",
+  "total_applications": 5,
+  "applications": [
+    {
+      "app_id": "app001",
+      "app_name": "ERPApp-001",
+      "application_status": "Production",
+      "business_unit": "Finance",
+      "business_criticality": "High",
+      "deployment_type": "On-Premise",
+      "solution_type": "Custom made"
+    },
+    {
+      "app_id": "app002",
+      "app_name": "CRMApp-002",
+      "application_status": "Production",
+      "business_unit": "Marketing",
+      "business_criticality": "Medium",
+      "deployment_type": "AWS",
+      "solution_type": "3rd party software"
+    },
+    {
+      "app_id": "app003",
+      "app_name": "AnalyticsApp-003",
+      "application_status": "Production",
+      "business_unit": "IT",
+      "business_criticality": "Low",
+      "deployment_type": "AWS",
+      "solution_type": "Open Source"
+    },
+    {
+      "app_id": "app004",
+      "app_name": "HRApp-004",
+      "application_status": "Production",
+      "business_unit": "HR",
+      "business_criticality": "High",
+      "deployment_type": "AWS, On-premise",
+      "solution_type": "Custom made"
+    },
+    {
+      "app_id": "app005",
+      "app_name": "EComApp-005",
+      "application_status": "Retired",
+      "business_unit": "Operations",
+      "business_criticality": "Critical",
+      "deployment_type": "AWS",
+      "solution_type": "3rd party software"
+    }
+  ]
+}
