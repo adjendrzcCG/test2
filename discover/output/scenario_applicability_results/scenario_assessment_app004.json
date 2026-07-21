@@ -1,0 +1,120 @@
+{
+  "application_identifier": "app004",
+  "scenarios": [
+    {
+      "scenario_id": "os_update_security_patch",
+      "scenario_name": "Operating System Update",
+      "status": "APPLICABLE",
+      "reasoning": "Windows Server 2012 reached end-of-support on October 10, 2023. No free security updates are available. Upgrade to Windows Server 2022 or migration to Linux is required to restore security compliance for this High criticality HR system.",
+      "triggered_by": [
+        "Windows Server 2012 EOL since October 10, 2023",
+        "Operating System no longer receiving security patches"
+      ],
+      "blocked_by": []
+    },
+    {
+      "scenario_id": "switch_to_standard_linux_os",
+      "scenario_name": "Switch to standard Linux Operating System",
+      "status": "NOT_APPLICABLE",
+      "reasoning": "HRApp-004 runs on Windows Server 2012 with IIS 8.0 as the application server. The application is Windows-native (.NET/IIS). Switching to Linux would require significant application re-architecture and is excluded from this scenario for Windows-native applications.",
+      "triggered_by": [],
+      "blocked_by": [
+        "Application is Windows-native (.NET Core + IIS)",
+        "Windows-to-Linux migration requires significant re-architecture"
+      ]
+    },
+    {
+      "scenario_id": "switch_to_arm_cpu",
+      "scenario_name": "Switch to ARM-based CPU",
+      "status": "BLOCKED",
+      "reasoning": "Windows Server 2012 is EOL and lacks ARM architecture support. While .NET Core is theoretically ARM-compatible, the EOL OS and IIS 8.0 dependency block ARM migration. The OS upgrade must be completed first before ARM migration can be evaluated.",
+      "triggered_by": [],
+      "blocked_by": [
+        "Windows Server 2012 EOL prevents ARM migration",
+        "IIS 8.0 on EOL Windows blocks ARM path",
+        "OS upgrade must precede ARM CPU evaluation"
+      ]
+    },
+    {
+      "scenario_id": "application_server_replacement",
+      "scenario_name": "Applications Server replacement",
+      "status": "APPLICABLE",
+      "reasoning": "Microsoft IIS 8.0 is EOL as part of Windows Server 2012 (EOL October 2023). Upgrading to IIS 10.0 on Windows Server 2022 or migrating to Kestrel/.NET self-hosted would restore security compliance and improve performance.",
+      "triggered_by": [
+        "IIS 8.0 EOL as part of Windows Server 2012",
+        "Application server no longer receiving security patches"
+      ],
+      "blocked_by": []
+    },
+    {
+      "scenario_id": "app_deployment_to_cloud",
+      "scenario_name": "Application Migration to Cloud Infrastructure (Lift & Shift)",
+      "status": "PARTIALLY_FULFILLED",
+      "reasoning": "HRApp-004 is partially deployed on AWS but retains an on-premise component (hybrid deployment: AWS + On-premise). Full cloud migration is required to eliminate on-premise infrastructure costs and security risks. Partial credit for existing AWS presence.",
+      "triggered_by": [
+        "Hybrid deployment - on-premise component still present",
+        "On-premise component creates security and cost risks"
+      ],
+      "blocked_by": []
+    },
+    {
+      "scenario_id": "app_containerization",
+      "scenario_name": "Application Containerization",
+      "status": "FULFILLED",
+      "reasoning": "HRApp-004 is already containerized. This scenario objective is fully satisfied.",
+      "triggered_by": [],
+      "blocked_by": []
+    },
+    {
+      "scenario_id": "app_refactor_decoupling",
+      "scenario_name": "Application Refactoring and De-coupling",
+      "status": "APPLICABLE",
+      "reasoning": "HRApp-004 uses a 2-Tier architecture with 6 external interfaces and 12 API endpoints. As a custom-made application, refactoring to decouple tiers and modernize the API layer would improve maintainability, scalability, and enable full cloud migration.",
+      "triggered_by": [
+        "2-Tier architecture with coupling between tiers",
+        "Custom-made application - source code accessible",
+        "6 external interfaces requiring API standardization",
+        "12 API endpoints suggesting service decomposition opportunity"
+      ],
+      "blocked_by": []
+    },
+    {
+      "scenario_id": "upgrade_legacy_databases",
+      "scenario_name": "Upgrade Legacy Databases",
+      "status": "APPLICABLE",
+      "reasoning": "SQL Server 2019 mainstream support ended July 2025 and is classified as OUTDATED. While Extended Support runs until 2030, planning migration to SQL Server 2022 or an alternative engine should begin now. The 750GB database with paid license adds cost and risk.",
+      "triggered_by": [
+        "SQL Server 2019 mainstream support ended July 2025",
+        "OUTDATED classification",
+        "Paid Microsoft license required"
+      ],
+      "blocked_by": []
+    },
+    {
+      "scenario_id": "switch_db_engine_open_source",
+      "scenario_name": "Switch DB Engine to open-source database solution",
+      "status": "APPLICABLE",
+      "reasoning": "SQL Server 2019 requires a paid Microsoft license. Switching to PostgreSQL would eliminate license costs and reduce vendor dependency. As a custom-made .NET application, the team has full control over the data access layer migration.",
+      "triggered_by": [
+        "SQL Server 2019 requires paid commercial license",
+        "Custom-made application - data access layer can be modified",
+        "PostgreSQL is a capable open-source alternative"
+      ],
+      "blocked_by": []
+    },
+    {
+      "scenario_id": "update_outdated_components",
+      "scenario_name": "Update outdated components",
+      "status": "APPLICABLE",
+      "reasoning": "Windows Server 2012 is EOL, IIS 8.0 is EOL, .NET Core version is unspecified (potential EOL), and SQL Server 2019 is OUTDATED. As a custom-made application, the team has full control to update all components. The Windows EOL creates the most critical security risk.",
+      "triggered_by": [
+        "Windows Server 2012 EOL October 2023",
+        "IIS 8.0 EOL October 2023",
+        ".NET Core version unspecified - potential EOL risk",
+        "Custom-made application - full control over component updates"
+      ],
+      "blocked_by": []
+    }
+  ],
+  "analysis_timestamp": "2026-07-21T07:14:37Z"
+}

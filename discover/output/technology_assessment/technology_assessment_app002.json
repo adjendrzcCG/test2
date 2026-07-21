@@ -1,0 +1,53 @@
+{
+  "application_identifier": "app002",
+  "components_analyzed": [
+    {
+      "component_name": "RHEL 7",
+      "component_family": "Red Hat Enterprise Linux",
+      "component_type": "os",
+      "managed_service": false,
+      "version": "7",
+      "component_status": "EOL",
+      "eol_date": "2024-06-30",
+      "reason": "Red Hat Enterprise Linux 7 reached end of life on June 30, 2024. No further security updates are provided.",
+      "confidence": 10
+    },
+    {
+      "component_name": "Java 11",
+      "component_family": "Java",
+      "component_type": "programming_language",
+      "managed_service": false,
+      "version": "11",
+      "component_status": "OUTDATED",
+      "eol_date": "2026-09-30",
+      "reason": "Java 11 LTS Premier Support ended September 2023. Extended Support remains active until September 2026. Upgrade to Java 17 or 21 LTS is recommended.",
+      "confidence": 9
+    },
+    {
+      "component_name": "WebSphere 7.0",
+      "component_family": "IBM WebSphere",
+      "component_type": "application_server",
+      "managed_service": false,
+      "version": "7.0",
+      "component_status": "EOL",
+      "eol_date": "2015-09-30",
+      "reason": "IBM WebSphere Application Server 7.0 reached end of service on September 30, 2015. Over 10 years past EOL.",
+      "confidence": 10
+    },
+    {
+      "component_name": "Amazon RDS MySQL",
+      "component_family": "MySQL",
+      "component_type": "database",
+      "managed_service": true,
+      "version": "managed",
+      "component_status": "CURRENT_VERSION",
+      "eol_date": null,
+      "reason": "Amazon RDS MySQL is a fully managed service. AWS manages version upgrades and patching. No EOL concern at the service level.",
+      "confidence": 9
+    }
+  ],
+  "has_eol_components": true,
+  "has_outdated_components": true,
+  "has_missing_version_data": false,
+  "analysis_timestamp": "2026-07-21T07:14:37Z"
+}

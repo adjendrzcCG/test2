@@ -1,0 +1,157 @@
+{
+  "app_id": "app003",
+  "app_name": "AnalyticsApp-003",
+  "schema_version": "1.0",
+  "fields": [
+    {
+      "field": "app_id",
+      "type": "string",
+      "description": "Unique application identifier"
+    },
+    {
+      "field": "app_name",
+      "type": "string",
+      "description": "Application display name"
+    },
+    {
+      "field": "app_description",
+      "type": "string",
+      "description": "Application description"
+    },
+    {
+      "field": "solution_type",
+      "type": "string",
+      "description": "Software type: Custom made, 3rd party software, Open Source"
+    },
+    {
+      "field": "business_criticality",
+      "type": "string",
+      "description": "Criticality: Critical, High, Medium, Low"
+    },
+    {
+      "field": "application_status",
+      "type": "string",
+      "description": "Lifecycle status: Production, Retired, etc."
+    },
+    {
+      "field": "deployment_type",
+      "type": "string",
+      "description": "Where the application is deployed"
+    },
+    {
+      "field": "data_classification",
+      "type": "string",
+      "description": "Data sensitivity level"
+    },
+    {
+      "field": "business_unit",
+      "type": "string",
+      "description": "Owning business unit"
+    },
+    {
+      "field": "business_capabilities",
+      "type": "array",
+      "description": "List of business capabilities"
+    },
+    {
+      "field": "user_count",
+      "type": "integer",
+      "description": "Number of active users"
+    },
+    {
+      "field": "operating_system",
+      "type": "string",
+      "description": "Host operating system and version"
+    },
+    {
+      "field": "programming_language",
+      "type": "string",
+      "description": "Primary programming language and version"
+    },
+    {
+      "field": "application_server",
+      "type": "string",
+      "description": "Application server software and version"
+    },
+    {
+      "field": "application_architecture",
+      "type": "string",
+      "description": "Architectural pattern (1-Tier, 2-Tier, 3-Tier)"
+    },
+    {
+      "field": "is_containerized",
+      "type": "string",
+      "description": "Whether app runs in containers"
+    },
+    {
+      "field": "ci_cd_present",
+      "type": "string",
+      "description": "Whether CI/CD pipeline is in place"
+    },
+    {
+      "field": "api_endpoint_count",
+      "type": "integer",
+      "description": "Number of API endpoints exposed"
+    },
+    {
+      "field": "external_interface_count",
+      "type": "integer",
+      "description": "Number of external system interfaces"
+    },
+    {
+      "field": "database_engine",
+      "type": "string",
+      "description": "Database engine and version"
+    },
+    {
+      "field": "database_storage_gb",
+      "type": "integer",
+      "description": "Database storage in GB"
+    },
+    {
+      "field": "database_license_required",
+      "type": "string",
+      "description": "Whether a paid DB license is required"
+    }
+  ],
+  "application_data": {
+    "app_id": "app003",
+    "app_name": "AnalyticsApp-003",
+    "app_description": "Analytics platform for generating operational reports and business insights from logistics data",
+    "solution_type": "Open Source",
+    "business_criticality": "Low",
+    "application_status": "Production",
+    "deployment_type": "AWS",
+    "data_classification": "Public",
+    "business_unit": "IT",
+    "business_capabilities": [
+      "Data Analytics",
+      "Reporting",
+      "Business Intelligence"
+    ],
+    "user_count": 480,
+    "operating_system": "RHEL 7",
+    "programming_language": "Python 3.9",
+    "application_server": "Apache Tomcat 6.1",
+    "application_architecture": "3-Tier",
+    "is_containerized": "Yes",
+    "environment_count": 1,
+    "server_instances": "sv03",
+    "cpu_cores": 2,
+    "memory_gb": 8,
+    "production_environments": "prod04",
+    "ci_cd_present": "Yes",
+    "api_endpoint_count": 8,
+    "external_interface_count": 3,
+    "database_engine": "PostgreSQL 13",
+    "database_storage_gb": 200,
+    "database_license_required": "No",
+    "logging_solution": "ELK",
+    "monitoring_tool": "Prometheus",
+    "additional_attributes": {
+      "decomission_date": "not planned",
+      "physical_database_server_instance": "db0003"
+    }
+  },
+  "analysis_timestamp": "2026-07-21T07:14:37Z"
+}

@@ -1,0 +1,121 @@
+{
+  "application_identifier": "app001",
+  "scenarios": [
+    {
+      "scenario_id": "os_update_security_patch",
+      "scenario_name": "Operating System Update",
+      "status": "APPLICABLE",
+      "reasoning": "AIX 7.2 is end-of-life since April 2025. No security patches are available. The OS must be updated or replaced immediately to eliminate critical security risk.",
+      "triggered_by": [
+        "Operating System Version is Unsupported",
+        "Operating System no longer receiving security patches"
+      ],
+      "blocked_by": []
+    },
+    {
+      "scenario_id": "switch_to_standard_linux_os",
+      "scenario_name": "Switch to standard Linux Operating System",
+      "status": "APPLICABLE",
+      "reasoning": "AIX 7.2 is a proprietary IBM Unix platform, not a standard Linux distribution. Migrating to RHEL, Ubuntu, or Amazon Linux 2 would reduce licensing costs, increase community support, and enable broader tooling compatibility.",
+      "triggered_by": [
+        "Operating System is non-standard proprietary Unix",
+        "AIX is not a standard Linux distribution"
+      ],
+      "blocked_by": []
+    },
+    {
+      "scenario_id": "switch_to_arm_cpu",
+      "scenario_name": "Switch to ARM-based CPU",
+      "status": "NOT_APPLICABLE",
+      "reasoning": "Application runs on AIX 7.2 with COBOL-2014 and is not containerized. AIX is IBM's proprietary Unix for POWER hardware, incompatible with ARM CPU architecture. COBOL workloads require platform-specific migration before ARM can be considered.",
+      "triggered_by": [],
+      "blocked_by": [
+        "AIX is not Linux-based",
+        "Not containerized",
+        "COBOL-2014 requires specific compiler for target architecture"
+      ]
+    },
+    {
+      "scenario_id": "application_server_replacement",
+      "scenario_name": "Applications Server replacement",
+      "status": "NOT_APPLICABLE",
+      "reasoning": "ERPApp-001 uses no application server (null). It is a direct 1-Tier COBOL application. Application server replacement is not relevant.",
+      "triggered_by": [],
+      "blocked_by": [
+        "No application server in use"
+      ]
+    },
+    {
+      "scenario_id": "app_deployment_to_cloud",
+      "scenario_name": "Application Migration to Cloud Infrastructure (Lift & Shift)",
+      "status": "APPLICABLE",
+      "reasoning": "Application is currently deployed On-Premise on AIX hardware. Migrating to cloud infrastructure (e.g., AWS or Azure) would eliminate on-premise hardware costs, improve scalability, and enable managed services. Significant re-platforming effort required given COBOL/AIX stack.",
+      "triggered_by": [
+        "Deployment type is On-Premise",
+        "EOL OS prevents continued on-premise operation without significant risk"
+      ],
+      "blocked_by": []
+    },
+    {
+      "scenario_id": "app_containerization",
+      "scenario_name": "Application Containerization",
+      "status": "NOT_APPLICABLE",
+      "reasoning": "Application runs on AIX 7.2 with COBOL-2014 in a 1-Tier monolithic architecture. AIX is not a container-compatible platform. COBOL monolith cannot be containerized without significant re-architecture. Excluded from containerization scenario.",
+      "triggered_by": [],
+      "blocked_by": [
+        "AIX is not Linux - containers not supported",
+        "1-Tier COBOL monolith incompatible with container paradigm"
+      ]
+    },
+    {
+      "scenario_id": "app_refactor_decoupling",
+      "scenario_name": "Application Refactoring and De-coupling",
+      "status": "APPLICABLE",
+      "reasoning": "1-Tier monolithic COBOL architecture with 0 API endpoints and 5 external interfaces. The monolith must be refactored and decoupled to enable cloud migration, improve maintainability, and reduce technical debt. This is the highest-impact modernization action.",
+      "triggered_by": [
+        "1-Tier monolithic architecture",
+        "Zero API endpoints",
+        "Custom-made application",
+        "5 external interfaces with no API layer"
+      ],
+      "blocked_by": []
+    },
+    {
+      "scenario_id": "upgrade_legacy_databases",
+      "scenario_name": "Upgrade Legacy Databases",
+      "status": "APPLICABLE",
+      "reasoning": "Oracle 19c has exited Premier Support (ended December 2024) and is in Extended Support until December 2027. Upgrade to a current Oracle version or migration to another engine should be planned. Database stores 1000GB of critical financial data.",
+      "triggered_by": [
+        "Oracle 19c is in Extended Support - OUTDATED",
+        "Premier Support ended December 2024",
+        "Paid license required"
+      ],
+      "blocked_by": []
+    },
+    {
+      "scenario_id": "switch_db_engine_open_source",
+      "scenario_name": "Switch DB Engine to open-source database solution",
+      "status": "APPLICABLE",
+      "reasoning": "Oracle 19c requires a paid commercial license. Switching to an open-source database (PostgreSQL) would eliminate license costs, reduce vendor lock-in, and align with cloud-native practices. Given the 1000GB financial database, this requires careful data migration planning.",
+      "triggered_by": [
+        "Oracle 19c requires paid license",
+        "High Oracle license cost",
+        "Open-source alternative (PostgreSQL) available"
+      ],
+      "blocked_by": []
+    },
+    {
+      "scenario_id": "update_outdated_components",
+      "scenario_name": "Update outdated components",
+      "status": "APPLICABLE",
+      "reasoning": "COBOL-2014 is a legacy language with outdated paradigms. AIX 7.2 is EOL. Oracle 19c is in extended support. All primary technology components require updates or replacement. This is a foundational modernization requirement.",
+      "triggered_by": [
+        "COBOL-2014 outdated language paradigm",
+        "AIX 7.2 EOL",
+        "Custom-made application with full control over component selection"
+      ],
+      "blocked_by": []
+    }
+  ],
+  "analysis_timestamp": "2026-07-21T07:14:37Z"
+}

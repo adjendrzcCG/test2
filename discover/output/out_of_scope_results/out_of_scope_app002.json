@@ -1,0 +1,19 @@
+{
+  "application_identifier": "app002",
+  "application_name": "CRMApp-002",
+  "out_of_scope": false,
+  "reason": null,
+  "exclusion_criteria_checked": [
+    {
+      "criterion": "RETIRED",
+      "matched": false,
+      "value": "Production"
+    },
+    {
+      "criterion": "SAP",
+      "matched": false,
+      "value": "3rd party software"
+    }
+  ],
+  "analysis_timestamp": "2026-07-21T07:14:37Z"
+}

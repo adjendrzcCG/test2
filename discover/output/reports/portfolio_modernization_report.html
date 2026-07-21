@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portfolio Modernization Report - GenDiscover</title>
+  <style>
+:root {
+  --primary-dark: #081722;
+  --report-background: #102737;
+  --section-background: #163244;
+  --accent: #1ec8d7;
+  --accent-rgb: 30, 200, 215;
+  --report-text-font-primary: #e9f7ff;
+  --report-text-font-secondary-rgb: 184, 216, 232;
+  --text-light-blue-rgb: 154, 198, 220;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  background: var(--primary-dark);
+  color: var(--report-text-font-primary);
+  font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 14px; line-height: 1.6; padding: 20px;
+}
+.container { max-width: 1300px; margin: 0 auto; }
+.header-card {
+  background: var(--report-background);
+  border: 1px solid rgba(var(--accent-rgb), 0.4);
+  border-radius: 12px; padding: 28px 32px; margin-bottom: 24px;
+  display: flex; justify-content: space-between; align-items: center;
+  box-shadow: 0 0 40px rgba(var(--accent-rgb), 0.15);
+}
+.header-left h1 { color: var(--accent); font-size: 24px; margin-bottom: 6px; }
+.header-left p  { color: rgba(var(--report-text-font-secondary-rgb),1); font-size: 12px; }
+[data-testid="customer-name"] { font-size: 13px; color: rgba(var(--text-light-blue-rgb),1); margin-bottom: 6px; }
+.logo-svg svg { width: 130px; height: auto; fill: var(--accent); }
+.title-card {
+  background: linear-gradient(135deg, var(--section-background) 0%, rgba(var(--accent-rgb),0.08) 100%);
+  border: 1px solid rgba(var(--accent-rgb), 0.4); border-radius: 10px;
+  padding: 28px 32px; margin-bottom: 24px;
+  box-shadow: 0 0 30px rgba(var(--accent-rgb), 0.1);
+}
+.title-card h1 { color: var(--accent); font-size: 24px; margin-bottom: 10px; }
+.title-card p { color: rgba(var(--report-text-font-secondary-rgb),1); font-size: 14px; }
+.section-card {
+  background: var(--section-background);
+  border: 1px solid rgba(var(--accent-rgb), 0.2);
+  border-radius: 10px; margin-bottom: 24px; overflow: hidden;
+  box-shadow: 0 2px 16px rgba(0,0,0,0.4);
+}
+.section-header {
+  background: rgba(var(--accent-rgb), 0.1);
+  border-bottom: 1px solid rgba(var(--accent-rgb), 0.2);
+  padding: 16px 24px; cursor: pointer;
+  display: flex; justify-content: space-between; align-items: center;
+}
+.section-header:hover { background: rgba(var(--accent-rgb), 0.16); }
+.section-header h2 { color: var(--accent); font-size: 16px; font-weight: 600; }
+.chevron { color: var(--accent); transition: transform 0.2s; font-size: 20px; }
+.section-body { padding: 24px 28px; }
+.section-body.collapsed { display: none; }
+table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 13px; }
+th { background: rgba(var(--accent-rgb), 0.15); color: var(--accent); padding: 10px 14px; text-align: left;
+     border: 1px solid rgba(var(--accent-rgb),0.2); font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; }
+td { padding: 10px 14px; border: 1px solid rgba(255,255,255,0.07);
+     color: rgba(var(--report-text-font-secondary-rgb),1); vertical-align: middle; }
+tr:nth-child(even) td { background: rgba(255,255,255,0.03); }
+td a { color: var(--accent); text-decoration: none; }
+td a:hover { text-decoration: underline; }
+.badge { display: inline-block; padding: 3px 10px; border-radius: 4px; font-size: 11px; font-weight: 600; color: #fff; }
+.kpi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px,1fr)); gap: 16px; margin: 16px 0; }
+.kpi-card {
+  background: rgba(var(--accent-rgb), 0.07);
+  border: 1px solid rgba(var(--accent-rgb), 0.25);
+  border-radius: 10px; padding: 20px; text-align: center;
+  box-shadow: 0 0 20px rgba(var(--accent-rgb), 0.08);
+}
+.kpi-value { font-size: 36px; font-weight: 800; color: var(--accent);
+  text-shadow: 0 0 25px rgba(var(--accent-rgb), 0.8); line-height: 1; }
+.kpi-label { font-size: 11px; color: rgba(var(--text-light-blue-rgb),1); margin-top: 6px; text-transform: uppercase; letter-spacing: 0.7px; }
+.app-nav-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px,1fr)); gap: 16px; margin: 16px 0; }
+.app-nav-card {
+  background: rgba(var(--accent-rgb), 0.05);
+  border: 1px solid rgba(var(--accent-rgb), 0.2);
+  border-radius: 8px; padding: 16px; transition: border-color 0.2s;
+}
+.app-nav-card:hover { border-color: rgba(var(--accent-rgb), 0.6); }
+.app-nav-card h3 { color: var(--accent); font-size: 14px; margin-bottom: 8px; }
+.app-nav-card a { color: var(--accent); text-decoration: none; font-size: 12px; display: block; margin-top: 10px; padding: 6px 12px; border: 1px solid rgba(var(--accent-rgb),0.4); border-radius: 4px; text-align: center; }
+.app-nav-card a:hover { background: rgba(var(--accent-rgb),0.15); }
+.app-nav-card p { font-size: 12px; color: rgba(var(--text-light-blue-rgb),1); margin: 4px 0; }
+.complexity-bar { height: 8px; background: rgba(255,255,255,0.1); border-radius: 4px; overflow: hidden; display: inline-block; width: 100px; vertical-align: middle; margin-left: 8px; }
+.complexity-fill { height: 100%; border-radius: 4px; }
+.footer {
+  background: var(--report-background);
+  border: 1px solid rgba(var(--accent-rgb), 0.2);
+  border-radius: 10px; padding: 20px 28px; margin-top: 28px;
+  display: flex; justify-content: space-between; align-items: center;
+  font-size: 12px; color: rgba(var(--text-light-blue-rgb),1);
+}
+.footer-logo svg { width: 90px; height: auto; fill: var(--accent); opacity: 0.7; }
+p { margin: 8px 0; color: rgba(var(--report-text-font-secondary-rgb),1); }
+ul { margin: 8px 0 8px 20px; }
+li { color: rgba(var(--report-text-font-secondary-rgb),1); margin: 5px 0; }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- Header -->
+  <div class="header-card">
+    <div class="header-left">
+      <div data-testid="customer-name">Enterprise Application Portfolio Assessment</div>
+      <h1>Portfolio Modernization Report</h1>
+      <p>Application modernization with Agentic AI powered by Capgemini GenSuite</p>
+    </div>
+    <div class="logo-svg"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 358.01 117.11">
+  <path d="M330.21,46.53c-1.44-4.78-4.35-8.97-8.21-12.52-4.17-3.82-9.13-6.71-14.33-8.89-.42-.18-.84-.35-1.26-.51h0c-6.4,7.67-28.57,13.4-28.57,29.47,0,6.29,3.97,12.16,9.81,14.52,3.63,1.23,7.53,1,11.01-.59,3.36-1.53,5.93-4.23,7.99-7.24,2.18-3.17,3.84-6.66,5.91-9.9,1.92-3.01,4.38-6.02,8.03-6.86,3.31-.77,7.22.09,9.64,2.51h-.02ZM330.36,49.79c-1.47-2.94-4.56-4.2-7.73-4.05-3.06.14-5.29,2.09-6.99,4.49-1.93,2.71-3.28,5.8-4.85,8.72-1.52,2.81-3.15,5.57-5.33,7.92-2.42,2.61-5.46,4.58-8.88,5.61,1.58,1.14,3.77,1.39,5.66,1.47,2.13.08,4.29-.11,6.39-.49,3.84-.69,7.98-2.03,10.81-4.83-4.42.06-7.99-2.92-8.31-7.4,2.85,3.45,7.15,4.77,11.46,3.55,3.78-1.07,6.81-4.06,8.03-7.78.78-2.36.85-4.93-.26-7.2h0ZM268.07,47.47c0-3.55-.21-5.92-2.53-5.92-1.06,0-1.57.21-2.5.52.82,11.99-1.89,22.55-5.19,22.55-4.34,0-2.17-25.7-11.36-25.7-8.47,0-9.69,20.52-10.65,20.52-.66,0-.76-5.39-.72-9.49.36-1.97.55-3.74.55-5.08,0-1.91-.77-5.22-5.11-3.56.15,14.67-2.79,23.54-6.09,23.54-4.85,0-4.91-13.3-4.91-16.97s.26-8.36-5.06-6.66c-.8,12.8-4.15,22.46-6.26,22.46-3.16,0-2.52-22.11-9.34-22.11-6.12,0-8.02,20.94-9.3,20.94-2.29,0,.71-23.57-8.14-23.57-4.64,0-6.49,7.87-8.3,16.68-.35,1.71-.72,1.76-.78-.17-.05-1.58-.06-3.33-.04-4.94,2.23-8.85-.49-12.13-4.59-9.76,1.32,16.34-6.18,24.33-11.93,24.33-2.08,0-3.71-.88-4.94-2.28,6.9-4.23,9.97-9.09,9.97-13.83,0-5.14-2.95-8.11-7.86-8.11-6.85,0-10.67,7.05-10.67,13.04,0,3.22.6,5.96,1.59,8.22-2.35,1.12-4.57,2.09-6.63,3.03-.18-6.17-.88-12.64-1.41-18.61-3.64-1-4.71.75-4.99,3.99-.65,7.4-3.39,11.99-5.81,11.99-1.83,0-2.94-2.22-3.07-4.58-.68-11.86,8.95-15.16,13.99-13.44,1.05-2.61-.1-4.5-4.64-4.5-5.51,0-9.63,3.35-12.65,7.64-2.02,2.87-4.34,4.9-7.44,7.35.08-.71.12-1.41.12-2.11,0-8.37-4.53-12.04-8.86-12.04-3.58,0-5.83,2.15-7.14,5.44-.32-3.3-.98-4.73-2.9-4.73-.83,0-1.96.23-3.19.83.56,1.85.78,5.93.78,8.62,0,10.06-2.88,14.57-5.66,14.57-3.17,0-3.67-11.93-3.94-16.57-.41-.14-.86-.29-1.55-.29-2.87,0-3.24,3.85-3.95,7.39-.78,3.92-3.05,8.86-6.39,8.86-2.02,0-3.28-1.95-3.44-5.46-.33-7.11,5.59-15.54,14.85-12.92,1.21-2.83-.69-4.99-4.53-4.99-6.77,0-12.36,5.07-14.8,11.06-2.48,5.49-6.82,13.56-15.64,13.56-6.23,0-10.99-5.43-10.99-16.83,0-9.83,6.19-19.16,12.8-19.16,4.62,0,5.7,4.55,5.29,8.81,2.39,1.93,6.32.14,6.32-4.67,0-3.31-2.69-8.92-11.36-8.92-10.74,0-20.23,10.71-20.23,24.78s6.92,21.68,16.71,21.68c6.18,0,12.01-3.52,16.03-10.03,1.01,5.69,4.89,8.09,7.8,8.09,4.71,0,7.78-3.05,9.46-7.17,1.05,4.13,3.26,7.19,6.93,7.19,2.59,0,4.6-1.31,6.12-3.41-.6,14.36-1.36,23.51,7.12,21.71-1.31-4.08-1.73-11.51-1.73-18.19,0-18.26,3.01-24.27,6.79-24.27,2.73,0,3.62,3.49,3.62,7.21,0,1.99-.19,4.28-.7,6.35-4.64,2.92-8.35,5.23-8.35,8.17,0,2.32,1.72,2.54,3.21,2.54,3.56,0,7.85-3.49,10.22-10.09,2.07-1.25,4.15-2.69,6.14-4.65-.07.67-.11,1.35-.11,2.03,0,6.55,2.87,10.5,7.44,10.5,3.58,0,6.27-2.54,8.17-6.35.12,2.19.19,4.21.23,6.08-7.27,3.36-15.32,6.78-15.32,16.26,0,4.91,3.54,8.61,8.16,8.61,10.13,0,12.44-10.69,12.53-23.11,3.3-1.43,5.75-2.53,8.59-3.93,2.42,3.03,5.72,4.55,8.74,4.55,5.72,0,10.01-3.03,13.46-9.17.61,4.68,1.82,9.17,4.31,9.17,4.53,0,5.45-23.69,8.82-23.69,2.58,0,.46,25.64,7.28,25.64,5.83,0,6.93-22.56,9.77-22.56,2.01,0,2.17,20.62,8.52,20.62,3.13,0,6.52-3.75,8.22-11.62.8,5.24,3.44,11.62,8.6,11.62,3.01,0,5.6-3.05,7.6-7.1.55,4.17,1.73,7.1,4.01,7.1,5.94,0,5.74-23.65,10.44-23.65,3.67,0,2.53,23.65,11.26,23.65,4.16,0,6.12-3.54,7.29-7.98,1.61,6.53,4.2,7.98,6.34,7.98,1.35,0,2.37-.47,3.71-2.07-6.75-2.93-6.18-13.58-6.18-20.46h-.03Z"/>
+</svg></div>
+  </div>
+
+  <!-- Title Card -->
+  <div class="title-card" data-testid="app-report-title">
+    <h1>Portfolio Modernization Report</h1>
+    <p>A comprehensive modernization assessment of 5 applications (4 in-scope) across Finance, Marketing, IT, and HR business units. 
+       All in-scope applications carry EOL technology risk. Total portfolio investment: 
+       <strong style="color:var(--accent)">$1,083,100</strong> | 
+       Annual savings: <strong style="color:#2ecc71">$405,400/yr</strong> | 
+       5-Year ROI: <strong style="color:var(--accent)">87.1%</strong></p>
+  </div>
+
+  
+<div class="section-card" data-testid="section-summary">
+  <div class="section-header" onclick="toggleSection('summary')">
+    <h2>📊 Executive Summary &amp; Portfolio Health</h2>
+    <span class="chevron" id="chev-summary">▾</span>
+  </div>
+  <div class="section-body" id="body-summary">
+    
+<div class="kpi-grid">
+  <div class="kpi-card">
+    <div class="kpi-value">5</div>
+    <div class="kpi-label">Total Applications</div>
+  </div>
+  <div class="kpi-card">
+    <div class="kpi-value">4</div>
+    <div class="kpi-label">In-Scope</div>
+  </div>
+  <div class="kpi-card">
+    <div class="kpi-value" style="color:#e74c3c;text-shadow:0 0 20px #e74c3c88">4</div>
+    <div class="kpi-label">Apps with EOL Components</div>
+  </div>
+  <div class="kpi-card">
+    <div class="kpi-value" style="color:#e74c3c;text-shadow:0 0 20px #e74c3c88">$1083K</div>
+    <div class="kpi-label">Total Investment</div>
+  </div>
+  <div class="kpi-card">
+    <div class="kpi-value" style="color:#2ecc71;text-shadow:0 0 20px #2ecc7188">$405K</div>
+    <div class="kpi-label">Annual Savings / yr</div>
+  </div>
+  <div class="kpi-card">
+    <div class="kpi-value">87.1%</div>
+    <div class="kpi-label">5-Year Portfolio ROI</div>
+  </div>
+</div>
+<p>This portfolio modernization assessment covers <strong>5 applications</strong> across Finance, Marketing, IT, and HR business units. 
+<strong>4 applications are in-scope</strong>; <strong>EComApp-005</strong> is retired and excluded. 
+All 4 in-scope applications have at least one EOL technology component, representing immediate security and compliance risks. 
+The portfolio requires <strong>$1,083,100</strong> total investment to address modernization needs, 
+with projected annual savings of <strong>$405,400/year</strong> and a 5-year ROI of <strong>87.1%</strong>.</p>
+<br>
+<table>
+  <thead><tr><th>Application</th><th>Criticality</th><th>Type</th><th>Deployment</th><th>Complexity</th><th>EOL Components</th><th>Containerized</th><th>CI/CD</th><th>Report</th></tr></thead>
+  <tbody><tr>
+  <td><strong>ERPApp-001</strong><br><small style="color:rgba(var(--text-light-blue-rgb),1)">app001</small></td>
+  <td><span class="badge" style="background:#e74c3c">High</span></td>
+  <td style="font-size:12px">Custom made</td>
+  <td style="font-size:12px">On-Premise</td>
+  <td>
+    <span style="color:#e74c3c;font-weight:700">9</span>/10
+    <div class="complexity-bar"><div class="complexity-fill" style="width:90%;background:#e74c3c"></div></div>
+  </td>
+  <td style="text-align:center;color:#e74c3c;font-weight:700">1</td>
+  <td style="text-align:center">No</td>
+  <td style="text-align:center">No</td>
+  <td><a href="application_reports/application_report_app001.html">View Report →</a></td>
+</tr><tr>
+  <td><strong>CRMApp-002</strong><br><small style="color:rgba(var(--text-light-blue-rgb),1)">app002</small></td>
+  <td><span class="badge" style="background:#f39c12">Medium</span></td>
+  <td style="font-size:12px">3rd party software</td>
+  <td style="font-size:12px">AWS</td>
+  <td>
+    <span style="color:#f39c12;font-weight:700">6</span>/10
+    <div class="complexity-bar"><div class="complexity-fill" style="width:60%;background:#f39c12"></div></div>
+  </td>
+  <td style="text-align:center;color:#e74c3c;font-weight:700">2</td>
+  <td style="text-align:center">No</td>
+  <td style="text-align:center">Yes</td>
+  <td><a href="application_reports/application_report_app002.html">View Report →</a></td>
+</tr><tr>
+  <td><strong>AnalyticsApp-003</strong><br><small style="color:rgba(var(--text-light-blue-rgb),1)">app003</small></td>
+  <td><span class="badge" style="background:#2ecc71">Low</span></td>
+  <td style="font-size:12px">Open Source</td>
+  <td style="font-size:12px">AWS</td>
+  <td>
+    <span style="color:#e67e22;font-weight:700">4</span>/10
+    <div class="complexity-bar"><div class="complexity-fill" style="width:40%;background:#e67e22"></div></div>
+  </td>
+  <td style="text-align:center;color:#e74c3c;font-weight:700">4</td>
+  <td style="text-align:center">Yes</td>
+  <td style="text-align:center">Yes</td>
+  <td><a href="application_reports/application_report_app003.html">View Report →</a></td>
+</tr><tr>
+  <td><strong>HRApp-004</strong><br><small style="color:rgba(var(--text-light-blue-rgb),1)">app004</small></td>
+  <td><span class="badge" style="background:#e74c3c">High</span></td>
+  <td style="font-size:12px">Custom made</td>
+  <td style="font-size:12px">AWS, On-premise</td>
+  <td>
+    <span style="color:#f39c12;font-weight:700">7</span>/10
+    <div class="complexity-bar"><div class="complexity-fill" style="width:70%;background:#f39c12"></div></div>
+  </td>
+  <td style="text-align:center;color:#e74c3c;font-weight:700">2</td>
+  <td style="text-align:center">Yes</td>
+  <td style="text-align:center">Yes</td>
+  <td><a href="application_reports/application_report_app004.html">View Report →</a></td>
+</tr></tbody></table>
+  </div>
+</div>
+  
+<div class="section-card" data-testid="section-modernization-opportunities">
+  <div class="section-header" onclick="toggleSection('modernization-opportunities')">
+    <h2>🎯 Modernization Opportunities</h2>
+    <span class="chevron" id="chev-modernization-opportunities">▾</span>
+  </div>
+  <div class="section-body" id="body-modernization-opportunities">
+    
+<p>Key modernization opportunities identified across the portfolio, ranked by urgency and impact:</p>
+<table>
+  <thead><tr><th>#</th><th>Priority</th><th>Application</th><th>Action</th><th>Investment</th><th>Annual Savings</th></tr></thead>
+  <tbody><tr><td>1</td><td>🔴 Critical</td><td>ERPApp-001</td><td>Migrate from EOL AIX 7.2 to standard Linux</td><td>$2,000</td><td style='color:#2ecc71'>$500/yr</td></tr><tr><td>2</td><td>🔴 Critical</td><td>ERPApp-001</td><td>Deploy to cloud (currently On-Premise)</td><td>$10,000</td><td style='color:#2ecc71'>$3,000/yr</td></tr><tr><td>3</td><td>🔴 Critical</td><td>HRApp-004</td><td>Upgrade EOL Windows Server 2012</td><td>$1,500</td><td style='color:#2ecc71'>$500/yr</td></tr><tr><td>4</td><td>🔴 Critical</td><td>CRMApp-002</td><td>Replace WebSphere 7.0 (10+ years past EOL)</td><td>$15,000</td><td style='color:#2ecc71'>$12,000/yr</td></tr><tr><td>5</td><td>🔴 Critical</td><td>AnalyticsApp-003</td><td>Upgrade Tomcat 6.1 (9+ years past EOL)</td><td>$12,500</td><td style='color:#2ecc71'>$12,000/yr</td></tr><tr><td>6</td><td>🟡 High</td><td>ERPApp-001</td><td>Refactor/Decouple 1-Tier COBOL monolith</td><td>$500,000</td><td style='color:#2ecc71'>$150,000/yr</td></tr><tr><td>7</td><td>🟡 High</td><td>HRApp-004</td><td>Refactor 2-Tier architecture + complete cloud migration</td><td>$375,000</td><td style='color:#2ecc71'>$150,000/yr</td></tr><tr><td>8</td><td>🟡 High</td><td>ERPApp-001</td><td>Switch from Oracle 19c to PostgreSQL</td><td>$50,000</td><td style='color:#2ecc71'>$15,000/yr</td></tr><tr><td>9</td><td>🟠 Medium</td><td>HRApp-004</td><td>Switch SQL Server to PostgreSQL</td><td>$37,500</td><td style='color:#2ecc71'>$15,000/yr</td></tr><tr><td>10</td><td>🟠 Medium</td><td>AnalyticsApp-003</td><td>Migrate to ARM CPU (AWS Graviton)</td><td>$6,250</td><td style='color:#2ecc71'>$1,000/yr</td></tr></tbody></table>
+  </div>
+</div>
+  
+<div class="section-card" data-testid="section-scenario-overview">
+  <div class="section-header" onclick="toggleSection('scenario-overview')">
+    <h2>📋 Scenario Applicability Overview</h2>
+    <span class="chevron" id="chev-scenario-overview">▾</span>
+  </div>
+  <div class="section-body" id="body-scenario-overview">
+    
+<table>
+  <thead>
+    <tr><th>Scenario</th><th>app001<br>ERPApp</th><th>app002<br>CRMApp</th><th>app003<br>Analytics</th><th>app004<br>HRApp</th></tr>
+  </thead>
+  <tbody><tr><td style='font-size:12px'><strong>OS Update</strong></td><td><span class="badge" style="background:#e74c3c">APPLICABLE</span></td><td><span class="badge" style="background:#e74c3c">APPLICABLE</span></td><td><span class="badge" style="background:#e74c3c">APPLICABLE</span></td><td><span class="badge" style="background:#e74c3c">APPLICABLE</span></td></tr><tr><td style='font-size:12px'><strong>Standard Linux</strong></td><td><span class="badge" style="background:#e74c3c">APPLICABLE</span></td><td><span class="badge" style="background:#2ecc71">FULFILLED</span></td><td><span class="badge" style="background:#2ecc71">FULFILLED</span></td><td><span class="badge" style="background:#7f8c8d">N/A</span></td></tr><tr><td style='font-size:12px'><strong>ARM CPU</strong></td><td><span class="badge" style="background:#7f8c8d">N/A</span></td><td><span class="badge" style="background:#7f8c8d">N/A</span></td><td><span class="badge" style="background:#e74c3c">APPLICABLE</span></td><td><span class="badge" style="background:#95a5a6">BLOCKED</span></td></tr><tr><td style='font-size:12px'><strong>App Server Replacement</strong></td><td><span class="badge" style="background:#7f8c8d">N/A</span></td><td><span class="badge" style="background:#e74c3c">APPLICABLE</span></td><td><span class="badge" style="background:#e74c3c">APPLICABLE</span></td><td><span class="badge" style="background:#e74c3c">APPLICABLE</span></td></tr><tr><td style='font-size:12px'><strong>Cloud Deployment</strong></td><td><span class="badge" style="background:#e74c3c">APPLICABLE</span></td><td><span class="badge" style="background:#2ecc71">FULFILLED</span></td><td><span class="badge" style="background:#2ecc71">FULFILLED</span></td><td><span class="badge" style="background:#f39c12">P.FULFILLED</span></td></tr><tr><td style='font-size:12px'><strong>Containerization</strong></td><td><span class="badge" style="background:#7f8c8d">N/A</span></td><td><span class="badge" style="background:#7f8c8d">N/A</span></td><td><span class="badge" style="background:#2ecc71">FULFILLED</span></td><td><span class="badge" style="background:#2ecc71">FULFILLED</span></td></tr><tr><td style='font-size:12px'><strong>Refactor/Decouple</strong></td><td><span class="badge" style="background:#e74c3c">APPLICABLE</span></td><td><span class="badge" style="background:#7f8c8d">N/A</span></td><td><span class="badge" style="background:#7f8c8d">N/A</span></td><td><span class="badge" style="background:#e74c3c">APPLICABLE</span></td></tr><tr><td style='font-size:12px'><strong>Upgrade DB</strong></td><td><span class="badge" style="background:#e74c3c">APPLICABLE</span></td><td><span class="badge" style="background:#7f8c8d">N/A</span></td><td><span class="badge" style="background:#e74c3c">APPLICABLE</span></td><td><span class="badge" style="background:#e74c3c">APPLICABLE</span></td></tr><tr><td style='font-size:12px'><strong>Open Source DB</strong></td><td><span class="badge" style="background:#e74c3c">APPLICABLE</span></td><td><span class="badge" style="background:#2ecc71">FULFILLED</span></td><td><span class="badge" style="background:#2ecc71">FULFILLED</span></td><td><span class="badge" style="background:#e74c3c">APPLICABLE</span></td></tr><tr><td style='font-size:12px'><strong>Update Components</strong></td><td><span class="badge" style="background:#e74c3c">APPLICABLE</span></td><td><span class="badge" style="background:#7f8c8d">N/A</span></td><td><span class="badge" style="background:#e74c3c">APPLICABLE</span></td><td><span class="badge" style="background:#e74c3c">APPLICABLE</span></td></tr></tbody></table>
+<br>
+<p><strong>Portfolio Scenario Summary:</strong></p>
+<div style="display:flex;flex-wrap:wrap;gap:10px;margin:12px 0"><div style="padding:8px 16px;background:rgba(var(--section-background),0.5);border:1px solid #2ecc7144;border-radius:6px"><span style="color:#2ecc71;font-size:22px;font-weight:800;display:block">8</span><span style="font-size:11px;color:rgba(var(--text-light-blue-rgb),1)">FULFILLED</span></div><div style="padding:8px 16px;background:rgba(var(--section-background),0.5);border:1px solid #f39c1244;border-radius:6px"><span style="color:#f39c12;font-size:22px;font-weight:800;display:block">1</span><span style="font-size:11px;color:rgba(var(--text-light-blue-rgb),1)">PARTIALLY_FULFILLED</span></div><div style="padding:8px 16px;background:rgba(var(--section-background),0.5);border:1px solid #e74c3c44;border-radius:6px"><span style="color:#e74c3c;font-size:22px;font-weight:800;display:block">20</span><span style="font-size:11px;color:rgba(var(--text-light-blue-rgb),1)">APPLICABLE</span></div><div style="padding:8px 16px;background:rgba(var(--section-background),0.5);border:1px solid #95a5a644;border-radius:6px"><span style="color:#95a5a6;font-size:22px;font-weight:800;display:block">1</span><span style="font-size:11px;color:rgba(var(--text-light-blue-rgb),1)">BLOCKED</span></div><div style="padding:8px 16px;background:rgba(var(--section-background),0.5);border:1px solid #7f8c8d44;border-radius:6px"><span style="color:#7f8c8d;font-size:22px;font-weight:800;display:block">10</span><span style="font-size:11px;color:rgba(var(--text-light-blue-rgb),1)">NOT_APPLICABLE</span></div></div>
+  </div>
+</div>
+  
+<div class="section-card" data-testid="section-roadmap-proposal">
+  <div class="section-header" onclick="toggleSection('roadmap-proposal')">
+    <h2>🗺️ Roadmap Proposal &amp; Application Reports</h2>
+    <span class="chevron" id="chev-roadmap-proposal">▾</span>
+  </div>
+  <div class="section-body" id="body-roadmap-proposal">
+    
+<p>Recommended phased modernization roadmap based on urgency, risk, and business impact:</p>
+<table>
+  <thead><tr><th>Phase</th><th>Timeline</th><th>Application</th><th>Actions</th><th>Investment</th></tr></thead>
+  <tbody>
+    <tr>
+      <td><strong style="color:#e74c3c">Phase 1</strong><br><small>Immediate</small></td>
+      <td>Q3-Q4 2026</td>
+      <td>All Applications</td>
+      <td>
+        • ERPApp-001: AIX 7.2 → Linux migration planning<br>
+        • CRMApp-002: WebSphere 7.0 replacement (critical EOL)<br>
+        • HRApp-004: Windows Server 2012 upgrade<br>
+        • AnalyticsApp-003: Tomcat 6.1 + Python 3.9 upgrade<br>
+        • All: RHEL 7 OS security patching
+      </td>
+      <td>$33,750</td>
+    </tr>
+    <tr>
+      <td><strong style="color:#f39c12">Phase 2</strong><br><small>Short-term</small></td>
+      <td>Q4 2026 – Q2 2027</td>
+      <td>ERPApp-001, HRApp-004</td>
+      <td>
+        • ERPApp-001: Cloud deployment (On-Prem → AWS)<br>
+        • ERPApp-001: Oracle → PostgreSQL migration<br>
+        • HRApp-004: Complete cloud migration (hybrid → full AWS)<br>
+        • HRApp-004: SQL Server → PostgreSQL<br>
+        • AnalyticsApp-003: PostgreSQL 13 upgrade + ARM migration
+      </td>
+      <td>$131,250</td>
+    </tr>
+    <tr>
+      <td><strong style="color:#2ecc71">Phase 3</strong><br><small>Strategic</small></td>
+      <td>Q1-Q3 2027</td>
+      <td>ERPApp-001, HRApp-004</td>
+      <td>
+        • ERPApp-001: COBOL monolith refactoring/decoupling<br>
+        • HRApp-004: 2-Tier architecture refactoring<br>
+        • ERPApp-001: Switch to standard Linux OS
+      </td>
+      <td>$875,600</td>
+    </tr>
+  </tbody>
+</table>
+<br>
+<p><strong>Portfolio Navigation — Individual Application Reports:</strong></p>
+
+<div style="display:inline-block;width:calc(50% - 8px);min-width:260px;vertical-align:top;background:rgba(var(--accent-rgb),0.05);border:1px solid rgba(var(--accent-rgb),0.2);border-radius:8px;padding:16px;margin:8px 4px">
+  <h3 style="color:var(--accent);margin-bottom:8px">ERPApp-001</h3>
+  <p style="font-size:12px;margin:3px 0">Criticality: <span class="badge" style="background:#e74c3c">High</span> &nbsp; Complexity: <strong style="color:#e74c3c">9/10</strong></p>
+  <p style="font-size:12px;margin:3px 0">Investment: <strong>$582,600</strong> | Savings: <strong style="color:#2ecc71">$178,900/yr</strong></p>
+  <p style="font-size:12px;margin:3px 0">Applicable Scenarios: <strong style="color:#e74c3c">7</strong></p>
+  <a href="application_reports/application_report_app001.html" style="display:block;margin-top:10px;padding:7px 12px;background:rgba(var(--accent-rgb),0.12);border:1px solid rgba(var(--accent-rgb),0.4);border-radius:5px;color:var(--accent);text-decoration:none;font-size:12px;text-align:center">
+    View Full Report →
+  </a>
+</div>
+<div style="display:inline-block;width:calc(50% - 8px);min-width:260px;vertical-align:top;background:rgba(var(--accent-rgb),0.05);border:1px solid rgba(var(--accent-rgb),0.2);border-radius:8px;padding:16px;margin:8px 4px">
+  <h3 style="color:var(--accent);margin-bottom:8px">CRMApp-002</h3>
+  <p style="font-size:12px;margin:3px 0">Criticality: <span class="badge" style="background:#f39c12">Medium</span> &nbsp; Complexity: <strong style="color:#f39c12">6/10</strong></p>
+  <p style="font-size:12px;margin:3px 0">Investment: <strong>$16,500</strong> | Savings: <strong style="color:#2ecc71">$12,500/yr</strong></p>
+  <p style="font-size:12px;margin:3px 0">Applicable Scenarios: <strong style="color:#e74c3c">2</strong></p>
+  <a href="application_reports/application_report_app002.html" style="display:block;margin-top:10px;padding:7px 12px;background:rgba(var(--accent-rgb),0.12);border:1px solid rgba(var(--accent-rgb),0.4);border-radius:5px;color:var(--accent);text-decoration:none;font-size:12px;text-align:center">
+    View Full Report →
+  </a>
+</div>
+<div style="display:inline-block;width:calc(50% - 8px);min-width:260px;vertical-align:top;background:rgba(var(--accent-rgb),0.05);border:1px solid rgba(var(--accent-rgb),0.2);border-radius:8px;padding:16px;margin:8px 4px">
+  <h3 style="color:var(--accent);margin-bottom:8px">AnalyticsApp-003</h3>
+  <p style="font-size:12px;margin:3px 0">Criticality: <span class="badge" style="background:#2ecc71">Low</span> &nbsp; Complexity: <strong style="color:#e67e22">4/10</strong></p>
+  <p style="font-size:12px;margin:3px 0">Investment: <strong>$32,500</strong> | Savings: <strong style="color:#2ecc71">$23,500/yr</strong></p>
+  <p style="font-size:12px;margin:3px 0">Applicable Scenarios: <strong style="color:#e74c3c">5</strong></p>
+  <a href="application_reports/application_report_app003.html" style="display:block;margin-top:10px;padding:7px 12px;background:rgba(var(--accent-rgb),0.12);border:1px solid rgba(var(--accent-rgb),0.4);border-radius:5px;color:var(--accent);text-decoration:none;font-size:12px;text-align:center">
+    View Full Report →
+  </a>
+</div>
+<div style="display:inline-block;width:calc(50% - 8px);min-width:260px;vertical-align:top;background:rgba(var(--accent-rgb),0.05);border:1px solid rgba(var(--accent-rgb),0.2);border-radius:8px;padding:16px;margin:8px 4px">
+  <h3 style="color:var(--accent);margin-bottom:8px">HRApp-004</h3>
+  <p style="font-size:12px;margin:3px 0">Criticality: <span class="badge" style="background:#e74c3c">High</span> &nbsp; Complexity: <strong style="color:#f39c12">7/10</strong></p>
+  <p style="font-size:12px;margin:3px 0">Investment: <strong>$451,500</strong> | Savings: <strong style="color:#2ecc71">$190,500/yr</strong></p>
+  <p style="font-size:12px;margin:3px 0">Applicable Scenarios: <strong style="color:#e74c3c">7</strong></p>
+  <a href="application_reports/application_report_app004.html" style="display:block;margin-top:10px;padding:7px 12px;background:rgba(var(--accent-rgb),0.12);border:1px solid rgba(var(--accent-rgb),0.4);border-radius:5px;color:var(--accent);text-decoration:none;font-size:12px;text-align:center">
+    View Full Report →
+  </a>
+</div>
+  </div>
+</div>
+
+  <!-- Footer -->
+  <div class="footer">
+    <div>
+      <strong>Generated by GenDiscover</strong><br>
+      2026-07-21 07:14 UTC | Analysis ID: CCB9D3C12044<br>
+      Applications in scope: 4 | Total investment: $1,083,100 | Annual savings: $405,400/yr
+    </div>
+    <div class="footer-logo"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 358.01 117.11">
+  <path d="M330.21,46.53c-1.44-4.78-4.35-8.97-8.21-12.52-4.17-3.82-9.13-6.71-14.33-8.89-.42-.18-.84-.35-1.26-.51h0c-6.4,7.67-28.57,13.4-28.57,29.47,0,6.29,3.97,12.16,9.81,14.52,3.63,1.23,7.53,1,11.01-.59,3.36-1.53,5.93-4.23,7.99-7.24,2.18-3.17,3.84-6.66,5.91-9.9,1.92-3.01,4.38-6.02,8.03-6.86,3.31-.77,7.22.09,9.64,2.51h-.02ZM330.36,49.79c-1.47-2.94-4.56-4.2-7.73-4.05-3.06.14-5.29,2.09-6.99,4.49-1.93,2.71-3.28,5.8-4.85,8.72-1.52,2.81-3.15,5.57-5.33,7.92-2.42,2.61-5.46,4.58-8.88,5.61,1.58,1.14,3.77,1.39,5.66,1.47,2.13.08,4.29-.11,6.39-.49,3.84-.69,7.98-2.03,10.81-4.83-4.42.06-7.99-2.92-8.31-7.4,2.85,3.45,7.15,4.77,11.46,3.55,3.78-1.07,6.81-4.06,8.03-7.78.78-2.36.85-4.93-.26-7.2h0ZM268.07,47.47c0-3.55-.21-5.92-2.53-5.92-1.06,0-1.57.21-2.5.52.82,11.99-1.89,22.55-5.19,22.55-4.34,0-2.17-25.7-11.36-25.7-8.47,0-9.69,20.52-10.65,20.52-.66,0-.76-5.39-.72-9.49.36-1.97.55-3.74.55-5.08,0-1.91-.77-5.22-5.11-3.56.15,14.67-2.79,23.54-6.09,23.54-4.85,0-4.91-13.3-4.91-16.97s.26-8.36-5.06-6.66c-.8,12.8-4.15,22.46-6.26,22.46-3.16,0-2.52-22.11-9.34-22.11-6.12,0-8.02,20.94-9.3,20.94-2.29,0,.71-23.57-8.14-23.57-4.64,0-6.49,7.87-8.3,16.68-.35,1.71-.72,1.76-.78-.17-.05-1.58-.06-3.33-.04-4.94,2.23-8.85-.49-12.13-4.59-9.76,1.32,16.34-6.18,24.33-11.93,24.33-2.08,0-3.71-.88-4.94-2.28,6.9-4.23,9.97-9.09,9.97-13.83,0-5.14-2.95-8.11-7.86-8.11-6.85,0-10.67,7.05-10.67,13.04,0,3.22.6,5.96,1.59,8.22-2.35,1.12-4.57,2.09-6.63,3.03-.18-6.17-.88-12.64-1.41-18.61-3.64-1-4.71.75-4.99,3.99-.65,7.4-3.39,11.99-5.81,11.99-1.83,0-2.94-2.22-3.07-4.58-.68-11.86,8.95-15.16,13.99-13.44,1.05-2.61-.1-4.5-4.64-4.5-5.51,0-9.63,3.35-12.65,7.64-2.02,2.87-4.34,4.9-7.44,7.35.08-.71.12-1.41.12-2.11,0-8.37-4.53-12.04-8.86-12.04-3.58,0-5.83,2.15-7.14,5.44-.32-3.3-.98-4.73-2.9-4.73-.83,0-1.96.23-3.19.83.56,1.85.78,5.93.78,8.62,0,10.06-2.88,14.57-5.66,14.57-3.17,0-3.67-11.93-3.94-16.57-.41-.14-.86-.29-1.55-.29-2.87,0-3.24,3.85-3.95,7.39-.78,3.92-3.05,8.86-6.39,8.86-2.02,0-3.28-1.95-3.44-5.46-.33-7.11,5.59-15.54,14.85-12.92,1.21-2.83-.69-4.99-4.53-4.99-6.77,0-12.36,5.07-14.8,11.06-2.48,5.49-6.82,13.56-15.64,13.56-6.23,0-10.99-5.43-10.99-16.83,0-9.83,6.19-19.16,12.8-19.16,4.62,0,5.7,4.55,5.29,8.81,2.39,1.93,6.32.14,6.32-4.67,0-3.31-2.69-8.92-11.36-8.92-10.74,0-20.23,10.71-20.23,24.78s6.92,21.68,16.71,21.68c6.18,0,12.01-3.52,16.03-10.03,1.01,5.69,4.89,8.09,7.8,8.09,4.71,0,7.78-3.05,9.46-7.17,1.05,4.13,3.26,7.19,6.93,7.19,2.59,0,4.6-1.31,6.12-3.41-.6,14.36-1.36,23.51,7.12,21.71-1.31-4.08-1.73-11.51-1.73-18.19,0-18.26,3.01-24.27,6.79-24.27,2.73,0,3.62,3.49,3.62,7.21,0,1.99-.19,4.28-.7,6.35-4.64,2.92-8.35,5.23-8.35,8.17,0,2.32,1.72,2.54,3.21,2.54,3.56,0,7.85-3.49,10.22-10.09,2.07-1.25,4.15-2.69,6.14-4.65-.07.67-.11,1.35-.11,2.03,0,6.55,2.87,10.5,7.44,10.5,3.58,0,6.27-2.54,8.17-6.35.12,2.19.19,4.21.23,6.08-7.27,3.36-15.32,6.78-15.32,16.26,0,4.91,3.54,8.61,8.16,8.61,10.13,0,12.44-10.69,12.53-23.11,3.3-1.43,5.75-2.53,8.59-3.93,2.42,3.03,5.72,4.55,8.74,4.55,5.72,0,10.01-3.03,13.46-9.17.61,4.68,1.82,9.17,4.31,9.17,4.53,0,5.45-23.69,8.82-23.69,2.58,0,.46,25.64,7.28,25.64,5.83,0,6.93-22.56,9.77-22.56,2.01,0,2.17,20.62,8.52,20.62,3.13,0,6.52-3.75,8.22-11.62.8,5.24,3.44,11.62,8.6,11.62,3.01,0,5.6-3.05,7.6-7.1.55,4.17,1.73,7.1,4.01,7.1,5.94,0,5.74-23.65,10.44-23.65,3.67,0,2.53,23.65,11.26,23.65,4.16,0,6.12-3.54,7.29-7.98,1.61,6.53,4.2,7.98,6.34,7.98,1.35,0,2.37-.47,3.71-2.07-6.75-2.93-6.18-13.58-6.18-20.46h-.03Z"/>
+</svg></div>
+  </div>
+
+</div>
+<script type="application/json" id="report-data">{"report_title": "Portfolio Modernization Report", "lead_text": "Comprehensive modernization assessment for application portfolio", "sections": ["Summary", "Modernization Opportunities", "Scenario Overview", "Roadmap Proposal"], "app_links": [{"app_id": "app001", "href": "application_reports/application_report_app001.html"}, {"app_id": "app002", "href": "application_reports/application_report_app002.html"}, {"app_id": "app003", "href": "application_reports/application_report_app003.html"}, {"app_id": "app004", "href": "application_reports/application_report_app004.html"}], "generated_timestamp": "2026-07-21T07:14:37Z", "analysis_id": "CCB9D3C12044"}</script>
+<script>
+function toggleSection(id) {
+  var body = document.getElementById('body-' + id);
+  var chev = document.getElementById('chev-' + id);
+  if (body.classList.contains('collapsed')) {
+    body.classList.remove('collapsed');
+    chev.textContent = '▾';
+  } else {
+    body.classList.add('collapsed');
+    chev.textContent = '▸';
+  }
+}
+</script>
+</body>
+</html>

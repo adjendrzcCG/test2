@@ -1,0 +1,109 @@
+{
+  "application_identifier": "app003",
+  "scenarios": [
+    {
+      "scenario_id": "os_update_security_patch",
+      "scenario_name": "Operating System Update",
+      "status": "APPLICABLE",
+      "reasoning": "RHEL 7 reached end-of-life on June 30, 2024. No further security patches are available. Upgrade to RHEL 8/9 or Amazon Linux 2/2023 is required to restore security compliance for this AWS-deployed containerized application.",
+      "triggered_by": [
+        "RHEL 7 EOL since June 30, 2024",
+        "Operating System no longer receiving security patches"
+      ],
+      "blocked_by": []
+    },
+    {
+      "scenario_id": "switch_to_standard_linux_os",
+      "scenario_name": "Switch to standard Linux Operating System",
+      "status": "FULFILLED",
+      "reasoning": "RHEL 7 is already a standard Linux distribution. The application runs on standard Linux, satisfying this scenario. An OS upgrade is needed for EOL reasons but the standard Linux objective is met.",
+      "triggered_by": [],
+      "blocked_by": []
+    },
+    {
+      "scenario_id": "switch_to_arm_cpu",
+      "scenario_name": "Switch to ARM-based CPU",
+      "status": "APPLICABLE",
+      "reasoning": "AnalyticsApp-003 runs on Linux (RHEL 7), is containerized, uses Python 3.9 (ARM-compatible), and is open source. These characteristics make it eligible for ARM-based CPU migration (e.g., AWS Graviton) for compute cost savings.",
+      "triggered_by": [
+        "Runs on Linux OS",
+        "Containerized",
+        "Python 3.9 supports ARM architecture",
+        "Open source application - no vendor ARM certification required",
+        "AWS deployment enables Graviton instances"
+      ],
+      "blocked_by": []
+    },
+    {
+      "scenario_id": "application_server_replacement",
+      "scenario_name": "Applications Server replacement",
+      "status": "APPLICABLE",
+      "reasoning": "Apache Tomcat 6.1 reached end-of-life in December 2016 - over 9 years ago. This is a critical security vulnerability. Upgrade to Tomcat 10.x or 11.x is required. The open source nature allows direct upgrade management.",
+      "triggered_by": [
+        "Tomcat 6.1 EOL since December 2016",
+        "Application server no longer receiving security patches",
+        "Over 9 years past end-of-life"
+      ],
+      "blocked_by": []
+    },
+    {
+      "scenario_id": "app_deployment_to_cloud",
+      "scenario_name": "Application Migration to Cloud Infrastructure (Lift & Shift)",
+      "status": "FULFILLED",
+      "reasoning": "AnalyticsApp-003 is already deployed on AWS. Cloud deployment objective is fully satisfied.",
+      "triggered_by": [],
+      "blocked_by": []
+    },
+    {
+      "scenario_id": "app_containerization",
+      "scenario_name": "Application Containerization",
+      "status": "FULFILLED",
+      "reasoning": "AnalyticsApp-003 is already containerized. This scenario objective is fully satisfied.",
+      "triggered_by": [],
+      "blocked_by": []
+    },
+    {
+      "scenario_id": "app_refactor_decoupling",
+      "scenario_name": "Application Refactoring and De-coupling",
+      "status": "NOT_APPLICABLE",
+      "reasoning": "AnalyticsApp-003 already has a 3-Tier architecture and is open source (not custom-made). The existing architecture is appropriately decoupled and the application is not custom-developed, so refactoring/decoupling is not applicable.",
+      "triggered_by": [],
+      "blocked_by": [
+        "Already 3-Tier architecture - appropriately decoupled",
+        "Open Source application - not custom-made"
+      ]
+    },
+    {
+      "scenario_id": "upgrade_legacy_databases",
+      "scenario_name": "Upgrade Legacy Databases",
+      "status": "APPLICABLE",
+      "reasoning": "PostgreSQL 13 reached end-of-life in November 2025. No further bug fixes or security patches are available. Upgrade to PostgreSQL 16 or 17 is required. The 200GB database and open source nature make this upgrade manageable.",
+      "triggered_by": [
+        "PostgreSQL 13 EOL since November 2025",
+        "Database no longer receiving security patches"
+      ],
+      "blocked_by": []
+    },
+    {
+      "scenario_id": "switch_db_engine_open_source",
+      "scenario_name": "Switch DB Engine to open-source database solution",
+      "status": "FULFILLED",
+      "reasoning": "PostgreSQL is already an open-source database engine. This scenario objective is fully satisfied.",
+      "triggered_by": [],
+      "blocked_by": []
+    },
+    {
+      "scenario_id": "update_outdated_components",
+      "scenario_name": "Update outdated components",
+      "status": "APPLICABLE",
+      "reasoning": "Python 3.9 is EOL (October 2025) and Tomcat 6.1 is EOL (December 2016). Both primary runtime components require urgent updates. Being open source, the team has full control over updating these components. RHEL 7 upgrade also needed.",
+      "triggered_by": [
+        "Python 3.9 EOL since October 2025",
+        "Tomcat 6.1 EOL since December 2016",
+        "Open source application - team controls component versions"
+      ],
+      "blocked_by": []
+    }
+  ],
+  "analysis_timestamp": "2026-07-21T07:14:37Z"
+}

@@ -1,0 +1,53 @@
+{
+  "application_identifier": "app004",
+  "complexity_score": 7,
+  "complexity_level": "High",
+  "scoring_factors": [
+    {
+      "factor": "EOL Components",
+      "score": 2,
+      "max": 3,
+      "notes": "Windows Server 2012 EOL (Oct 2023), IIS 8.0 EOL (Oct 2023); .NET Core version unspecified (risk), SQL Server 2019 OUTDATED"
+    },
+    {
+      "factor": "Business Criticality",
+      "score": 3,
+      "max": 3,
+      "notes": "High criticality HR system managing employee records, payroll, and benefits for 670 users"
+    },
+    {
+      "factor": "Architecture",
+      "score": 1,
+      "max": 2,
+      "notes": "2-Tier architecture with Custom made codebase; some coupling between tiers"
+    },
+    {
+      "factor": "Infrastructure",
+      "score": 1,
+      "max": 1,
+      "notes": "Hybrid AWS+On-premise deployment increases migration complexity and maintenance overhead"
+    },
+    {
+      "factor": "Integration Complexity",
+      "score": 2,
+      "max": 2,
+      "notes": "6 external interfaces, 12 API endpoints; significant integration surface for HR workflows"
+    },
+    {
+      "factor": "Deployment Maturity",
+      "score": 0,
+      "max": 2,
+      "notes": "Already containerized with CI/CD; mitigates some complexity"
+    },
+    {
+      "factor": "Modernization Risk",
+      "score": 2,
+      "max": 2,
+      "notes": "Custom-made on Windows with unversioned .NET Core; hybrid infrastructure; Windows EOL blocks ARM migration path"
+    }
+  ],
+  "total_raw_score": 11,
+  "normalized_score": 7,
+  "rationale": "HRApp-004 presents high modernization complexity driven by the combination of EOL Windows Server 2012 (critical security risk), custom-made .NET Core codebase with unspecified version, hybrid AWS+On-premise deployment, and High business criticality. The 2-Tier architecture with 6 external interfaces and 12 API endpoints for a 670-user HR system increases migration risk. While containerization and CI/CD are positives, the Windows-only application server (IIS 8.0), SQL Server paid license, and incomplete cloud migration create multiple parallel modernization tracks needed.",
+  "analysis_timestamp": "2026-07-21T07:14:37Z"
+}
