@@ -1,0 +1,53 @@
+{
+  "application_identifier": "app002",
+  "complexity_score": 6,
+  "complexity_level": "Medium-High",
+  "scoring_factors": [
+    {
+      "factor": "EOL Components",
+      "score": 2,
+      "max": 3,
+      "notes": "RHEL 7 EOL (Jun 2024), WebSphere 7.0 EOL (Sep 2015); Amazon RDS MySQL is managed/current"
+    },
+    {
+      "factor": "Business Criticality",
+      "score": 2,
+      "max": 3,
+      "notes": "Medium criticality CRM; important for sales and marketing operations"
+    },
+    {
+      "factor": "Architecture",
+      "score": 1,
+      "max": 2,
+      "notes": "Architecture type unknown (3rd party software); CRM system with 15 API endpoints"
+    },
+    {
+      "factor": "Infrastructure",
+      "score": 0,
+      "max": 1,
+      "notes": "Already deployed on AWS; good cloud-native positioning"
+    },
+    {
+      "factor": "Integration Complexity",
+      "score": 2,
+      "max": 2,
+      "notes": "8 external interfaces, 15 API endpoints; high integration surface area for a 3rd party system"
+    },
+    {
+      "factor": "Deployment Maturity",
+      "score": 1,
+      "max": 2,
+      "notes": "CI/CD present; not containerized - limited by 3rd party software constraints"
+    },
+    {
+      "factor": "Modernization Risk",
+      "score": 1,
+      "max": 2,
+      "notes": "3rd party software limits upgrade options to vendor-managed upgrades; RHEL and WebSphere must be coordinated with vendor"
+    }
+  ],
+  "total_raw_score": 9,
+  "normalized_score": 6,
+  "rationale": "CRMApp-002 presents medium-high complexity due to a combination of severely outdated infrastructure components (WebSphere 7.0 is 10+ years past EOL, RHEL 7 EOL 2024) and the constraints imposed by being 3rd party software. While AWS deployment and CI/CD reduce some risk, the vendor dependency for component upgrades and the 8 external interfaces/15 API endpoints increase coordination complexity. WebSphere 7.0 replacement is the most critical action item.",
+  "analysis_timestamp": "2026-07-21T07:14:37Z"
+}

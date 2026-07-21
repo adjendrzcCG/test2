@@ -1,0 +1,53 @@
+{
+  "application_identifier": "app001",
+  "complexity_score": 9,
+  "complexity_level": "Very High",
+  "scoring_factors": [
+    {
+      "factor": "EOL Components",
+      "score": 3,
+      "max": 3,
+      "notes": "AIX 7.2 EOL (Apr 2025), COBOL-2014 outdated paradigm, Oracle 19c in Extended Support"
+    },
+    {
+      "factor": "Business Criticality",
+      "score": 3,
+      "max": 3,
+      "notes": "High criticality Finance ERP handling regulatory reporting and financial transactions"
+    },
+    {
+      "factor": "Architecture",
+      "score": 2,
+      "max": 2,
+      "notes": "1-Tier monolithic architecture with no separation of concerns; no API endpoints"
+    },
+    {
+      "factor": "Infrastructure",
+      "score": 1,
+      "max": 1,
+      "notes": "On-premise deployment on proprietary AIX platform; 2 servers"
+    },
+    {
+      "factor": "Integration Complexity",
+      "score": 1,
+      "max": 2,
+      "notes": "5 external interfaces; no REST API endpoints exposed"
+    },
+    {
+      "factor": "Deployment Maturity",
+      "score": 2,
+      "max": 2,
+      "notes": "No CI/CD pipeline, not containerized; fully manual deployments"
+    },
+    {
+      "factor": "Modernization Risk",
+      "score": 2,
+      "max": 2,
+      "notes": "Legacy COBOL codebase on proprietary AIX with Oracle; high migration effort and risk; decommission target 2027"
+    }
+  ],
+  "total_raw_score": 14,
+  "normalized_score": 9,
+  "rationale": "ERPApp-001 represents one of the most complex modernization challenges in the portfolio. The combination of EOL AIX 7.2, legacy COBOL-2014 codebase, 1-Tier monolithic architecture, on-premise deployment without CI/CD or containerization, and High business criticality creates a very high-risk modernization scenario. The 1000GB Oracle database, 5 external interfaces, and 2027 decommission target add further urgency. Any modernization effort will require extensive planning, testing, and phased migration to avoid disruption to critical financial operations.",
+  "analysis_timestamp": "2026-07-21T07:14:37Z"
+}

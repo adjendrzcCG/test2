@@ -1,0 +1,19 @@
+{
+  "application_identifier": "app003",
+  "application_name": "AnalyticsApp-003",
+  "out_of_scope": false,
+  "reason": null,
+  "exclusion_criteria_checked": [
+    {
+      "criterion": "RETIRED",
+      "matched": false,
+      "value": "Production"
+    },
+    {
+      "criterion": "SAP",
+      "matched": false,
+      "value": "Open Source"
+    }
+  ],
+  "analysis_timestamp": "2026-07-21T07:14:37Z"
+}

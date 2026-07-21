@@ -1,0 +1,83 @@
+{
+  "total_applications": 5,
+  "in_scope_count": 4,
+  "out_of_scope_count": 1,
+  "analysis_timestamp": "2026-07-21T07:14:37Z",
+  "applications": [
+    {
+      "app_id": "app001",
+      "app_name": "ERPApp-001",
+      "solution_type": "Custom made",
+      "business_criticality": "High",
+      "application_status": "Production",
+      "deployment_type": "On-Premise",
+      "operating_system": "AIX 7.2",
+      "programming_language": "COBOL-2014",
+      "database_engine": "Oracle 19c",
+      "user_count": 350,
+      "is_containerized": "No",
+      "ci_cd_present": "No",
+      "in_scope": true
+    },
+    {
+      "app_id": "app002",
+      "app_name": "CRMApp-002",
+      "solution_type": "3rd party software",
+      "business_criticality": "Medium",
+      "application_status": "Production",
+      "deployment_type": "AWS",
+      "operating_system": "RHEL 7",
+      "programming_language": "Java 11",
+      "database_engine": "Amazon RDS MySQL",
+      "user_count": 1200,
+      "is_containerized": "No",
+      "ci_cd_present": "Yes",
+      "in_scope": true
+    },
+    {
+      "app_id": "app003",
+      "app_name": "AnalyticsApp-003",
+      "solution_type": "Open Source",
+      "business_criticality": "Low",
+      "application_status": "Production",
+      "deployment_type": "AWS",
+      "operating_system": "RHEL 7",
+      "programming_language": "Python 3.9",
+      "database_engine": "PostgreSQL 13",
+      "user_count": 480,
+      "is_containerized": "Yes",
+      "ci_cd_present": "Yes",
+      "in_scope": true
+    },
+    {
+      "app_id": "app004",
+      "app_name": "HRApp-004",
+      "solution_type": "Custom made",
+      "business_criticality": "High",
+      "application_status": "Production",
+      "deployment_type": "AWS, On-premise",
+      "operating_system": "Windows Server 2012",
+      "programming_language": ".NET Core",
+      "database_engine": "SQL Server 2019",
+      "user_count": 670,
+      "is_containerized": "Yes",
+      "ci_cd_present": "Yes",
+      "in_scope": true
+    },
+    {
+      "app_id": "app005",
+      "app_name": "EComApp-005",
+      "solution_type": "3rd party software",
+      "business_criticality": "Critical",
+      "application_status": "Retired",
+      "deployment_type": "AWS",
+      "operating_system": "Windows Server 2012",
+      "programming_language": "Node.js 14",
+      "database_engine": "Amazon RDS MySQL",
+      "user_count": 1340,
+      "is_containerized": "Yes",
+      "ci_cd_present": "Yes",
+      "in_scope": false
+    }
+  ]
+}

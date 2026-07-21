@@ -1,0 +1,53 @@
+{
+  "application_identifier": "app003",
+  "complexity_score": 4,
+  "complexity_level": "Medium",
+  "scoring_factors": [
+    {
+      "factor": "EOL Components",
+      "score": 2,
+      "max": 3,
+      "notes": "RHEL 7 EOL, Python 3.9 EOL (Oct 2025), Tomcat 6.1 EOL (Dec 2016), PostgreSQL 13 EOL (Nov 2025) - all 4 components EOL"
+    },
+    {
+      "factor": "Business Criticality",
+      "score": 1,
+      "max": 3,
+      "notes": "Low business criticality analytics/reporting platform; limited operational impact if unavailable"
+    },
+    {
+      "factor": "Architecture",
+      "score": 1,
+      "max": 2,
+      "notes": "3-Tier architecture is well-structured; already modular open source stack"
+    },
+    {
+      "factor": "Infrastructure",
+      "score": 0,
+      "max": 1,
+      "notes": "AWS deployment, single server, containerized, CI/CD - excellent infrastructure maturity"
+    },
+    {
+      "factor": "Integration Complexity",
+      "score": 0,
+      "max": 2,
+      "notes": "Only 3 external interfaces, 8 API endpoints; low integration complexity"
+    },
+    {
+      "factor": "Deployment Maturity",
+      "score": 0,
+      "max": 2,
+      "notes": "Already containerized with CI/CD; best deployment maturity in portfolio"
+    },
+    {
+      "factor": "Modernization Risk",
+      "score": 1,
+      "max": 2,
+      "notes": "Multiple EOL components require coordinated upgrades but open source nature enables self-managed upgrades"
+    }
+  ],
+  "total_raw_score": 5,
+  "normalized_score": 4,
+  "rationale": "AnalyticsApp-003 scores medium complexity despite having all 4 technology components at EOL status. The low business criticality, excellent deployment maturity (containerized, CI/CD, AWS), 3-Tier architecture, and open source nature make component upgrades achievable without high risk. The main challenge is coordinating upgrades of RHEL 7, Python 3.9, Tomcat 6.1, and PostgreSQL 13 simultaneously while maintaining analytics service availability. The single server deployment and minimal external interfaces further reduce complexity.",
+  "analysis_timestamp": "2026-07-21T07:14:37Z"
+}

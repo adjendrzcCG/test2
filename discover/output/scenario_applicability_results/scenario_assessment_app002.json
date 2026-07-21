@@ -1,0 +1,104 @@
+{
+  "application_identifier": "app002",
+  "scenarios": [
+    {
+      "scenario_id": "os_update_security_patch",
+      "scenario_name": "Operating System Update",
+      "status": "APPLICABLE",
+      "reasoning": "RHEL 7 reached end-of-life on June 30, 2024. No further security patches are available. The operating system must be upgraded to RHEL 8 or 9 (or equivalent) to restore security compliance.",
+      "triggered_by": [
+        "RHEL 7 EOL since June 30, 2024",
+        "Operating System no longer receiving security patches"
+      ],
+      "blocked_by": []
+    },
+    {
+      "scenario_id": "switch_to_standard_linux_os",
+      "scenario_name": "Switch to standard Linux Operating System",
+      "status": "FULFILLED",
+      "reasoning": "RHEL 7 is already a standard Linux distribution. The application already runs on standard Linux, satisfying this scenario's objective. However, an OS upgrade within the Linux family is still required due to EOL status.",
+      "triggered_by": [],
+      "blocked_by": []
+    },
+    {
+      "scenario_id": "switch_to_arm_cpu",
+      "scenario_name": "Switch to ARM-based CPU",
+      "status": "NOT_APPLICABLE",
+      "reasoning": "CRMApp-002 is 3rd party software. ARM CPU migration requires vendor support and certification. Third-party software is excluded from this scenario as migration is vendor-controlled.",
+      "triggered_by": [],
+      "blocked_by": [
+        "3rd party software - vendor controls architecture compatibility"
+      ]
+    },
+    {
+      "scenario_id": "application_server_replacement",
+      "scenario_name": "Applications Server replacement",
+      "status": "APPLICABLE",
+      "reasoning": "WebSphere 7.0 reached end-of-service on September 30, 2015 - over 10 years ago. This represents a critical security and supportability risk. Migration to a modern application server (e.g., WebSphere Liberty, WildFly, or Tomcat) is urgently needed.",
+      "triggered_by": [
+        "WebSphere 7.0 EOL since September 2015",
+        "Application server no longer receiving security patches",
+        "Over 10 years past end-of-service"
+      ],
+      "blocked_by": []
+    },
+    {
+      "scenario_id": "app_deployment_to_cloud",
+      "scenario_name": "Application Migration to Cloud Infrastructure (Lift & Shift)",
+      "status": "FULFILLED",
+      "reasoning": "CRMApp-002 is already deployed on AWS. The application meets the cloud deployment objective.",
+      "triggered_by": [],
+      "blocked_by": []
+    },
+    {
+      "scenario_id": "app_containerization",
+      "scenario_name": "Application Containerization",
+      "status": "NOT_APPLICABLE",
+      "reasoning": "CRMApp-002 is 3rd party software. Containerization is vendor-controlled and cannot be independently applied. Excluded from this scenario.",
+      "triggered_by": [],
+      "blocked_by": [
+        "3rd party software - containerization is vendor responsibility"
+      ]
+    },
+    {
+      "scenario_id": "app_refactor_decoupling",
+      "scenario_name": "Application Refactoring and De-coupling",
+      "status": "NOT_APPLICABLE",
+      "reasoning": "CRMApp-002 is 3rd party software. Application refactoring is not feasible as source code is vendor-owned. Integration improvements via APIs are possible but full refactoring is excluded.",
+      "triggered_by": [],
+      "blocked_by": [
+        "3rd party software - source code not accessible for refactoring"
+      ]
+    },
+    {
+      "scenario_id": "upgrade_legacy_databases",
+      "scenario_name": "Upgrade Legacy Databases",
+      "status": "NOT_APPLICABLE",
+      "reasoning": "Amazon RDS MySQL is a fully managed AWS service. AWS manages version upgrades and patching. The database is classified as CURRENT_VERSION. No legacy database upgrade action required.",
+      "triggered_by": [],
+      "blocked_by": [
+        "Amazon RDS MySQL is a managed service - AWS handles upgrades",
+        "Database classified as CURRENT_VERSION"
+      ]
+    },
+    {
+      "scenario_id": "switch_db_engine_open_source",
+      "scenario_name": "Switch DB Engine to open-source database solution",
+      "status": "FULFILLED",
+      "reasoning": "MySQL is already an open-source database engine. This scenario objective is already satisfied.",
+      "triggered_by": [],
+      "blocked_by": []
+    },
+    {
+      "scenario_id": "update_outdated_components",
+      "scenario_name": "Update outdated components",
+      "status": "NOT_APPLICABLE",
+      "reasoning": "CRMApp-002 is 3rd party software. Component updates are vendor-managed and cannot be independently applied. Vendor upgrade path should be followed for RHEL and WebSphere components.",
+      "triggered_by": [],
+      "blocked_by": [
+        "3rd party software - component updates managed by vendor"
+      ]
+    }
+  ],
+  "analysis_timestamp": "2026-07-21T07:14:37Z"
+}
