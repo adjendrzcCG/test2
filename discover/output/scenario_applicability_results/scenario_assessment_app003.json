@@ -1,0 +1,114 @@
+{
+  "application_identifier": "app003",
+  "application_name": "AnalyticsApp-003",
+  "scenarios": [
+    {
+      "scenario_id": "os_update_security_patch",
+      "scenario_name": "Operating System Update",
+      "status": "APPLICABLE",
+      "priority": "High",
+      "reasoning": "RHEL 7 is EOL (June 2024). Upgrade to RHEL 9 is needed. Application is already containerized which may ease the OS upgrade path.",
+      "triggered_by": [
+        "Operating System Version is Unsupported",
+        "Operating System no longer receiving security patches"
+      ],
+      "blocked_by": []
+    },
+    {
+      "scenario_id": "switch_to_standard_linux_os",
+      "scenario_name": "Switch to standard Linux Operating System",
+      "status": "FULFILLED",
+      "priority": "N/A",
+      "reasoning": "Application already runs on RHEL, a standard enterprise Linux distribution.",
+      "triggered_by": [],
+      "blocked_by": []
+    },
+    {
+      "scenario_id": "switch_to_arm_cpu",
+      "scenario_name": "Switch to ARM-based CPU",
+      "status": "APPLICABLE",
+      "priority": "Medium",
+      "reasoning": "Application is containerized, running Python on Linux/AWS \u2014 all favorable for ARM (AWS Graviton). Python 3.x is ARM-compatible. Once upgraded to a current Python version, ARM migration is feasible.",
+      "triggered_by": [
+        "Operating System is Linux-based",
+        "Deployment is containerized or Kubernetes-based",
+        "Framework is ARM-compatible (Python 3.x)"
+      ],
+      "blocked_by": []
+    },
+    {
+      "scenario_id": "application_server_replacement",
+      "scenario_name": "Applications Server replacement",
+      "status": "APPLICABLE",
+      "priority": "High",
+      "reasoning": "Apache Tomcat 6.1 is EOL since December 2016. For a Python analytics application, Tomcat is also an unusual choice \u2014 this may indicate a legacy deployment. Upgrading to Tomcat 10.x or replacing with a Python-native WSGI server (Gunicorn/uvicorn) is appropriate.",
+      "triggered_by": [
+        "Application Server Status is End of Life",
+        "Application Server version is deprecated"
+      ],
+      "blocked_by": []
+    },
+    {
+      "scenario_id": "app_deployment_to_cloud",
+      "scenario_name": "Application Migration to Cloud Infrastructure (Lift & Shift)",
+      "status": "FULFILLED",
+      "priority": "N/A",
+      "reasoning": "Application is already deployed on AWS cloud infrastructure.",
+      "triggered_by": [],
+      "blocked_by": []
+    },
+    {
+      "scenario_id": "app_containerization",
+      "scenario_name": "Application Containerization",
+      "status": "FULFILLED",
+      "priority": "N/A",
+      "reasoning": "Application is already containerized (is_containerized = Yes).",
+      "triggered_by": [],
+      "blocked_by": []
+    },
+    {
+      "scenario_id": "app_refactor_decoupling",
+      "scenario_name": "Application Refactoring and De-coupling",
+      "status": "PARTIALLY_FULFILLED",
+      "priority": "Low",
+      "reasoning": "Application has a 3-Tier architecture and exposes 8 API endpoints, indicating some decoupling already exists. However, the open-source base and analytics focus mean this is a lower priority. Minor refinement rather than full refactoring is recommended.",
+      "triggered_by": [],
+      "blocked_by": []
+    },
+    {
+      "scenario_id": "upgrade_legacy_databases",
+      "scenario_name": "Upgrade Legacy Databases",
+      "status": "APPLICABLE",
+      "priority": "High",
+      "reasoning": "PostgreSQL 13 reached EOL November 2025. Upgrade to PostgreSQL 16 or 17 is required for continued security patches.",
+      "triggered_by": [
+        "Database Support is End of Life",
+        "Database version is no longer patched"
+      ],
+      "blocked_by": []
+    },
+    {
+      "scenario_id": "switch_db_engine_open_source",
+      "scenario_name": "Switch DB Engine to open-source database solution",
+      "status": "FULFILLED",
+      "priority": "N/A",
+      "reasoning": "PostgreSQL is already an open-source database engine with no commercial licensing requirements.",
+      "triggered_by": [],
+      "blocked_by": []
+    },
+    {
+      "scenario_id": "update_outdated_components",
+      "scenario_name": "Update outdated components",
+      "status": "APPLICABLE",
+      "priority": "High",
+      "reasoning": "All 4 technology components (RHEL 7, Python 3.9, Tomcat 6.1, PostgreSQL 13) are EOL. A comprehensive stack upgrade is needed: RHEL 9, Python 3.12, modern application server, PostgreSQL 16+.",
+      "triggered_by": [
+        "Used programming language EOL (Python 3.9)",
+        "Used Application Server EOL (Tomcat 6.x)",
+        "Application has End-of-Life indicators"
+      ],
+      "blocked_by": []
+    }
+  ],
+  "analysis_timestamp": "2026-07-30T06:21:22Z"
+}

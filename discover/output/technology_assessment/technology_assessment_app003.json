@@ -1,0 +1,53 @@
+{
+  "application_identifier": "app003",
+  "components_analyzed": [
+    {
+      "component_name": "RHEL 7",
+      "component_family": "Red Hat Enterprise Linux",
+      "component_type": "os",
+      "managed_service": false,
+      "version": "7",
+      "component_status": "EOL",
+      "eol_date": "2024-06-30",
+      "reason": "RHEL 7 reached End of Maintenance Support on June 30, 2024.",
+      "confidence": 10
+    },
+    {
+      "component_name": "Python 3.9",
+      "component_family": "Python",
+      "component_type": "programming_language",
+      "managed_service": false,
+      "version": "3.9",
+      "component_status": "EOL",
+      "eol_date": "2025-10-05",
+      "reason": "Python 3.9 reached end-of-life on October 5, 2025 per the Python release schedule. No further security patches. Current supported versions are 3.11, 3.12, and 3.13.",
+      "confidence": 10
+    },
+    {
+      "component_name": "Apache Tomcat 6.1",
+      "component_family": "Apache Tomcat",
+      "component_type": "application_server",
+      "managed_service": false,
+      "version": "6.1",
+      "component_status": "EOL",
+      "eol_date": "2016-12-31",
+      "reason": "Apache Tomcat 6.x reached End-of-Life in December 2016. The version 6.1 doesn't officially exist (last 6.x was 6.0.x), suggesting possible misrecording. Either way, Tomcat 6.x is EOL.",
+      "confidence": 9
+    },
+    {
+      "component_name": "PostgreSQL 13",
+      "component_family": "PostgreSQL",
+      "component_type": "database",
+      "managed_service": false,
+      "version": "13",
+      "component_status": "EOL",
+      "eol_date": "2025-11-13",
+      "reason": "PostgreSQL 13 reached End-of-Life on November 13, 2025 per the PostgreSQL release schedule. Current supported versions are 15, 16, and 17.",
+      "confidence": 10
+    }
+  ],
+  "has_eol_components": true,
+  "has_outdated_components": false,
+  "has_missing_version_data": false,
+  "analysis_timestamp": "2026-07-30T06:21:22Z"
+}

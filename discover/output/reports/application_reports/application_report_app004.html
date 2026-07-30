@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Application Report - HRApp-004 - GenDiscover</title>
+<style>
+:root {
+  --primary-dark: #081722;
+  --report-background: #102737;
+  --section-background: #163244;
+  --accent: #1ec8d7;
+  --accent-rgb: 30, 200, 215;
+  --report-text-font-primary: #e9f7ff;
+  --report-text-font-secondary-rgb: 184, 216, 232;
+  --text-light-blue-rgb: 154, 198, 220;
+  --eol-color: #ff4d4d;
+  --outdated-color: #f0a830;
+  --current-color: #4caf86;
+  --card-border: rgba(30,200,215,0.18);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--primary-dark);color:var(--report-text-font-primary);font-family:'Segoe UI',Arial,sans-serif;font-size:14px;line-height:1.6}
+.container{max-width:1200px;margin:0 auto;padding:20px}
+.page-header{display:flex;justify-content:space-between;align-items:center;padding:20px 28px;background:var(--report-background);border-bottom:2px solid var(--accent);margin-bottom:24px;border-radius:8px 8px 0 0}
+.page-header .branding h1{font-size:1.5rem;color:var(--accent);letter-spacing:.04em}
+.page-header .branding p{color:rgba(var(--report-text-font-secondary-rgb),1);font-size:.8rem}
+.report-card{background:var(--report-background);border:1px solid var(--card-border);border-radius:10px;box-shadow:0 4px 32px rgba(0,0,0,.45);overflow:hidden;margin-bottom:28px}
+.title-card{background:linear-gradient(135deg,var(--primary-dark) 0%,var(--report-background) 60%,rgba(var(--accent-rgb),.08) 100%);border:1px solid var(--card-border);border-radius:10px;padding:40px 36px;margin-bottom:24px;position:relative}
+.title-card h1{font-size:2rem;color:var(--accent);font-weight:700;margin-bottom:8px}
+.title-card .lead{color:rgba(var(--report-text-font-secondary-rgb),1);font-size:1rem;max-width:750px;line-height:1.7}
+.metric-row{display:flex;flex-wrap:wrap;gap:16px;margin:24px 0}
+.metric-card{flex:1;min-width:150px;background:var(--section-background);border:1px solid var(--card-border);border-radius:8px;padding:20px;text-align:center}
+.metric-value{font-size:2.2rem;font-weight:800;color:var(--accent);text-shadow:0 0 14px rgba(var(--accent-rgb),.4);display:block}
+.metric-label{font-size:.75rem;color:rgba(var(--report-text-font-secondary-rgb),1);text-transform:uppercase;letter-spacing:.06em;margin-top:4px}
+details{background:var(--section-background);border:1px solid var(--card-border);border-radius:8px;margin-bottom:16px;overflow:hidden}
+details[open]{border-color:rgba(var(--accent-rgb),.35)}
+summary{padding:16px 20px;cursor:pointer;font-size:1rem;font-weight:600;color:var(--accent);display:flex;align-items:center;gap:10px;list-style:none;user-select:none}
+summary::before{content:'▶';font-size:.7rem;transition:transform .2s;display:inline-block}
+details[open] summary::before{transform:rotate(90deg)}
+.section-body{padding:20px}
+table{width:100%;border-collapse:collapse;margin:12px 0;font-size:.87rem}
+th{background:rgba(var(--accent-rgb),.12);color:var(--accent);padding:10px 12px;text-align:left;border-bottom:2px solid rgba(var(--accent-rgb),.25)}
+td{padding:9px 12px;border-bottom:1px solid rgba(255,255,255,.07);vertical-align:top}
+tr:hover td{background:rgba(var(--accent-rgb),.05)}
+.badge{display:inline-block;padding:3px 9px;border-radius:4px;font-size:.75rem;font-weight:600}
+.badge-eol{background:rgba(255,77,77,.18);color:#ff7070;border:1px solid rgba(255,77,77,.3)}
+.badge-outdated{background:rgba(240,168,48,.18);color:#f0a830;border:1px solid rgba(240,168,48,.3)}
+.badge-current{background:rgba(76,175,134,.18);color:#4caf86;border:1px solid rgba(76,175,134,.3)}
+.badge-applicable{background:rgba(255,77,77,.18);color:#ff7070;border:1px solid rgba(255,77,77,.3)}
+.badge-partially{background:rgba(240,168,48,.18);color:#f0a830;border:1px solid rgba(240,168,48,.3)}
+.badge-fulfilled{background:rgba(76,175,134,.18);color:#4caf86;border:1px solid rgba(76,175,134,.3)}
+.badge-blocked{background:rgba(120,120,120,.18);color:#aaa;border:1px solid rgba(120,120,120,.3)}
+.badge-na{background:rgba(60,60,80,.3);color:#888;border:1px solid rgba(120,120,120,.2)}
+.complexity-bar{display:flex;align-items:center;gap:12px}
+.bar-track{flex:1;height:14px;background:rgba(255,255,255,.1);border-radius:7px;overflow:hidden}
+.bar-fill{height:100%;border-radius:7px;background:linear-gradient(90deg,var(--current-color),var(--accent),var(--eol-color))}
+.risk-list{list-style:none;padding:0}
+.risk-list li{padding:6px 0 6px 22px;position:relative;border-bottom:1px solid rgba(255,255,255,.05)}
+.risk-list li::before{content:'⚠';position:absolute;left:0;color:var(--outdated-color)}
+.app-link{display:inline-block;padding:8px 16px;background:rgba(var(--accent-rgb),.1);border:1px solid rgba(var(--accent-rgb),.3);border-radius:6px;color:var(--accent);text-decoration:none;margin:4px;font-size:.85rem;transition:background .2s}
+.app-link:hover{background:rgba(var(--accent-rgb),.2)}
+.footer{text-align:center;padding:24px;border-top:1px solid var(--card-border);color:rgba(var(--text-light-blue-rgb),1);font-size:.8rem;margin-top:24px}
+.footer .logo-footer{margin-bottom:10px}
+h2{color:var(--accent);font-size:1.1rem;margin-bottom:12px;padding-bottom:6px;border-bottom:1px solid rgba(var(--accent-rgb),.2)}
+h3{color:rgba(var(--report-text-font-secondary-rgb),1);font-size:.95rem;margin:14px 0 8px}
+p{margin-bottom:10px;color:rgba(var(--report-text-font-secondary-rgb),1)}
+.info-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:12px 0}
+.info-item{background:rgba(var(--accent-rgb),.05);border-radius:6px;padding:10px 14px}
+.info-label{font-size:.72rem;text-transform:uppercase;color:rgba(var(--text-light-blue-rgb),1);letter-spacing:.05em}
+.info-value{font-size:.93rem;color:var(--report-text-font-primary);margin-top:2px}
+.scenario-row td:nth-child(3){font-size:.8rem;color:rgba(var(--report-text-font-secondary-rgb),1)}
+</style>
+</head>
+<body>
+<div class="container">
+<div class="page-header">
+  <div class="branding">
+    <h1 data-testid="customer-name">HRApp-004</h1>
+    <p>Application modernization with Agentic AI powered by Capgemini GenSuite</p>
+  </div>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 358.01 117.11" style="height:40px;fill:#1ec8d7;"><path d="M330.21,46.53c-1.44-4.78-4.35-8.97-8.21-12.52-4.17-3.82-9.13-6.71-14.33-8.89-.42-.18-.84-.35-1.26-.51h0c-6.4,7.67-28.57,13.4-28.57,29.47,0,6.29,3.97,12.16,9.81,14.52,3.63,1.23,7.53,1,11.01-.59,3.36-1.53,5.93-4.23,7.99-7.24,2.18-3.17,3.84-6.66,5.91-9.9,1.92-3.01,4.38-6.02,8.03-6.86,3.31-.77,7.22.09,9.64,2.51h-.02ZM330.36,49.79c-1.47-2.94-4.56-4.2-7.73-4.05-3.06.14-5.29,2.09-6.99,4.49-1.93,2.71-3.28,5.8-4.85,8.72-1.52,2.81-3.15,5.57-5.33,7.92-2.42,2.61-5.46,4.58-8.88,5.61,1.58,1.14,3.77,1.39,5.66,1.47,2.13.08,4.29-.11,6.39-.49,3.84-.69,7.98-2.03,10.81-4.83-4.42.06-7.99-2.92-8.31-7.4,2.85,3.45,7.15,4.77,11.46,3.55,3.78-1.07,6.81-4.06,8.03-7.78.78-2.36.85-4.93-.26-7.2h0ZM268.07,47.47c0-3.55-.21-5.92-2.53-5.92-1.06,0-1.57.21-2.5.52.82,11.99-1.89,22.55-5.19,22.55-4.34,0-2.17-25.7-11.36-25.7-8.47,0-9.69,20.52-10.65,20.52-.66,0-.76-5.39-.72-9.49.36-1.97.55-3.74.55-5.08,0-1.91-.77-5.22-5.11-3.56.15,14.67-2.79,23.54-6.09,23.54-4.85,0-4.91-13.3-4.91-16.97s.26-8.36-5.06-6.66c-.8,12.8-4.15,22.46-6.26,22.46-3.16,0-2.52-22.11-9.34-22.11-6.12,0-8.02,20.94-9.3,20.94-2.29,0,.71-23.57-8.14-23.57-4.64,0-6.49,7.87-8.3,16.68-.35,1.71-.72,1.76-.78-.17-.05-1.58-.06-3.33-.04-4.94,2.23-8.85-.49-12.13-4.59-9.76,1.32,16.34-6.18,24.33-11.93,24.33-2.08,0-3.71-.88-4.94-2.28,6.9-4.23,9.97-9.09,9.97-13.83,0-5.14-2.95-8.11-7.86-8.11-6.85,0-10.67,7.05-10.67,13.04,0,3.22.6,5.96,1.59,8.22-2.35,1.12-4.57,2.09-6.63,3.03-.18-6.17-.88-12.64-1.41-18.61-3.64-1-4.71.75-4.99,3.99-.65,7.4-3.39,11.99-5.81,11.99-1.83,0-2.94-2.22-3.07-4.58-.68-11.86,8.95-15.16,13.99-13.44,1.05-2.61-.1-4.5-4.64-4.5-5.51,0-9.63,3.35-12.65,7.64-2.02,2.87-4.34,4.9-7.44,7.35.08-.71.12-1.41.12-2.11,0-8.37-4.53-12.04-8.86-12.04-3.58,0-5.83,2.15-7.14,5.44-.32-3.3-.98-4.73-2.9-4.73-.83,0-1.96.23-3.19.83.56,1.85.78,5.93.78,8.62,0,10.06-2.88,14.57-5.66,14.57-3.17,0-3.67-11.93-3.94-16.57-.41-.14-.86-.29-1.55-.29-2.87,0-3.24,3.85-3.95,7.39-.78,3.92-3.05,8.86-6.39,8.86-2.02,0-3.28-1.95-3.44-5.46-.33-7.11,5.59-15.54,14.85-12.92,1.21-2.83-.69-4.99-4.53-4.99-6.77,0-12.36,5.07-14.8,11.06-2.48,5.49-6.82,13.56-15.64,13.56-6.23,0-10.99-5.43-10.99-16.83,0-9.83,6.19-19.16,12.8-19.16,4.62,0,5.7,4.55,5.29,8.81,2.39,1.93,6.32.14,6.32-4.67,0-3.31-2.69-8.92-11.36-8.92-10.74,0-20.23,10.71-20.23,24.78s6.92,21.68,16.71,21.68c6.18,0,12.01-3.52,16.03-10.03,1.01,5.69,4.89,8.09,7.8,8.09,4.71,0,7.78-3.05,9.46-7.17,1.05,4.13,3.26,7.19,6.93,7.19,2.59,0,4.6-1.31,6.12-3.41-.6,14.36-1.36,23.51,7.12,21.71-1.31-4.08-1.73-11.51-1.73-18.19,0-18.26,3.01-24.27,6.79-24.27,2.73,0,3.62,3.49,3.62,7.21,0,1.99-.19,4.28-.7,6.35-4.64,2.92-8.35,5.23-8.35,8.17,0,2.32,1.72,2.54,3.21,2.54,3.56,0,7.85-3.49,10.22-10.09,2.07-1.25,4.15-2.69,6.14-4.65-.07.67-.11,1.35-.11,2.03,0,6.55,2.87,10.5,7.44,10.5,3.58,0,6.27-2.54,8.17-6.35.12,2.19.19,4.21.23,6.08-7.27,3.36-15.32,6.78-15.32,16.26,0,4.91,3.54,8.61,8.16,8.61,10.13,0,12.44-10.69,12.53-23.11,3.3-1.43,5.75-2.53,8.59-3.93,2.42,3.03,5.72,4.55,8.74,4.55,5.72,0,10.01-3.03,13.46-9.17.61,4.68,1.82,9.17,4.31,9.17,4.53,0,5.45-23.69,8.82-23.69,2.58,0,.46,25.64,7.28,25.64,5.83,0,6.93-22.56,9.77-22.56,2.01,0,2.17,20.62,8.52,20.62,3.13,0,6.52-3.75,8.22-11.62.8,5.24,3.44,11.62,8.6,11.62,3.01,0,5.6-3.05,7.6-7.1.55,4.17,1.73,7.1,4.01,7.1,5.94,0,5.74-23.65,10.44-23.65,3.67,0,2.53,23.65,11.26,23.65,4.16,0,6.12-3.54,7.29-7.98,1.61,6.53,4.2,7.98,6.34,7.98,1.35,0,2.37-.47,3.71-2.07-6.75-2.93-6.18-13.58-6.18-20.46h-.03Z"/></svg>
+</div>
+<div class="title-card" data-testid="app-report-title">
+  <h1>Application Report — HRApp-004</h1>
+  <p class="lead">Human resources management system handling employee records, benefits, and HR workflows</p>
+</div>
+<details open data-testid="section-overview">
+  <summary>Overview</summary>
+  <div class="section-body"><div class="info-grid">
+  <div class="info-item"><div class="info-label">Application ID</div><div class="info-value">app004</div></div>
+  <div class="info-item"><div class="info-label">Solution Type</div><div class="info-value">Custom made</div></div>
+  <div class="info-item"><div class="info-label">Business Criticality</div><div class="info-value">High</div></div>
+  <div class="info-item"><div class="info-label">Status</div><div class="info-value">Production</div></div>
+  <div class="info-item"><div class="info-label">Deployment Type</div><div class="info-value">AWS, On-premise</div></div>
+  <div class="info-item"><div class="info-label">Business Unit</div><div class="info-value">HR</div></div>
+  <div class="info-item"><div class="info-label">Data Classification</div><div class="info-value">Internal</div></div>
+  <div class="info-item"><div class="info-label">Users</div><div class="info-value">670</div></div>
+  <div class="info-item"><div class="info-label">Operating System</div><div class="info-value">Windows Server 2012</div></div>
+  <div class="info-item"><div class="info-label">Programming Language</div><div class="info-value">.NET Core</div></div>
+  <div class="info-item"><div class="info-label">Application Server</div><div class="info-value">Microsoft IIS 8.0</div></div>
+  <div class="info-item"><div class="info-label">Database Engine</div><div class="info-value">SQL Server 2019</div></div>
+  <div class="info-item"><div class="info-label">DB License Required</div><div class="info-value">Yes</div></div>
+  <div class="info-item"><div class="info-label">Architecture</div><div class="info-value">2-Tier</div></div>
+  <div class="info-item"><div class="info-label">Containerized</div><div class="info-value">Yes</div></div>
+  <div class="info-item"><div class="info-label">CI/CD Present</div><div class="info-value">Yes</div></div>
+  <div class="info-item"><div class="info-label">API Endpoints</div><div class="info-value">12</div></div>
+  <div class="info-item"><div class="info-label">External Interfaces</div><div class="info-value">6</div></div>
+</div>
+<p style="margin-top:12px">Human resources management system handling employee records, benefits, and HR workflows</p>
+<p><strong>Business Capabilities:</strong> Employee Management, Payroll Processing, Benefits Administration</p></div>
+</details>
+<details open data-testid="section-technology-assessment">
+  <summary>Technology Assessment</summary>
+  <div class="section-body"><div class="metric-row">
+  <div class="metric-card"><span class="metric-value" style="color:var(--eol-color)">2</span><div class="metric-label">EOL Components</div></div>
+  <div class="metric-card"><span class="metric-value" style="color:var(--outdated-color)">2</span><div class="metric-label">Outdated</div></div>
+  <div class="metric-card"><span class="metric-value" style="color:var(--current-color)">0</span><div class="metric-label">Current</div></div>
+  <div class="metric-card"><span class="metric-value">4</span><div class="metric-label">Total Assessed</div></div>
+</div>
+<table>
+<thead><tr><th>Component</th><th>Type</th><th>Version</th><th>Status</th><th>EOL Date</th><th>Reasoning</th></tr></thead>
+<tbody><tr>
+  <td><strong>Windows Server 2012</strong></td>
+  <td>os</td>
+  <td>2012</td>
+  <td><span class="badge badge-eol">🔴 EOL</span></td>
+  <td>2023-10-10</td>
+  <td style="font-size:.82rem">Windows Server 2012 and 2012 R2 reached End of Extended Support on October 10, 2023. Extended Security Updates (ESU) available but at additional cost only.</td>
+</tr><tr>
+  <td><strong>.NET Core</strong></td>
+  <td>programming_language</td>
+  <td>unknown</td>
+  <td><span class="badge badge-outdated">🟡 Outdated</span></td>
+  <td>N/A</td>
+  <td style="font-size:.82rem">&#x27;.NET Core&#x27; without a specific version number is ambiguous. .NET Core 3.1 (last .NET Core release) reached EOL December 2022. Assuming this may refer to a .NET 6 or later, but without a version number confidence is limited. Classified as OUTDATED due to lack of version clarity.</td>
+</tr><tr>
+  <td><strong>Microsoft IIS 8.0</strong></td>
+  <td>application_server</td>
+  <td>8.0</td>
+  <td><span class="badge badge-eol">🔴 EOL</span></td>
+  <td>2023-10-10</td>
+  <td style="font-size:.82rem">IIS 8.0 is bundled with Windows Server 2012, which reached EOL on October 10, 2023. IIS 8.0 follows the same support lifecycle as its host OS.</td>
+</tr><tr>
+  <td><strong>SQL Server 2019</strong></td>
+  <td>database</td>
+  <td>2019</td>
+  <td><span class="badge badge-outdated">🟡 Outdated</span></td>
+  <td>2030-01-09</td>
+  <td style="font-size:.82rem">SQL Server 2019 mainstream support ended January 9, 2025. Extended support continues until January 9, 2030. Classified as OUTDATED as it is in extended support mode. SQL Server 2022 is the current version.</td>
+</tr></tbody>
+</table></div>
+</details>
+<details open data-testid="section-complexity-assessment">
+  <summary>Complexity Assessment</summary>
+  <div class="section-body"><div class="metric-row">
+  <div class="metric-card"><span class="metric-value" style="color:#ff4d4d">7/10</span><div class="metric-label">Complexity Score</div></div>
+  <div class="metric-card"><span class="metric-value" style="color:#ff4d4d">High</span><div class="metric-label">Complexity Level</div></div>
+</div>
+<div class="complexity-bar" style="margin:16px 0">
+  <span style="font-size:.8rem;color:rgba(var(--text-light-blue-rgb),1);min-width:80px">Complexity</span>
+  <div class="bar-track"><div class="bar-fill" style="width:70%;background:#ff4d4d"></div></div>
+  <span style="font-size:.9rem;font-weight:700;color:#ff4d4d">7/10</span>
+</div>
+<h3>Scoring Dimensions</h3>
+<table><thead><tr><th>Dimension</th><th>Score</th><th>Reasoning</th></tr></thead><tbody><tr><td>Business Criticality</td><td>4/5</td><td style='font-size:.82rem'>High criticality: HR and payroll processing is business-essential</td></tr><tr><td>Technology Age / EOL Risk</td><td>4/5</td><td style='font-size:.82rem'>Windows Server 2012 and IIS 8.0 are EOL; .NET Core version unclear</td></tr><tr><td>Architecture Complexity</td><td>3/5</td><td style='font-size:.82rem'>2-Tier architecture; partially containerized; has CI/CD; hybrid deployment</td></tr><tr><td>Data Sensitivity</td><td>3/5</td><td style='font-size:.82rem'>Internal HR/payroll data is sensitive despite &#x27;Internal&#x27; classification</td></tr><tr><td>Integration Complexity</td><td>3/5</td><td style='font-size:.82rem'>12 API endpoints and 6 external interfaces — moderate-high connectivity</td></tr><tr><td>Infrastructure Footprint</td><td>2/5</td><td style='font-size:.82rem'>2 servers; hybrid deployment (AWS + On-premise); 750 GB SQL Server database</td></tr></tbody></table>
+<h3>Key Risk Factors</h3>
+<ul class="risk-list"><li>Windows Server 2012 EOL — no security patches since Oct 2023</li><li>IIS 8.0 EOL — bundled with EOL OS</li><li>.NET Core version ambiguity — could be EOL (.NET Core 3.1) or current</li><li>SQL Server 2019 in extended support — plan upgrade to SQL Server 2022</li><li>Hybrid deployment adds migration complexity</li><li>HR/payroll data requires careful compliance during migration</li></ul>
+<p style="margin-top:14px"><strong>Recommendation:</strong> High urgency. Migrate OS from Windows Server 2012 to Windows Server 2022 or adopt Linux where applicable. Clarify .NET version and upgrade if needed. Migrate SQL Server to 2022 or managed Azure SQL. Consolidate hybrid deployment.</p></div>
+</details>
+<details open data-testid="section-scenario-applicability">
+  <summary>Scenario Applicability</summary>
+  <div class="section-body"><table data-testid="section-scenario-applicability">
+<thead><tr><th>Scenario</th><th>Status</th><th>Priority</th><th>Reasoning</th></tr></thead>
+<tbody><tr class="scenario-row">
+  <td><strong>Operating System Update</strong></td>
+  <td><span class="badge badge-applicable">🔴 APPLICABLE</span></td>
+  <td>High</td>
+  <td style="font-size:.82rem">Windows Server 2012 is EOL (October 2023). Security patches require paid Extended Security Updates (ESU). Upgrade to Windows Server 2022 or migration to Linux is required.</td>
+</tr><tr class="scenario-row">
+  <td><strong>Switch to standard Linux Operating System</strong></td>
+  <td><span class="badge badge-partially">🟡 PARTIAL</span></td>
+  <td>Medium</td>
+  <td style="font-size:.82rem">Application uses .NET Core which supports Linux. Migrating from Windows Server to Linux (RHEL/Ubuntu) is feasible and would reduce Windows licensing costs. However, IIS dependency would need replacement with Linux alternatives (Nginx/Kestrel). Partial as requires effort.</td>
+</tr><tr class="scenario-row">
+  <td><strong>Switch to ARM-based CPU</strong></td>
+  <td><span class="badge badge-partially">🟡 PARTIAL</span></td>
+  <td>Medium</td>
+  <td style="font-size:.82rem">.NET Core supports ARM64. Application is containerized. However, Windows Server 2012 (EOL) OS is a blocker. After OS upgrade, ARM migration becomes feasible on AWS Graviton.</td>
+</tr><tr class="scenario-row">
+  <td><strong>Applications Server replacement</strong></td>
+  <td><span class="badge badge-applicable">🔴 APPLICABLE</span></td>
+  <td>High</td>
+  <td style="font-size:.82rem">Microsoft IIS 8.0 is EOL (tied to Windows Server 2012 EOL October 2023). The IIS version must be upgraded to IIS 10.0 (Windows Server 2022) or replaced with a cross-platform alternative (Nginx, Kestrel) to support Linux migration.</td>
+</tr><tr class="scenario-row">
+  <td><strong>Application Migration to Cloud Infrastructure (Lift &amp; Shift)</strong></td>
+  <td><span class="badge badge-partially">🟡 PARTIAL</span></td>
+  <td>Low</td>
+  <td style="font-size:.82rem">Application is partially cloud-deployed (AWS + On-premise hybrid). Cloud migration is underway but not complete. The on-premise portion needs to be migrated to fully leverage cloud benefits.</td>
+</tr><tr class="scenario-row">
+  <td><strong>Application Containerization</strong></td>
+  <td><span class="badge badge-fulfilled">✅ FULFILLED</span></td>
+  <td>N/A</td>
+  <td style="font-size:.82rem">Application is already containerized (is_containerized = Yes).</td>
+</tr><tr class="scenario-row">
+  <td><strong>Application Refactoring and De-coupling</strong></td>
+  <td><span class="badge badge-applicable">🔴 APPLICABLE</span></td>
+  <td>Medium</td>
+  <td style="font-size:.82rem">2-Tier architecture with 12 API endpoints and 6 external interfaces. Custom-made application with active development (CI/CD present). Refactoring to a more modular/microservice approach would improve maintainability of the HR/payroll system.</td>
+</tr><tr class="scenario-row">
+  <td><strong>Upgrade Legacy Databases</strong></td>
+  <td><span class="badge badge-applicable">🔴 APPLICABLE</span></td>
+  <td>Medium</td>
+  <td style="font-size:.82rem">SQL Server 2019 has entered extended support (mainstream ended Jan 2025). While not EOL, upgrading to SQL Server 2022 is recommended. Alternatively, migrating to Azure SQL Managed Instance as a managed service would eliminate version lifecycle concerns.</td>
+</tr><tr class="scenario-row">
+  <td><strong>Switch DB Engine to open-source database solution</strong></td>
+  <td><span class="badge badge-applicable">🔴 APPLICABLE</span></td>
+  <td>Medium</td>
+  <td style="font-size:.82rem">SQL Server 2019 requires a commercial license (DB License required = Yes). Migrating to PostgreSQL would eliminate licensing costs. .NET Core has good PostgreSQL support via Entity Framework Core/Npgsql.</td>
+</tr><tr class="scenario-row">
+  <td><strong>Update outdated components</strong></td>
+  <td><span class="badge badge-applicable">🔴 APPLICABLE</span></td>
+  <td>High</td>
+  <td style="font-size:.82rem">Windows Server 2012 and IIS 8.0 are EOL. .NET Core version is unknown (possibly EOL if 3.1). SQL Server 2019 is in extended support. Full stack assessment and upgrade is required.</td>
+</tr></tbody>
+</table></div>
+</details>
+<details open data-testid="section-business-case">
+  <summary>Business Case</summary>
+  <div class="section-body"><div class="metric-row">
+  <div class="metric-card"><span class="metric-value">$491,820</span><div class="metric-label">Migration Investment</div></div>
+  <div class="metric-card"><span class="metric-value" style="color:var(--current-color)">$208,900</span><div class="metric-label">Annual Savings</div></div>
+  <div class="metric-card"><span class="metric-value" style="color:var(--current-color)">$134,880</span><div class="metric-label">Net Benefit (3yr)</div></div>
+  <div class="metric-card"><span class="metric-value">27.4%</span><div class="metric-label">3-Year ROI</div></div>
+</div>
+<h3>Scenario Cost Breakdown</h3>
+<table><thead><tr><th>Scenario</th><th>Migration Cost</th><th>Annual Savings</th><th>Net Benefit (3yr)</th><th>ROI</th></tr></thead><tbody><tr><td>os_update_security_patch</td><td>$1,400</td><td>$500</td><td>$100</td><td>7.1%</td></tr><tr><td>switch_to_standard_linux_os</td><td>$420</td><td>$400</td><td>$780</td><td>185.7%</td></tr><tr><td>switch_to_arm_cpu</td><td>$7,000</td><td>$1,000</td><td>$-4,000</td><td>-57.1%</td></tr><tr><td>application_server_replacement</td><td>$14,000</td><td>$12,000</td><td>$22,000</td><td>157.1%</td></tr><tr><td>app_refactor_decoupling</td><td>$350,000</td><td>$150,000</td><td>$100,000</td><td>28.6%</td></tr><tr><td>upgrade_legacy_databases</td><td>$14,000</td><td>$10,000</td><td>$16,000</td><td>114.3%</td></tr><tr><td>switch_db_engine_open_source</td><td>$35,000</td><td>$15,000</td><td>$10,000</td><td>28.6%</td></tr><tr><td>update_outdated_components</td><td>$70,000</td><td>$20,000</td><td>$-10,000</td><td>-14.3%</td></tr></tbody></table></div>
+</details>
+<div class="footer">
+  <div class="logo-footer"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 358.01 117.11" style="height:40px;fill:#1ec8d7;"><path d="M330.21,46.53c-1.44-4.78-4.35-8.97-8.21-12.52-4.17-3.82-9.13-6.71-14.33-8.89-.42-.18-.84-.35-1.26-.51h0c-6.4,7.67-28.57,13.4-28.57,29.47,0,6.29,3.97,12.16,9.81,14.52,3.63,1.23,7.53,1,11.01-.59,3.36-1.53,5.93-4.23,7.99-7.24,2.18-3.17,3.84-6.66,5.91-9.9,1.92-3.01,4.38-6.02,8.03-6.86,3.31-.77,7.22.09,9.64,2.51h-.02ZM330.36,49.79c-1.47-2.94-4.56-4.2-7.73-4.05-3.06.14-5.29,2.09-6.99,4.49-1.93,2.71-3.28,5.8-4.85,8.72-1.52,2.81-3.15,5.57-5.33,7.92-2.42,2.61-5.46,4.58-8.88,5.61,1.58,1.14,3.77,1.39,5.66,1.47,2.13.08,4.29-.11,6.39-.49,3.84-.69,7.98-2.03,10.81-4.83-4.42.06-7.99-2.92-8.31-7.4,2.85,3.45,7.15,4.77,11.46,3.55,3.78-1.07,6.81-4.06,8.03-7.78.78-2.36.85-4.93-.26-7.2h0ZM268.07,47.47c0-3.55-.21-5.92-2.53-5.92-1.06,0-1.57.21-2.5.52.82,11.99-1.89,22.55-5.19,22.55-4.34,0-2.17-25.7-11.36-25.7-8.47,0-9.69,20.52-10.65,20.52-.66,0-.76-5.39-.72-9.49.36-1.97.55-3.74.55-5.08,0-1.91-.77-5.22-5.11-3.56.15,14.67-2.79,23.54-6.09,23.54-4.85,0-4.91-13.3-4.91-16.97s.26-8.36-5.06-6.66c-.8,12.8-4.15,22.46-6.26,22.46-3.16,0-2.52-22.11-9.34-22.11-6.12,0-8.02,20.94-9.3,20.94-2.29,0,.71-23.57-8.14-23.57-4.64,0-6.49,7.87-8.3,16.68-.35,1.71-.72,1.76-.78-.17-.05-1.58-.06-3.33-.04-4.94,2.23-8.85-.49-12.13-4.59-9.76,1.32,16.34-6.18,24.33-11.93,24.33-2.08,0-3.71-.88-4.94-2.28,6.9-4.23,9.97-9.09,9.97-13.83,0-5.14-2.95-8.11-7.86-8.11-6.85,0-10.67,7.05-10.67,13.04,0,3.22.6,5.96,1.59,8.22-2.35,1.12-4.57,2.09-6.63,3.03-.18-6.17-.88-12.64-1.41-18.61-3.64-1-4.71.75-4.99,3.99-.65,7.4-3.39,11.99-5.81,11.99-1.83,0-2.94-2.22-3.07-4.58-.68-11.86,8.95-15.16,13.99-13.44,1.05-2.61-.1-4.5-4.64-4.5-5.51,0-9.63,3.35-12.65,7.64-2.02,2.87-4.34,4.9-7.44,7.35.08-.71.12-1.41.12-2.11,0-8.37-4.53-12.04-8.86-12.04-3.58,0-5.83,2.15-7.14,5.44-.32-3.3-.98-4.73-2.9-4.73-.83,0-1.96.23-3.19.83.56,1.85.78,5.93.78,8.62,0,10.06-2.88,14.57-5.66,14.57-3.17,0-3.67-11.93-3.94-16.57-.41-.14-.86-.29-1.55-.29-2.87,0-3.24,3.85-3.95,7.39-.78,3.92-3.05,8.86-6.39,8.86-2.02,0-3.28-1.95-3.44-5.46-.33-7.11,5.59-15.54,14.85-12.92,1.21-2.83-.69-4.99-4.53-4.99-6.77,0-12.36,5.07-14.8,11.06-2.48,5.49-6.82,13.56-15.64,13.56-6.23,0-10.99-5.43-10.99-16.83,0-9.83,6.19-19.16,12.8-19.16,4.62,0,5.7,4.55,5.29,8.81,2.39,1.93,6.32.14,6.32-4.67,0-3.31-2.69-8.92-11.36-8.92-10.74,0-20.23,10.71-20.23,24.78s6.92,21.68,16.71,21.68c6.18,0,12.01-3.52,16.03-10.03,1.01,5.69,4.89,8.09,7.8,8.09,4.71,0,7.78-3.05,9.46-7.17,1.05,4.13,3.26,7.19,6.93,7.19,2.59,0,4.6-1.31,6.12-3.41-.6,14.36-1.36,23.51,7.12,21.71-1.31-4.08-1.73-11.51-1.73-18.19,0-18.26,3.01-24.27,6.79-24.27,2.73,0,3.62,3.49,3.62,7.21,0,1.99-.19,4.28-.7,6.35-4.64,2.92-8.35,5.23-8.35,8.17,0,2.32,1.72,2.54,3.21,2.54,3.56,0,7.85-3.49,10.22-10.09,2.07-1.25,4.15-2.69,6.14-4.65-.07.67-.11,1.35-.11,2.03,0,6.55,2.87,10.5,7.44,10.5,3.58,0,6.27-2.54,8.17-6.35.12,2.19.19,4.21.23,6.08-7.27,3.36-15.32,6.78-15.32,16.26,0,4.91,3.54,8.61,8.16,8.61,10.13,0,12.44-10.69,12.53-23.11,3.3-1.43,5.75-2.53,8.59-3.93,2.42,3.03,5.72,4.55,8.74,4.55,5.72,0,10.01-3.03,13.46-9.17.61,4.68,1.82,9.17,4.31,9.17,4.53,0,5.45-23.69,8.82-23.69,2.58,0,.46,25.64,7.28,25.64,5.83,0,6.93-22.56,9.77-22.56,2.01,0,2.17,20.62,8.52,20.62,3.13,0,6.52-3.75,8.22-11.62.8,5.24,3.44,11.62,8.6,11.62,3.01,0,5.6-3.05,7.6-7.1.55,4.17,1.73,7.1,4.01,7.1,5.94,0,5.74-23.65,10.44-23.65,3.67,0,2.53,23.65,11.26,23.65,4.16,0,6.12-3.54,7.29-7.98,1.61,6.53,4.2,7.98,6.34,7.98,1.35,0,2.37-.47,3.71-2.07-6.75-2.93-6.18-13.58-6.18-20.46h-.03Z"/></svg></div>
+  <div>Generated by GenDiscover &bull; 2026-07-30 &bull; Analysis ID: GD-2026-0730-001</div>
+</div>
+<script type="application/json" id="report-data">{"app_id": "app004", "report_title": "Application Report - HRApp-004 - GenDiscover", "lead_text": "Human resources management system handling employee records, benefits, and HR workflows", "sections": ["Overview", "Technology Assessment", "Complexity Assessment", "Scenario Applicability", "Business Case"], "generated_timestamp": "2026-07-30", "analysis_id": "GD-2026-0730-001"}</script>
+</div>
+</body>
+</html>

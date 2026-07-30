@@ -1,0 +1,8 @@
+{
+  "application_identifier": "app001",
+  "application_name": "ERPApp-001",
+  "out_of_scope": false,
+  "reason": "Application is in Production status and is not SAP or retired.",
+  "exclusion_type": null,
+  "analysis_timestamp": "2026-07-30T06:21:22Z"
+}

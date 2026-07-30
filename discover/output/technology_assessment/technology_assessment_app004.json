@@ -1,0 +1,53 @@
+{
+  "application_identifier": "app004",
+  "components_analyzed": [
+    {
+      "component_name": "Windows Server 2012",
+      "component_family": "Windows Server",
+      "component_type": "os",
+      "managed_service": false,
+      "version": "2012",
+      "component_status": "EOL",
+      "eol_date": "2023-10-10",
+      "reason": "Windows Server 2012 and 2012 R2 reached End of Extended Support on October 10, 2023. Extended Security Updates (ESU) available but at additional cost only.",
+      "confidence": 10
+    },
+    {
+      "component_name": ".NET Core",
+      "component_family": ".NET / .NET Core",
+      "component_type": "programming_language",
+      "managed_service": false,
+      "version": "unknown",
+      "component_status": "OUTDATED",
+      "eol_date": null,
+      "reason": "'.NET Core' without a specific version number is ambiguous. .NET Core 3.1 (last .NET Core release) reached EOL December 2022. Assuming this may refer to a .NET 6 or later, but without a version number confidence is limited. Classified as OUTDATED due to lack of version clarity.",
+      "confidence": 6
+    },
+    {
+      "component_name": "Microsoft IIS 8.0",
+      "component_family": "Microsoft IIS",
+      "component_type": "application_server",
+      "managed_service": false,
+      "version": "8.0",
+      "component_status": "EOL",
+      "eol_date": "2023-10-10",
+      "reason": "IIS 8.0 is bundled with Windows Server 2012, which reached EOL on October 10, 2023. IIS 8.0 follows the same support lifecycle as its host OS.",
+      "confidence": 10
+    },
+    {
+      "component_name": "SQL Server 2019",
+      "component_family": "Microsoft SQL Server",
+      "component_type": "database",
+      "managed_service": false,
+      "version": "2019",
+      "component_status": "OUTDATED",
+      "eol_date": "2030-01-09",
+      "reason": "SQL Server 2019 mainstream support ended January 9, 2025. Extended support continues until January 9, 2030. Classified as OUTDATED as it is in extended support mode. SQL Server 2022 is the current version.",
+      "confidence": 9
+    }
+  ],
+  "has_eol_components": true,
+  "has_outdated_components": true,
+  "has_missing_version_data": true,
+  "analysis_timestamp": "2026-07-30T06:21:22Z"
+}

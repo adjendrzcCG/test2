@@ -1,0 +1,61 @@
+{
+  "application_identifier": "app003",
+  "application_name": "AnalyticsApp-003",
+  "complexity_score": 5,
+  "complexity_label": "Medium",
+  "scoring_dimensions": [
+    {
+      "dimension": "Business Criticality",
+      "weight": 2,
+      "score": 1,
+      "weighted_score": 2,
+      "reasoning": "Low criticality: analytics/reporting platform, not revenue-critical"
+    },
+    {
+      "dimension": "Technology Age / EOL Risk",
+      "weight": 2,
+      "score": 4,
+      "weighted_score": 8,
+      "reasoning": "RHEL 7, Python 3.9, Tomcat 6.1, and PostgreSQL 13 are all EOL"
+    },
+    {
+      "dimension": "Architecture Complexity",
+      "weight": 1,
+      "score": 2,
+      "weighted_score": 2,
+      "reasoning": "3-Tier architecture; already containerized; has CI/CD pipeline"
+    },
+    {
+      "dimension": "Data Sensitivity",
+      "weight": 1,
+      "score": 1,
+      "weighted_score": 1,
+      "reasoning": "Public data classification; low sensitivity"
+    },
+    {
+      "dimension": "Integration Complexity",
+      "weight": 1,
+      "score": 2,
+      "weighted_score": 2,
+      "reasoning": "8 API endpoints and 3 external interfaces \u2014 manageable"
+    },
+    {
+      "dimension": "Infrastructure Footprint",
+      "weight": 1,
+      "score": 1,
+      "weighted_score": 1,
+      "reasoning": "Single server; cloud-hosted on AWS; 200 GB database"
+    }
+  ],
+  "total_weighted_score": 16,
+  "max_weighted_score": 40,
+  "normalized_score": 5,
+  "key_risk_factors": [
+    "All 4 technology components are EOL \u2014 comprehensive upgrade required",
+    "Tomcat 6.1 EOL since 2016 \u2014 severe vulnerability exposure",
+    "RHEL 7 EOL \u2014 OS-level security gap",
+    "PostgreSQL 13 EOL \u2014 database vulnerability"
+  ],
+  "modernization_recommendation": "Medium urgency. Despite low business criticality, all components are EOL creating significant security risk. Upgrade stack: OS to RHEL 9, Python to 3.12, Tomcat to 10.x, PostgreSQL to 16. Containerization already in place simplifies this.",
+  "analysis_timestamp": "2026-07-30T06:21:22Z"
+}

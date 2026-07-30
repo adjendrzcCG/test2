@@ -1,0 +1,121 @@
+{
+  "application_identifier": "app004",
+  "application_name": "HRApp-004",
+  "scenarios": [
+    {
+      "scenario_id": "os_update_security_patch",
+      "scenario_name": "Operating System Update",
+      "status": "APPLICABLE",
+      "priority": "High",
+      "reasoning": "Windows Server 2012 is EOL (October 2023). Security patches require paid Extended Security Updates (ESU). Upgrade to Windows Server 2022 or migration to Linux is required.",
+      "triggered_by": [
+        "Operating System Version is Unsupported",
+        "Operating System no longer receiving security patches"
+      ],
+      "blocked_by": []
+    },
+    {
+      "scenario_id": "switch_to_standard_linux_os",
+      "scenario_name": "Switch to standard Linux Operating System",
+      "status": "PARTIALLY_FULFILLED",
+      "priority": "Medium",
+      "reasoning": "Application uses .NET Core which supports Linux. Migrating from Windows Server to Linux (RHEL/Ubuntu) is feasible and would reduce Windows licensing costs. However, IIS dependency would need replacement with Linux alternatives (Nginx/Kestrel). Partial as requires effort.",
+      "triggered_by": [
+        "Operating System is a commercial or proprietary non-Linux system (Windows)"
+      ],
+      "blocked_by": []
+    },
+    {
+      "scenario_id": "switch_to_arm_cpu",
+      "scenario_name": "Switch to ARM-based CPU",
+      "status": "PARTIALLY_FULFILLED",
+      "priority": "Medium",
+      "reasoning": ".NET Core supports ARM64. Application is containerized. However, Windows Server 2012 (EOL) OS is a blocker. After OS upgrade, ARM migration becomes feasible on AWS Graviton.",
+      "triggered_by": [
+        "Framework is ARM-compatible (.NET Core)",
+        "Deployment is containerized"
+      ],
+      "blocked_by": []
+    },
+    {
+      "scenario_id": "application_server_replacement",
+      "scenario_name": "Applications Server replacement",
+      "status": "APPLICABLE",
+      "priority": "High",
+      "reasoning": "Microsoft IIS 8.0 is EOL (tied to Windows Server 2012 EOL October 2023). The IIS version must be upgraded to IIS 10.0 (Windows Server 2022) or replaced with a cross-platform alternative (Nginx, Kestrel) to support Linux migration.",
+      "triggered_by": [
+        "Application Server Status is End of Life",
+        "Application Server version is deprecated"
+      ],
+      "blocked_by": []
+    },
+    {
+      "scenario_id": "app_deployment_to_cloud",
+      "scenario_name": "Application Migration to Cloud Infrastructure (Lift & Shift)",
+      "status": "PARTIALLY_FULFILLED",
+      "priority": "Low",
+      "reasoning": "Application is partially cloud-deployed (AWS + On-premise hybrid). Cloud migration is underway but not complete. The on-premise portion needs to be migrated to fully leverage cloud benefits.",
+      "triggered_by": [
+        "Environment on Private Data Center"
+      ],
+      "blocked_by": []
+    },
+    {
+      "scenario_id": "app_containerization",
+      "scenario_name": "Application Containerization",
+      "status": "FULFILLED",
+      "priority": "N/A",
+      "reasoning": "Application is already containerized (is_containerized = Yes).",
+      "triggered_by": [],
+      "blocked_by": []
+    },
+    {
+      "scenario_id": "app_refactor_decoupling",
+      "scenario_name": "Application Refactoring and De-coupling",
+      "status": "APPLICABLE",
+      "priority": "Medium",
+      "reasoning": "2-Tier architecture with 12 API endpoints and 6 external interfaces. Custom-made application with active development (CI/CD present). Refactoring to a more modular/microservice approach would improve maintainability of the HR/payroll system.",
+      "triggered_by": [
+        "Architecture is Tightly Coupled",
+        "Application has frequent change requests"
+      ],
+      "blocked_by": []
+    },
+    {
+      "scenario_id": "upgrade_legacy_databases",
+      "scenario_name": "Upgrade Legacy Databases",
+      "status": "APPLICABLE",
+      "priority": "Medium",
+      "reasoning": "SQL Server 2019 has entered extended support (mainstream ended Jan 2025). While not EOL, upgrading to SQL Server 2022 is recommended. Alternatively, migrating to Azure SQL Managed Instance as a managed service would eliminate version lifecycle concerns.",
+      "triggered_by": [
+        "Database Support is Limited Support"
+      ],
+      "blocked_by": []
+    },
+    {
+      "scenario_id": "switch_db_engine_open_source",
+      "scenario_name": "Switch DB Engine to open-source database solution",
+      "status": "APPLICABLE",
+      "priority": "Medium",
+      "reasoning": "SQL Server 2019 requires a commercial license (DB License required = Yes). Migrating to PostgreSQL would eliminate licensing costs. .NET Core has good PostgreSQL support via Entity Framework Core/Npgsql.",
+      "triggered_by": [
+        "Database Engine is proprietary or requires a paid commercial license (SQL Server)",
+        "License Cost is High"
+      ],
+      "blocked_by": []
+    },
+    {
+      "scenario_id": "update_outdated_components",
+      "scenario_name": "Update outdated components",
+      "status": "APPLICABLE",
+      "priority": "High",
+      "reasoning": "Windows Server 2012 and IIS 8.0 are EOL. .NET Core version is unknown (possibly EOL if 3.1). SQL Server 2019 is in extended support. Full stack assessment and upgrade is required.",
+      "triggered_by": [
+        "Application has End-of-Life indicators",
+        "Used Application Server EOL (IIS 8.x)"
+      ],
+      "blocked_by": []
+    }
+  ],
+  "analysis_timestamp": "2026-07-30T06:21:22Z"
+}

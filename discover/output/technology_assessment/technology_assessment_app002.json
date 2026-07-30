@@ -1,0 +1,53 @@
+{
+  "application_identifier": "app002",
+  "components_analyzed": [
+    {
+      "component_name": "RHEL 7",
+      "component_family": "Red Hat Enterprise Linux",
+      "component_type": "os",
+      "managed_service": false,
+      "version": "7",
+      "component_status": "EOL",
+      "eol_date": "2024-06-30",
+      "reason": "RHEL 7 reached End of Maintenance Support on June 30, 2024. No further free security patches. Only available through paid Extended Life Cycle Support (ELS).",
+      "confidence": 10
+    },
+    {
+      "component_name": "Java 11",
+      "component_family": "Java (OpenJDK/Oracle JDK)",
+      "component_type": "programming_language",
+      "managed_service": false,
+      "version": "11",
+      "component_status": "OUTDATED",
+      "eol_date": "2026-09-30",
+      "reason": "Java 11 LTS Premier Support from Oracle ended September 2023. Community OpenJDK builds (Temurin) continue support but Java 17 and 21 are the current recommended LTS releases. Classified as OUTDATED as it is 2 major LTS versions behind current (Java 21).",
+      "confidence": 9
+    },
+    {
+      "component_name": "WebSphere 7.0",
+      "component_family": "IBM WebSphere Application Server",
+      "component_type": "application_server",
+      "managed_service": false,
+      "version": "7.0",
+      "component_status": "EOL",
+      "eol_date": "2015-04-30",
+      "reason": "IBM WebSphere Application Server 7.0 reached end of support on April 30, 2015 \u2014 over a decade ago. No security patches or fixes available.",
+      "confidence": 10
+    },
+    {
+      "component_name": "Amazon RDS MySQL",
+      "component_family": "MySQL",
+      "component_type": "database",
+      "managed_service": true,
+      "version": "unknown",
+      "component_status": "CURRENT_VERSION",
+      "eol_date": null,
+      "reason": "Amazon RDS MySQL is a managed service. AWS automatically manages patching and version lifecycle. Exact MySQL version not specified but managed service ensures maintained state.",
+      "confidence": 7
+    }
+  ],
+  "has_eol_components": true,
+  "has_outdated_components": true,
+  "has_missing_version_data": true,
+  "analysis_timestamp": "2026-07-30T06:21:22Z"
+}

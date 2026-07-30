@@ -1,0 +1,113 @@
+{
+  "application_identifier": "app002",
+  "application_name": "CRMApp-002",
+  "scenarios": [
+    {
+      "scenario_id": "os_update_security_patch",
+      "scenario_name": "Operating System Update",
+      "status": "APPLICABLE",
+      "priority": "High",
+      "reasoning": "RHEL 7 is EOL (June 2024). Security patches no longer freely available. Upgrade to RHEL 9 is required. As a 3rd-party application, vendor certification for new OS must be confirmed.",
+      "triggered_by": [
+        "Operating System Version is Unsupported",
+        "Operating System no longer receiving security patches"
+      ],
+      "blocked_by": []
+    },
+    {
+      "scenario_id": "switch_to_standard_linux_os",
+      "scenario_name": "Switch to standard Linux Operating System",
+      "status": "FULFILLED",
+      "priority": "N/A",
+      "reasoning": "Application already runs on RHEL (Red Hat Enterprise Linux), a standard enterprise Linux distribution. The OS type is standard \u2014 the issue is the outdated version, not the OS family.",
+      "triggered_by": [],
+      "blocked_by": []
+    },
+    {
+      "scenario_id": "switch_to_arm_cpu",
+      "scenario_name": "Switch to ARM-based CPU",
+      "status": "BLOCKED",
+      "priority": "Low",
+      "reasoning": "3rd party software \u2014 the vendor must certify the application for ARM. No information is available on ARM compatibility. Cannot switch without vendor confirmation.",
+      "triggered_by": [],
+      "blocked_by": [
+        "Application is a 3rd party Application",
+        "Proprietary or closed-source runtimes"
+      ]
+    },
+    {
+      "scenario_id": "application_server_replacement",
+      "scenario_name": "Applications Server replacement",
+      "status": "APPLICABLE",
+      "priority": "High",
+      "reasoning": "WebSphere 7.0 reached EOL in April 2015 \u2014 over a decade ago. This is a critical security and operational risk. Replacement with a modern application server (or vendor-provided alternative) is urgent. Note: as 3rd party software, replacement must align with vendor's supported stack.",
+      "triggered_by": [
+        "Application Server Status is End of Life",
+        "Application Server has no vendor support"
+      ],
+      "blocked_by": []
+    },
+    {
+      "scenario_id": "app_deployment_to_cloud",
+      "scenario_name": "Application Migration to Cloud Infrastructure (Lift & Shift)",
+      "status": "FULFILLED",
+      "priority": "N/A",
+      "reasoning": "Application is already deployed on AWS cloud infrastructure with Amazon RDS MySQL as the managed database. Cloud migration is already accomplished.",
+      "triggered_by": [],
+      "blocked_by": []
+    },
+    {
+      "scenario_id": "app_containerization",
+      "scenario_name": "Application Containerization",
+      "status": "NOT_APPLICABLE",
+      "priority": "N/A",
+      "reasoning": "3rd party software \u2014 containerization of the application runtime is vendor-controlled. Customer cannot modify packaging. Excluded per exclusion criteria.",
+      "triggered_by": [],
+      "blocked_by": [
+        "Application is 3rd party software with no vendor-provided container image"
+      ]
+    },
+    {
+      "scenario_id": "app_refactor_decoupling",
+      "scenario_name": "Application Refactoring and De-coupling",
+      "status": "NOT_APPLICABLE",
+      "priority": "N/A",
+      "reasoning": "3rd party software \u2014 internal architecture and source code are not under customer control. Refactoring is excluded per exclusion criteria.",
+      "triggered_by": [],
+      "blocked_by": [
+        "Application is 3rd party software \u2014 internal architecture cannot be refactored"
+      ]
+    },
+    {
+      "scenario_id": "upgrade_legacy_databases",
+      "scenario_name": "Upgrade Legacy Databases",
+      "status": "FULFILLED",
+      "priority": "N/A",
+      "reasoning": "Amazon RDS MySQL is a managed service. AWS handles version lifecycle. Database is maintained by the cloud provider.",
+      "triggered_by": [],
+      "blocked_by": []
+    },
+    {
+      "scenario_id": "switch_db_engine_open_source",
+      "scenario_name": "Switch DB Engine to open-source database solution",
+      "status": "FULFILLED",
+      "priority": "N/A",
+      "reasoning": "Amazon RDS MySQL is already an open-source database engine with no commercial licensing fee. No action needed.",
+      "triggered_by": [],
+      "blocked_by": []
+    },
+    {
+      "scenario_id": "update_outdated_components",
+      "scenario_name": "Update outdated components",
+      "status": "APPLICABLE",
+      "priority": "High",
+      "reasoning": "RHEL 7 (EOL), WebSphere 7.0 (critically EOL), and Java 11 (outdated) are all below current supported versions. While 3rd party software limits self-service updates, the vendor must be engaged to provide updated deployable packages.",
+      "triggered_by": [
+        "Used Application Server is legacy (Websphere 7.x)",
+        "Application has End-of-Life indicators"
+      ],
+      "blocked_by": []
+    }
+  ],
+  "analysis_timestamp": "2026-07-30T06:21:22Z"
+}

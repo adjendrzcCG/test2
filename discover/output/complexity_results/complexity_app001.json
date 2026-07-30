@@ -1,0 +1,63 @@
+{
+  "application_identifier": "app001",
+  "application_name": "ERPApp-001",
+  "complexity_score": 9,
+  "complexity_label": "Very High",
+  "scoring_dimensions": [
+    {
+      "dimension": "Business Criticality",
+      "weight": 2,
+      "score": 5,
+      "weighted_score": 10,
+      "reasoning": "High criticality: core financial system with regulatory implications"
+    },
+    {
+      "dimension": "Technology Age / EOL Risk",
+      "weight": 2,
+      "score": 5,
+      "weighted_score": 10,
+      "reasoning": "AIX 7.2 is EOL; COBOL is a deeply legacy language with vanishing expertise pool"
+    },
+    {
+      "dimension": "Architecture Complexity",
+      "weight": 1,
+      "score": 4,
+      "weighted_score": 4,
+      "reasoning": "1-Tier monolithic architecture; deeply coupled; no CI/CD; no containerization"
+    },
+    {
+      "dimension": "Data Sensitivity",
+      "weight": 1,
+      "score": 4,
+      "weighted_score": 4,
+      "reasoning": "Confidential data classification; financial transactions; regulatory reporting"
+    },
+    {
+      "dimension": "Integration Complexity",
+      "weight": 1,
+      "score": 3,
+      "weighted_score": 3,
+      "reasoning": "5 external interfaces; no REST APIs (0 endpoints); batch-style integration"
+    },
+    {
+      "dimension": "Infrastructure Footprint",
+      "weight": 1,
+      "score": 3,
+      "weighted_score": 3,
+      "reasoning": "2 servers, 1 TB DB; on-premise deployment with proprietary AIX OS"
+    }
+  ],
+  "total_weighted_score": 34,
+  "max_weighted_score": 40,
+  "normalized_score": 9,
+  "key_risk_factors": [
+    "COBOL programming language \u2014 extreme specialist skill scarcity",
+    "AIX 7.2 operating system EOL \u2014 requires specialized IBM hardware/expertise",
+    "1-Tier monolithic architecture \u2014 no separation of concerns",
+    "No CI/CD pipeline \u2014 manual deployments increase risk",
+    "No API endpoints \u2014 tightly batch-oriented integration",
+    "Planned decommission in 2027 \u2014 must plan migration path urgently"
+  ],
+  "modernization_recommendation": "High urgency. Plan OS migration from AIX to Linux, and data/logic migration pathway away from COBOL before the 2027 decommission deadline. Oracle 19c is still supported and can be the anchor for data migration.",
+  "analysis_timestamp": "2026-07-30T06:21:22Z"
+}
