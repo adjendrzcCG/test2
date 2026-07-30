@@ -1,0 +1,62 @@
+{
+  "application_identifier": "app002",
+  "application_name": "CRMApp-002",
+  "complexity_score": 6,
+  "complexity_label": "Medium-High",
+  "scoring_dimensions": [
+    {
+      "dimension": "Business Criticality",
+      "weight": 2,
+      "score": 3,
+      "weighted_score": 6,
+      "reasoning": "Medium criticality: important CRM but not mission-critical"
+    },
+    {
+      "dimension": "Technology Age / EOL Risk",
+      "weight": 2,
+      "score": 4,
+      "weighted_score": 8,
+      "reasoning": "RHEL 7 EOL, WebSphere 7.0 critically EOL (2015); Java 11 outdated"
+    },
+    {
+      "dimension": "Architecture Complexity",
+      "weight": 1,
+      "score": 3,
+      "weighted_score": 3,
+      "reasoning": "Architecture unknown; no containerization; but has CI/CD"
+    },
+    {
+      "dimension": "Data Sensitivity",
+      "weight": 1,
+      "score": 2,
+      "weighted_score": 2,
+      "reasoning": "Internal data classification; CRM data has moderate sensitivity"
+    },
+    {
+      "dimension": "Integration Complexity",
+      "weight": 1,
+      "score": 4,
+      "weighted_score": 4,
+      "reasoning": "15 API endpoints and 8 external interfaces indicate high connectivity"
+    },
+    {
+      "dimension": "Infrastructure Footprint",
+      "weight": 1,
+      "score": 2,
+      "weighted_score": 2,
+      "reasoning": "2 servers; cloud-hosted on AWS; managed RDS database"
+    }
+  ],
+  "total_weighted_score": 25,
+  "max_weighted_score": 40,
+  "normalized_score": 6,
+  "key_risk_factors": [
+    "WebSphere 7.0 \u2014 EOL since 2015, active security risk",
+    "RHEL 7 \u2014 EOL June 2024, no free patches",
+    "3rd party software \u2014 limited control over internal architecture",
+    "8 external interfaces \u2014 upgrade coordination required",
+    "Unknown architecture \u2014 assessment gaps"
+  ],
+  "modernization_recommendation": "Medium-high urgency. Replace WebSphere 7.0 immediately (critical EOL risk). Upgrade OS from RHEL 7 to RHEL 9. As 3rd party software, coordinate with vendor for upgrade path.",
+  "analysis_timestamp": "2026-07-30T06:21:22Z"
+}

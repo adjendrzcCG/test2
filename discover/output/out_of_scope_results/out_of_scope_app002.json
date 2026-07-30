@@ -1,0 +1,8 @@
+{
+  "application_identifier": "app002",
+  "application_name": "CRMApp-002",
+  "out_of_scope": false,
+  "reason": "Application is in Production status. It is 3rd party software deployed on AWS \u2014 not SAP. Scenarios limited by 3rd party exclusion criteria.",
+  "exclusion_type": null,
+  "analysis_timestamp": "2026-07-30T06:21:22Z"
+}

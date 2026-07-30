@@ -1,0 +1,242 @@
+{
+  "total_migration_cost": 1242060.0,
+  "total_yearly_savings": 470800.0,
+  "total_3yr_savings": 1412400.0,
+  "total_net_benefit_3yr": 170340.0,
+  "applications": [
+    {
+      "application_identifier": "app001",
+      "complexity_multiplier": 1.8,
+      "total_migration_cost": 587340.0,
+      "total_yearly_savings": 185900.0,
+      "total_net_benefit_3yr": -29640.0,
+      "roi_3yr_pct": -5.0,
+      "scenario_breakdown": [
+        {
+          "scenario_id": "os_update_security_patch",
+          "base_migration_cost": 1000,
+          "complexity_multiplier": 1.8,
+          "adjusted_migration_cost": 1800.0,
+          "yearly_savings": 500,
+          "net_benefit_3yr": -300.0,
+          "roi_3yr_pct": -16.7
+        },
+        {
+          "scenario_id": "switch_to_standard_linux_os",
+          "base_migration_cost": 300,
+          "complexity_multiplier": 1.8,
+          "adjusted_migration_cost": 540.0,
+          "yearly_savings": 400,
+          "net_benefit_3yr": 660.0,
+          "roi_3yr_pct": 122.2
+        },
+        {
+          "scenario_id": "app_refactor_decoupling",
+          "base_migration_cost": 250000,
+          "complexity_multiplier": 1.8,
+          "adjusted_migration_cost": 450000.0,
+          "yearly_savings": 150000,
+          "net_benefit_3yr": 0.0,
+          "roi_3yr_pct": 0.0
+        },
+        {
+          "scenario_id": "switch_db_engine_open_source",
+          "base_migration_cost": 25000,
+          "complexity_multiplier": 1.8,
+          "adjusted_migration_cost": 45000.0,
+          "yearly_savings": 15000,
+          "net_benefit_3yr": 0.0,
+          "roi_3yr_pct": 0.0
+        },
+        {
+          "scenario_id": "update_outdated_components",
+          "base_migration_cost": 50000,
+          "complexity_multiplier": 1.8,
+          "adjusted_migration_cost": 90000.0,
+          "yearly_savings": 20000,
+          "net_benefit_3yr": -30000.0,
+          "roi_3yr_pct": -33.3
+        }
+      ]
+    },
+    {
+      "application_identifier": "app002",
+      "complexity_multiplier": 1.3,
+      "total_migration_cost": 79300.0,
+      "total_yearly_savings": 32500.0,
+      "total_net_benefit_3yr": 18200.0,
+      "roi_3yr_pct": 23.0,
+      "scenario_breakdown": [
+        {
+          "scenario_id": "os_update_security_patch",
+          "base_migration_cost": 1000,
+          "complexity_multiplier": 1.3,
+          "adjusted_migration_cost": 1300.0,
+          "yearly_savings": 500,
+          "net_benefit_3yr": 200.0,
+          "roi_3yr_pct": 15.4
+        },
+        {
+          "scenario_id": "application_server_replacement",
+          "base_migration_cost": 10000,
+          "complexity_multiplier": 1.3,
+          "adjusted_migration_cost": 13000.0,
+          "yearly_savings": 12000,
+          "net_benefit_3yr": 23000.0,
+          "roi_3yr_pct": 176.9
+        },
+        {
+          "scenario_id": "update_outdated_components",
+          "base_migration_cost": 50000,
+          "complexity_multiplier": 1.3,
+          "adjusted_migration_cost": 65000.0,
+          "yearly_savings": 20000,
+          "net_benefit_3yr": -5000.0,
+          "roi_3yr_pct": -7.7
+        }
+      ]
+    },
+    {
+      "application_identifier": "app003",
+      "complexity_multiplier": 1.1,
+      "total_migration_cost": 83600.0,
+      "total_yearly_savings": 43500.0,
+      "total_net_benefit_3yr": 46900.0,
+      "roi_3yr_pct": 56.1,
+      "scenario_breakdown": [
+        {
+          "scenario_id": "os_update_security_patch",
+          "base_migration_cost": 1000,
+          "complexity_multiplier": 1.1,
+          "adjusted_migration_cost": 1100.0,
+          "yearly_savings": 500,
+          "net_benefit_3yr": 400.0,
+          "roi_3yr_pct": 36.4
+        },
+        {
+          "scenario_id": "switch_to_arm_cpu",
+          "base_migration_cost": 5000,
+          "complexity_multiplier": 1.1,
+          "adjusted_migration_cost": 5500.0,
+          "yearly_savings": 1000,
+          "net_benefit_3yr": -2500.0,
+          "roi_3yr_pct": -45.5
+        },
+        {
+          "scenario_id": "application_server_replacement",
+          "base_migration_cost": 10000,
+          "complexity_multiplier": 1.1,
+          "adjusted_migration_cost": 11000.0,
+          "yearly_savings": 12000,
+          "net_benefit_3yr": 25000.0,
+          "roi_3yr_pct": 227.3
+        },
+        {
+          "scenario_id": "upgrade_legacy_databases",
+          "base_migration_cost": 10000,
+          "complexity_multiplier": 1.1,
+          "adjusted_migration_cost": 11000.0,
+          "yearly_savings": 10000,
+          "net_benefit_3yr": 19000.0,
+          "roi_3yr_pct": 172.7
+        },
+        {
+          "scenario_id": "update_outdated_components",
+          "base_migration_cost": 50000,
+          "complexity_multiplier": 1.1,
+          "adjusted_migration_cost": 55000.0,
+          "yearly_savings": 20000,
+          "net_benefit_3yr": 5000.0,
+          "roi_3yr_pct": 9.1
+        }
+      ]
+    },
+    {
+      "application_identifier": "app004",
+      "complexity_multiplier": 1.4,
+      "total_migration_cost": 491820.0,
+      "total_yearly_savings": 208900.0,
+      "total_net_benefit_3yr": 134880.0,
+      "roi_3yr_pct": 27.4,
+      "scenario_breakdown": [
+        {
+          "scenario_id": "os_update_security_patch",
+          "base_migration_cost": 1000,
+          "complexity_multiplier": 1.4,
+          "adjusted_migration_cost": 1400.0,
+          "yearly_savings": 500,
+          "net_benefit_3yr": 100.0,
+          "roi_3yr_pct": 7.1
+        },
+        {
+          "scenario_id": "switch_to_standard_linux_os",
+          "base_migration_cost": 300,
+          "complexity_multiplier": 1.4,
+          "adjusted_migration_cost": 420.0,
+          "yearly_savings": 400,
+          "net_benefit_3yr": 780.0,
+          "roi_3yr_pct": 185.7
+        },
+        {
+          "scenario_id": "switch_to_arm_cpu",
+          "base_migration_cost": 5000,
+          "complexity_multiplier": 1.4,
+          "adjusted_migration_cost": 7000.0,
+          "yearly_savings": 1000,
+          "net_benefit_3yr": -4000.0,
+          "roi_3yr_pct": -57.1
+        },
+        {
+          "scenario_id": "application_server_replacement",
+          "base_migration_cost": 10000,
+          "complexity_multiplier": 1.4,
+          "adjusted_migration_cost": 14000.0,
+          "yearly_savings": 12000,
+          "net_benefit_3yr": 22000.0,
+          "roi_3yr_pct": 157.1
+        },
+        {
+          "scenario_id": "app_refactor_decoupling",
+          "base_migration_cost": 250000,
+          "complexity_multiplier": 1.4,
+          "adjusted_migration_cost": 350000.0,
+          "yearly_savings": 150000,
+          "net_benefit_3yr": 100000.0,
+          "roi_3yr_pct": 28.6
+        },
+        {
+          "scenario_id": "upgrade_legacy_databases",
+          "base_migration_cost": 10000,
+          "complexity_multiplier": 1.4,
+          "adjusted_migration_cost": 14000.0,
+          "yearly_savings": 10000,
+          "net_benefit_3yr": 16000.0,
+          "roi_3yr_pct": 114.3
+        },
+        {
+          "scenario_id": "switch_db_engine_open_source",
+          "base_migration_cost": 25000,
+          "complexity_multiplier": 1.4,
+          "adjusted_migration_cost": 35000.0,
+          "yearly_savings": 15000,
+          "net_benefit_3yr": 10000.0,
+          "roi_3yr_pct": 28.6
+        },
+        {
+          "scenario_id": "update_outdated_components",
+          "base_migration_cost": 50000,
+          "complexity_multiplier": 1.4,
+          "adjusted_migration_cost": 70000.0,
+          "yearly_savings": 20000,
+          "net_benefit_3yr": -10000.0,
+          "roi_3yr_pct": -14.3
+        }
+      ]
+    }
+  ],
+  "portfolio_roi_3yr_pct": 13.7,
+  "roi_years": 3,
+  "analysis_timestamp": "2026-07-30T06:21:22Z",
+  "in_scope_applications": 4,
+  "out_of_scope_applications": 1
+}

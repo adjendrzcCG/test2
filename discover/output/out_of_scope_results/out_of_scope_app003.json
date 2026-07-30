@@ -1,0 +1,8 @@
+{
+  "application_identifier": "app003",
+  "application_name": "AnalyticsApp-003",
+  "out_of_scope": false,
+  "reason": "Application is in Production status, open-source, and not SAP.",
+  "exclusion_type": null,
+  "analysis_timestamp": "2026-07-30T06:21:22Z"
+}

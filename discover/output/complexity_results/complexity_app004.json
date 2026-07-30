@@ -1,0 +1,63 @@
+{
+  "application_identifier": "app004",
+  "application_name": "HRApp-004",
+  "complexity_score": 7,
+  "complexity_label": "High",
+  "scoring_dimensions": [
+    {
+      "dimension": "Business Criticality",
+      "weight": 2,
+      "score": 4,
+      "weighted_score": 8,
+      "reasoning": "High criticality: HR and payroll processing is business-essential"
+    },
+    {
+      "dimension": "Technology Age / EOL Risk",
+      "weight": 2,
+      "score": 4,
+      "weighted_score": 8,
+      "reasoning": "Windows Server 2012 and IIS 8.0 are EOL; .NET Core version unclear"
+    },
+    {
+      "dimension": "Architecture Complexity",
+      "weight": 1,
+      "score": 3,
+      "weighted_score": 3,
+      "reasoning": "2-Tier architecture; partially containerized; has CI/CD; hybrid deployment"
+    },
+    {
+      "dimension": "Data Sensitivity",
+      "weight": 1,
+      "score": 3,
+      "weighted_score": 3,
+      "reasoning": "Internal HR/payroll data is sensitive despite 'Internal' classification"
+    },
+    {
+      "dimension": "Integration Complexity",
+      "weight": 1,
+      "score": 3,
+      "weighted_score": 3,
+      "reasoning": "12 API endpoints and 6 external interfaces \u2014 moderate-high connectivity"
+    },
+    {
+      "dimension": "Infrastructure Footprint",
+      "weight": 1,
+      "score": 2,
+      "weighted_score": 2,
+      "reasoning": "2 servers; hybrid deployment (AWS + On-premise); 750 GB SQL Server database"
+    }
+  ],
+  "total_weighted_score": 27,
+  "max_weighted_score": 40,
+  "normalized_score": 7,
+  "key_risk_factors": [
+    "Windows Server 2012 EOL \u2014 no security patches since Oct 2023",
+    "IIS 8.0 EOL \u2014 bundled with EOL OS",
+    ".NET Core version ambiguity \u2014 could be EOL (.NET Core 3.1) or current",
+    "SQL Server 2019 in extended support \u2014 plan upgrade to SQL Server 2022",
+    "Hybrid deployment adds migration complexity",
+    "HR/payroll data requires careful compliance during migration"
+  ],
+  "modernization_recommendation": "High urgency. Migrate OS from Windows Server 2012 to Windows Server 2022 or adopt Linux where applicable. Clarify .NET version and upgrade if needed. Migrate SQL Server to 2022 or managed Azure SQL. Consolidate hybrid deployment.",
+  "analysis_timestamp": "2026-07-30T06:21:22Z"
+}

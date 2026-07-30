@@ -1,0 +1,8 @@
+{
+  "application_identifier": "app005",
+  "application_name": "EComApp-005",
+  "out_of_scope": true,
+  "reason": "Application status is 'Retired'. Decommission date is 'already retired'. This application is excluded from modernization assessment.",
+  "exclusion_type": "RETIRED",
+  "analysis_timestamp": "2026-07-30T06:21:22Z"
+}

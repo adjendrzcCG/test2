@@ -1,0 +1,42 @@
+{
+  "application_identifier": "app001",
+  "components_analyzed": [
+    {
+      "component_name": "AIX 7.2",
+      "component_family": "IBM AIX",
+      "component_type": "os",
+      "managed_service": false,
+      "version": "7.2",
+      "component_status": "EOL",
+      "eol_date": "2025-04-30",
+      "reason": "IBM AIX 7.2 reached end of service on April 30, 2025. No further security patches are released by IBM.",
+      "confidence": 9
+    },
+    {
+      "component_name": "COBOL-2014",
+      "component_family": "COBOL",
+      "component_type": "programming_language",
+      "managed_service": false,
+      "version": "2014",
+      "component_status": "OUTDATED",
+      "eol_date": null,
+      "reason": "COBOL-2014 is an ISO standard revision. The language is still technically supported (ISO COBOL 2014 / GnuCOBOL), but is widely considered a legacy language with diminishing developer talent pool and no active ecosystem growth. Classified as OUTDATED due to limited ecosystem support.",
+      "confidence": 8
+    },
+    {
+      "component_name": "Oracle 19c",
+      "component_family": "Oracle Database",
+      "component_type": "database",
+      "managed_service": false,
+      "version": "19c",
+      "component_status": "CURRENT_VERSION",
+      "eol_date": "2027-04-30",
+      "reason": "Oracle Database 19c is a Long-Term Release supported until April 2027 (Premier Support). Currently receiving full security patches and updates.",
+      "confidence": 9
+    }
+  ],
+  "has_eol_components": true,
+  "has_outdated_components": true,
+  "has_missing_version_data": false,
+  "analysis_timestamp": "2026-07-30T06:21:22Z"
+}
